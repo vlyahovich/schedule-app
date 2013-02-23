@@ -1,0 +1,15 @@
+{
+  "name"            : "express-coffee", "version": "1.5.1", "private": true, "dependencies": {
+  "express"      : "3.x",
+  "coffee-script": "1.3.3",
+  "jade"         : "0.26.0"
+}, "scripts"        : {
+  "start": "node server.js"
+}, "devDependencies": {
+  "coffee-script": "*"
+},
+  "engines"         : {
+    "node": "~0.8.x",
+    "npm" : "1.1.x"
+  }
+}
