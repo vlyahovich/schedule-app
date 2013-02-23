@@ -1,3 +1,4 @@
+/*
 var app, assets, express, port, stylus;
 
 express = require("express");
@@ -24,4 +25,4 @@ port = process.env.PORT || process.env.VMC_APP_PORT || 3000;
 
 app.listen(port, function() {
   return console.log("Listening on " + port + "\nPress CTRL-C to stop server.");
-});
+});*/
