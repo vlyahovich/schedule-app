@@ -2,5 +2,7 @@
 
 Front-end part of the schedule project
 
-### Getting Started
-Install 'node'
+## Getting Started
+You should have `nodejs` and `npm` installed
+
+To install `node modules` run `npm install` command in terminal
