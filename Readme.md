@@ -1,1 +1,1 @@
-Sample stub
+FUS-RO-DA
