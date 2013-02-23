@@ -7,8 +7,8 @@
     </list>
     <ignored path="schedule-app.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Readme.md" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361622679822" ignored="false" />
-    <file path="/Dummy.txt" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361622476506" ignored="false" />
+    <file path="/Readme.md" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361622731469" ignored="false" />
+    <file path="/Dummy.txt" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361622682422" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +28,7 @@
       <file leaf-file-name="Readme.md" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Readme.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="6" selection-start="6" selection-end="6" vertical-scroll-proportion="0.0">
+            <state line="0" column="11" selection-start="11" selection-end="11" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -228,7 +228,11 @@
       <created>1361622480992</created>
       <updated>1361622480992</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="test">
+      <created>1361622683915</created>
+      <updated>1361622683916</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -342,7 +346,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Readme.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="6" selection-start="6" selection-end="6" vertical-scroll-proportion="0.0">
+        <state line="0" column="11" selection-start="11" selection-end="11" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>

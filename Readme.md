@@ -1,1 +1,1 @@
-BORODA
+Sample stub
