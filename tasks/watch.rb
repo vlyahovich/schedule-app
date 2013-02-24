@@ -1,0 +1,1 @@
+system 'bundle exec middleman'

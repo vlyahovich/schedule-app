@@ -2,111 +2,44 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="72f0bea5-5816-43c0-926c-65c2712c5c81" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\Readme.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\app\assets\index.jade" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\.bin\cake" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\.bin\cake.cmd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\.bin\coffee" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\.bin\coffee.cmd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\.bin\jade" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\.bin\jade.cmd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\.npmignore" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\CNAME" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\CONTRIBUTING.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\README" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\Rakefile" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\bin\cake" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\bin\coffee" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\extras\jsl.conf" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\lib\coffee-script\browser.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\lib\coffee-script\cake.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\lib\coffee-script\coffee-script.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\lib\coffee-script\command.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\lib\coffee-script\grammar.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\lib\coffee-script\helpers.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\lib\coffee-script\index.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\lib\coffee-script\lexer.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\lib\coffee-script\nodes.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\lib\coffee-script\optparse.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\lib\coffee-script\parser.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\lib\coffee-script\repl.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\lib\coffee-script\rewriter.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\lib\coffee-script\scope.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\coffee-script\package.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\.npmignore" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\bin\jade" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\index.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\jade.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\jade.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\jade.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\compiler.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\doctypes.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\filters.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\inline-tags.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\jade.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\lexer.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\nodes\block-comment.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\nodes\block.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\nodes\case.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\nodes\code.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\nodes\comment.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\nodes\doctype.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\nodes\each.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\nodes\filter.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\nodes\index.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\nodes\literal.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\nodes\mixin.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\nodes\node.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\nodes\tag.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\nodes\text.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\parser.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\runtime.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\self-closing.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\lib\utils.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\commander\.npmignore" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\commander\.travis.yml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\commander\History.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\commander\Makefile" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\commander\Readme.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\commander\index.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\commander\lib\commander.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\commander\package.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\.npmignore" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\README.markdown" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\examples\pow.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\index.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\package.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\test\chmod.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\test\clobber.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\test\mkdirp.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\test\perm.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\test\perm_sync.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\test\race.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\test\rel.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\test\sync.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\test\umask.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\node_modules\mkdirp\test\umask_sync.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\package.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\runtime.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\runtime.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\testing\index.jade" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\node_modules\jade\testing\layout.jade" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\package.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Vadim\RubymineProjects\schedule-app\server.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/images/background.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/images/middleman.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Gemfile.lock" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Gemfile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/stylesheets/all.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/javascripts/all.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tasks/build.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tasks/clean.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/index.haml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/layouts/layout.haml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/stylesheets/normalize.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/javascripts/test.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tasks/watch.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/schedule-app.iml" afterPath="$PROJECT_DIR$/.idea/schedule-app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="schedule-app.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Readme.md" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361626382673" ignored="false" />
-    <file path="/Dummy.txt" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361696318308" ignored="false" />
-    <file path="/a.jade" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361624094627" ignored="false" />
+    <file path="/Dummy.txt" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361706561681" ignored="false" />
+    <file path="/a.jade" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361700333326" ignored="false" />
     <file path="/test.sh" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361624531321" ignored="false" />
     <file path="/index.jade" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361627110221" ignored="false" />
-    <file path="/server.js" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361627595315" ignored="false" />
+    <file path="/server.js" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361704762058" ignored="false" />
+    <file path="/tst.coffee" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361699236056" ignored="false" />
+    <file path="/application.styl" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361699788490" ignored="false" />
+    <file path="/index.html" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361700002303" ignored="false" />
+    <file path="/package.json" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361704322896" ignored="false" />
+    <file path="/f1.txt" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361704565372" ignored="false" />
+    <file path="/test.coffee" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361706016889" ignored="false" />
+    <file path="$PROJECT_DIR$/../my_new_project/source/javascripts/test.coffee" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361706020037" ignored="false" />
+    <file path="$PROJECT_DIR$/../my_new_project/source/layouts/layout.erb" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361706109401" ignored="false" />
+    <file path="/layout.erb" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361706054059" ignored="false" />
+    <file path="/watch.rb" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361706867953" ignored="false" />
+    <file path="/Ruby Console" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361707019104" ignored="false" />
+    <file path="/build.rb" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361707152587" ignored="false" />
+    <file path="/clean.rb" changelist="72f0bea5-5816-43c0-926c-65c2712c5c81" time="1361707316294" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,10 +75,20 @@
       <list>
         <option value="$PROJECT_DIR$/test.sh" />
         <option value="$PROJECT_DIR$/Readme.md" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/app/assets/index.jade" />
         <option value="$USER_HOME$/Dropbox/Projects/bbb/Jakefile.js" />
+        <option value="$PROJECT_DIR$/src/tst.coffee" />
+        <option value="$PROJECT_DIR$/app/views/styles/application.styl" />
+        <option value="$PROJECT_DIR$/app/assets/index.html" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/app/f1.txt" />
         <option value="$PROJECT_DIR$/server.js" />
+        <option value="$PROJECT_DIR$/watch.rb" />
+        <option value="$PROJECT_DIR$/tasks/build.rb" />
+        <option value="$PROJECT_DIR$/tasks/watch.rb" />
+        <option value="$PROJECT_DIR$/tasks/clean.rb" />
+        <option value="$PROJECT_DIR$/source/index.haml" />
+        <option value="$PROJECT_DIR$/source/layouts/layout.haml" />
       </list>
     </option>
   </component>
@@ -181,16 +124,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="schedule-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Problems" />
         <subPane subId="Project Files">
@@ -218,25 +151,121 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schedule-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schedule-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schedule-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="options.lastSelected" value="editor" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="preferences.sourceCode.Jade" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/tasks/clean.rb" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="last_opened_file_path" value="C:/Program Files/nodejs/npm.cmd" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Vadim\RubymineProjects\schedule-app" />
       <recent name="C:\Users\Vadim\RubymineProjects\schedule-app\app\assets" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Vadim\RubymineProjects\schedule-app\tasks" />
+    </key>
   </component>
-  <component name="RunManager" selected="Node.js.run-server">
+  <component name="RunManager" selected="IRB console.middleman-watch">
+    <configuration default="true" type="RakeRunConfigurationType" factoryName="Rake">
+      <module name="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov" />
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_NAME" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_ARGS" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_ATTACHED_TEST_FRAMEWORKS" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_TRACE" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_DRYRUN" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_PREREQS" VALUE="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="CommandRunConfigurationType" factoryName="Gem Command">
+      <module name="" />
+      <COMMAND_RUN_CONFIGURATION NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <COMMAND_RUN_CONFIGURATION NAME="WORK DIR" VALUE="C:\Users\Vadim\RubymineProjects\schedule-app" />
+      <COMMAND_RUN_CONFIGURATION NAME="SHOULD_USE_SDK" VALUE="false" />
+      <COMMAND_RUN_CONFIGURATION NAME="ALTERN_SDK_NAME" VALUE="" />
+      <COMMAND_RUN_CONFIGURATION NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov" />
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <COMMAND_CONFIG_SETTINGS_ID NAME="GEM_NAME" VALUE="" />
+      <COMMAND_CONFIG_SETTINGS_ID NAME="EXECUTABLE_NAME" VALUE="" />
+      <COMMAND_CONFIG_SETTINGS_ID NAME="EXECUTABLE_ARGS" VALUE="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="RailsRunConfigurationType" factoryName="Rails">
+      <predefined_log_file id="RUBY_RAILS_SERVER" enabled="true" />
+      <module name="" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov" />
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="SCRIPT_ARGS" VALUE="" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="PORT" VALUE="3000" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="IP" VALUE="127.0.0.1" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="DUMMY_APP" VALUE="test/dummy" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="RAILS_SERVER_TYPE" VALUE="Default" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="ENVIRONMENT_TYPE" VALUE="development" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="LAUNCH_JS" VALUE="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSRemoteDebug" factoryName="Node.js Remote Debug">
+      <node-js-remote-debug />
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeunitConfigurationType" factoryName="Nodeunit">
+      <setting name="nodePath" value="C:/Program Files/nodejs/node" />
+      <envs />
+      <setting name="passParentEnvVars" value="true" />
+      <setting name="nodeunitModuleDir" value="" />
+      <setting name="workingDirectory" value="$PROJECT_DIR$" />
+      <setting name="testType" value="JS_FILE" />
+      <setting name="jsFile" value="" />
+      <method />
+    </configuration>
     <configuration default="true" type="RSpecRunConfigurationType" factoryName="RSpec">
       <predefined_log_file id="RUBY_RSPEC" enabled="true" />
       <module name="" />
@@ -263,6 +292,22 @@
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
       <method />
     </configuration>
+    <configuration default="true" type="RubyRunConfigurationType" factoryName="Ruby">
+      <module name="" />
+      <RUBY_RUN_CONFIG NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RUBY_RUN_CONFIG NAME="WORK DIR" VALUE="" />
+      <RUBY_RUN_CONFIG NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RUBY_RUN_CONFIG NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RUBY_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov" />
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RUBY_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="" />
+      <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestUnitRunConfigurationType" factoryName="Test::Unit/Shoulda/Minitest">
       <predefined_log_file id="RUBY_TESTUNIT" enabled="true" />
       <module name="" />
@@ -285,7 +330,43 @@
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_OPTIONS" VALUE="" />
       <method />
     </configuration>
+    <configuration default="true" type="IrbRunConfigurationType" factoryName="IRB console">
+      <module name="schedule-app" />
+      <IRB_RUN_CONFIG NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <IRB_RUN_CONFIG NAME="WORK DIR" VALUE="" />
+      <IRB_RUN_CONFIG NAME="SHOULD_USE_SDK" VALUE="false" />
+      <IRB_RUN_CONFIG NAME="ALTERN_SDK_NAME" VALUE="" />
+      <IRB_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="true" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov" />
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <IRB_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="middleman server" />
+      <IRB_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
+      <IRB_RUN_CONFIG NAME="IS_RAILS_CONSOLE" VALUE="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="C:/Program Files/nodejs/node" working-dir="$PROJECT_DIR$" coffeescript-run="false">
+      <method />
+    </configuration>
+    <configuration default="true" type="RackRunConfigurationType" factoryName="Rack">
+      <module name="" />
+      <RACK_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RACK_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="C:\Users\Vadim\RubymineProjects\schedule-app" />
+      <RACK_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RACK_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RACK_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov" />
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RACK_CONFIG_SETTINGS_ID NAME="PORT" VALUE="9292" />
+      <RACK_CONFIG_SETTINGS_ID NAME="IP" VALUE="127.0.0.1" />
+      <RACK_CONFIG_SETTINGS_ID NAME="CONFIG_FILE" VALUE="" />
+      <RACK_CONFIG_SETTINGS_ID NAME="RACK_SERVER_TYPE" VALUE="Default" />
+      <RACK_CONFIG_SETTINGS_ID NAME="LAUNCH_JS" VALUE="false" />
       <method />
     </configuration>
     <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
@@ -294,13 +375,67 @@
       <option name="CONTEXT_PROVIDER" />
       <method />
     </configuration>
-    <configuration default="false" name="run-server" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="server.js" working-dir="$PROJECT_DIR$" coffeescript-run="false">
-      <RunnerSettings RunnerId="NodeJS.run" />
-      <ConfigurationWrapper RunnerId="NodeJS.run" />
+    <configuration default="false" name="middleman-watch" type="IrbRunConfigurationType" factoryName="IRB console">
+      <module name="schedule-app" />
+      <IRB_RUN_CONFIG NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <IRB_RUN_CONFIG NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
+      <IRB_RUN_CONFIG NAME="SHOULD_USE_SDK" VALUE="false" />
+      <IRB_RUN_CONFIG NAME="ALTERN_SDK_NAME" VALUE="" />
+      <IRB_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="true" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov" />
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <IRB_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="$PROJECT_DIR$/tasks/watch.rb" />
+      <IRB_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
+      <IRB_RUN_CONFIG NAME="IS_RAILS_CONSOLE" VALUE="false" />
+      <RunnerSettings RunnerId="RubyRunner" />
+      <ConfigurationWrapper RunnerId="RubyRunner" />
       <method />
     </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="Node.js.run-server" />
+    <configuration default="false" name="middleman-build" type="IrbRunConfigurationType" factoryName="IRB console">
+      <module name="schedule-app" />
+      <IRB_RUN_CONFIG NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <IRB_RUN_CONFIG NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
+      <IRB_RUN_CONFIG NAME="SHOULD_USE_SDK" VALUE="false" />
+      <IRB_RUN_CONFIG NAME="ALTERN_SDK_NAME" VALUE="" />
+      <IRB_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="true" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov" />
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <IRB_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="$PROJECT_DIR$/tasks/build.rb" />
+      <IRB_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
+      <IRB_RUN_CONFIG NAME="IS_RAILS_CONSOLE" VALUE="false" />
+      <RunnerSettings RunnerId="RubyRunner" />
+      <ConfigurationWrapper RunnerId="RubyRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="middleman-clean" type="IrbRunConfigurationType" factoryName="IRB console">
+      <module name="schedule-app" />
+      <IRB_RUN_CONFIG NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <IRB_RUN_CONFIG NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
+      <IRB_RUN_CONFIG NAME="SHOULD_USE_SDK" VALUE="false" />
+      <IRB_RUN_CONFIG NAME="ALTERN_SDK_NAME" VALUE="" />
+      <IRB_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov" />
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <IRB_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="$PROJECT_DIR$/tasks/clean.rb" />
+      <IRB_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
+      <IRB_RUN_CONFIG NAME="IS_RAILS_CONSOLE" VALUE="false" />
+      <RunnerSettings RunnerId="RubyRunner" />
+      <ConfigurationWrapper RunnerId="RubyRunner" />
+      <method />
+    </configuration>
+    <list size="3">
+      <item index="0" class="java.lang.String" itemvalue="IRB console.middleman-watch" />
+      <item index="1" class="java.lang.String" itemvalue="IRB console.middleman-build" />
+      <item index="2" class="java.lang.String" itemvalue="IRB console.middleman-clean" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -352,7 +487,11 @@
       <created>1361626260774</created>
       <updated>1361626260774</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Clean">
+      <created>1361698919711</created>
+      <updated>1361698919711</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -383,11 +522,11 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328594" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24963397" sideWeight="0.67140603" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24963397" sideWeight="0.6655405" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328594" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3270142" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33445945" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328594" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -437,7 +576,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Prepare structure" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clean" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -453,56 +592,12 @@
     <MESSAGE value="test" />
     <MESSAGE value="initial commit" />
     <MESSAGE value="Prepare structure" />
+    <MESSAGE value="Clean" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Readme.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="64" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/index.jade">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="33" selection-start="155" selection-end="155" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="12" selection-start="119" selection-end="119" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/Projects/bbb/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="34" selection-start="349" selection-end="349" vertical-scroll-proportion="0.37067544" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/Projects/bbb/Jakefile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="22" selection-start="22" selection-end="22" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/coffee-script/lib/coffee-script/cake.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/coffee-script/lib/coffee-script/coffee-script.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="34" selection-start="1837" selection-end="1837" vertical-scroll-proportion="0.49423394" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/standalone/standalone/js/lib/thorax.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9407" column="75" selection-start="283532" selection-end="283532" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/npm/node_modules/brunch/lib/commands/watch.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="243" column="7" selection-start="8207" selection-end="8207" vertical-scroll-proportion="0.94949496" />
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Roaming/npm/node_modules/brunch/lib/cli.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="82" selection-start="163" selection-end="163" vertical-scroll-proportion="0.12626262" />
@@ -515,28 +610,81 @@
     </entry>
     <entry file="file://$USER_HOME$/Documents/RIA/node_modules/javascript-brunch/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="58" selection-start="144" selection-end="144" vertical-scroll-proportion="0.123558484">
-          <folding />
-        </state>
+        <state line="5" column="58" selection-start="144" selection-end="144" vertical-scroll-proportion="0.123558484" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Documents/RIA/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="17" selection-start="604" selection-end="604" vertical-scroll-proportion="-16.875">
-          <folding />
-        </state>
+        <state line="27" column="17" selection-start="604" selection-end="604" vertical-scroll-proportion="-16.875" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Documents/RIA/node_modules/javascript-brunch/src/index.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="22" selection-start="34" selection-end="34" vertical-scroll-proportion="0.049423393">
-          <folding />
-        </state>
+        <state line="2" column="22" selection-start="34" selection-end="34" vertical-scroll-proportion="0.049423393" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Documents/RIA/node_modules/javascript-brunch/lib/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="0" selection-start="870" selection-end="870" vertical-scroll-proportion="0.9390445">
+        <state line="38" column="0" selection-start="870" selection-end="870" vertical-scroll-proportion="0.9390445" />
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/Projects/bbb/Jakefile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="59" selection-start="157" selection-end="157" vertical-scroll-proportion="0.123558484" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile.lock">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tasks/watch.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="29" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tasks/clean.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="19" selection-start="19" selection-end="19" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tasks/build.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="8" selection-start="8" selection-end="19" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="15" selection-start="102" selection-end="102" vertical-scroll-proportion="0.3">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/layouts/layout.haml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="31" selection-start="49" selection-end="49" vertical-scroll-proportion="0.08064516">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/index.haml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
