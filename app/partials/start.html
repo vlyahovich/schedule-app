@@ -1,0 +1,28 @@
+<div class="start-screen animate">
+  <div class="schedule-icon">
+    <img src="img/time.png" alt="Расписание">
+    <h4>
+      <small>{{strings.appName}}</small><br/>
+      <small>v <span app-version></span></small>
+    </h4>
+  </div>
+
+  <div class="schedule-form" spin-on="{on: 'look:request-start', off: 'look:request-end'}">
+    <form name="scheduleForm" ng-submit="look()">
+      <div class="control-group">
+        <input type="text" class="span5" value="" placeholder="{{strings.coursePlaceholder}}" ng-model="course"
+               name="course" ngv-required ngv-integer>
+      </div>
+
+      <div class="control-group">
+        <input type="text" class="span3" value="" placeholder="{{strings.groupPlaceholder}}" ng-model="group"
+               name="group" ngv-required ngv-integer>
+        <input type="text" class="sub-group span2" value="" placeholder="{{strings.sibGroupPlaceholder}}"
+               ng-model="subGroup" name="subGroup">
+      </div>
+      <input type="submit" class="btn btn-large btn-block" value="{{strings.look}}"
+             ng-class="{disabled: scheduleForm.$invalid, 'btn-primary': !scheduleForm.$invalid}"
+             ng-disabled="scheduleForm.$invalid">
+    </form>
+  </div>
+</div>

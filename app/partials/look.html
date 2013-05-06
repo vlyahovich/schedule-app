@@ -1,0 +1,58 @@
+<div class="look-screen animate">
+  <div class="header-controls clearfix">
+    <ul class="pager">
+      <li class="previous" ng-click="previousDay()">
+        <a>
+          <img src="img/previous.png">
+          {{currentDay}}
+        </a>
+      </li>
+      <li class="next" ng-click="nextDay()">
+        <a>
+          <img src="img/next.png">
+        </a>
+      </li>
+    </ul>
+    <div class="btn-toolbar">
+      <div class="btn-group">
+        <a class="btn btn-primary active">{{strings.currentWeek}}</a>
+        <a class="btn btn-primary">{{strings.nextWeek}}</a>
+      </div>
+    </div>
+    <input type="text" value="" ng-model="searchQuery" ng-change="search()" placeholder="Найти" class="search">
+  </div>
+  <ul class="subjects-list">
+    <li ng-repeat="subject in currentList" class="clearfix">
+      <div class="time" ng-bind-html-unsafe="subject.time.startTime | timelize"></div>
+      <div class="subject">
+        <h4 class="name"><span ng-bind-html-unsafe="subject.name | highlight:searchQuery"></span>
+          <!--<span class="noty lsf">tabs
+          <div class="tooltip right">
+            <div class="tooltip-arrow" style=""></div>
+            <div class="tooltip-inner">
+              <strong>Имя предмета</strong>
+              Имя преподователя
+            </div>
+          </div>
+          </span>-->
+          <!--<span class="noty lsf" ng-show="subject.notification">balloon
+          <div class="tooltip right">
+            <div class="tooltip-arrow" style=""></div>
+            <div class="tooltip-inner">
+              <strong>{{subject.notification.title}}</strong>
+              {{subject.notification.text}}
+            </div>
+          </div>
+          </span>-->
+        </h4>
+        <span ng-bind-html-unsafe="subject.lecturer.surname | highlight:searchQuery"></span>
+      </div>
+      <div class="room">{{subject.classroom}}</div>
+    </li>
+    <li ng-show="!currentList.length" class="empty">{{strings.noDataFound}}</li>
+  </ul>
+  <div class="legend">
+    <span class="lsf">tabs</span> - {{strings.evenOdd}}<br>
+    <span class="lsf">balloon</span> - {{strings.hasNoty}}<br>
+  </div>
+</div>

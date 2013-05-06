@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" ng-app="scheduleApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Schedule App</title>
+    <link rel="stylesheet" href="css/app.css"/>
+    <link rel="shortcut icon" href="img/favicon.ico">
+  </head>
+  <body>
+    <div class="container">
+      <div ng-controller="HeaderController" class="header">
+        <span class="home" ng-if="url!='/home'" ng-click="goHome()"><span class="lsf">backspace</span>
+          {{strings.toHome}}
+        </span>
+
+        <div class="dropdown-toggle">
+          <a class="link-toggle">
+            <span class="toggle-label">{{User.getName() || strings.enter}}</span>
+            <span class="toggle-icon lsf" ng-if="!User.isAuthenticated()">login</span>
+            <span class="toggle-icon lsf" ng-if="User.isAuthenticated()">app</span>
+          </a>
+
+          <div class="toggle-content" ng-switch on="User.isAuthenticated()">
+            <div ng-switch-when="true">
+              <ul class="user-menu">
+                <li ng-click="goSettings()">
+                  <div class="menu-icon lsf">param</div>
+                  <div class="menu-content">
+                    <h4>
+                      <strong>{{strings.params}}</strong>
+                    </h4>
+                  </div>
+                </li>
+                <li ng-click="goSchedule()">
+                  <div class="menu-icon lsf">edit</div>
+                  <div class="menu-content">
+                    <h4>
+                      <strong>{{strings.edit}}</strong>
+                    </h4>
+                  </div>
+                </li>
+                <li ng-click="logout()">
+                  <div class="menu-icon lsf">logout</div>
+                  <div class="menu-content">
+                    <h4>
+                      <strong>{{strings.exit}}</strong>
+                    </h4>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="login-form" ng-switch-default>
+              <form name="loginForm" ng-submit="login()">
+                <div class="control-group">
+                  <input type="text" class="login-field span3" value="" placeholder="{{strings.namePlaceholder}}"
+                         id="login-name" ng-model="name" name="name" ngv-required>
+                  <label class="login-field-icon lsf" for="login-name">user</label>
+                </div>
+                <div class="control-group">
+                  <input type="password" class="login-field span3" value="" placeholder="{{strings.passPlaceholder}}"
+                         id="login-pass" ng-model="password" name="password" ngv-required>
+                  <label class="login-field-icon lsf" for="login-pass">lock</label>
+                </div>
+                <input type="submit" value="{{strings.enter}}" class="btn btn-large btn-block"
+                       ng-class="{disabled: loginForm.$invalid, 'btn-primary': !loginForm.$invalid}"
+                       ng-disabled="loginForm.$invalid">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-view class="main-view" ng-animate="{enter: 'main-animation-enter', leave: 'main-animation-leave'}"></div>
+    </div>
+    <div class="toast-container" toast></div>
+
+    <script src="lib/jquery-1.9.1.min.js"></script>
+    <script src="lib/angular-1.1.4.min.js"></script>
+    <script src="lib/lodash-1.1.1.min.js"></script>
+    <script src="lib/spin.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/directives.js"></script>
+  </body>
+</html>

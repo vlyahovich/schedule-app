@@ -1,0 +1,498 @@
+@import "bootstrap.css";
+@import "flat-ui.css";
+
+/*-- LigatureSymbols --*/
+@font-face {
+  font-family : 'LigatureSymbols';
+  src         : url('../fonts/LigatureSymbols-2.07.eot');
+  src         : url('../fonts/LigatureSymbols-2.07.eot?#iefix') format('embedded-opentype'), url('../fonts/LigatureSymbols-2.07.woff') format('woff'), url('../fonts/LigatureSymbols-2.07.ttf') format('truetype'), url('../fonts/LigatureSymbols-2.07.svg#LigatureSymbols') format('svg');
+  src         : url('../fonts/LigatureSymbols-2.07.ttf') format('truetype');
+  font-weight : normal;
+  font-style  : normal;
+}
+
+.lsf {
+  font-family            : 'LigatureSymbols';
+  -webkit-text-rendering : optimizeLegibility;
+  -moz-text-rendering    : optimizeLegibility;
+  -ms-text-rendering     : optimizeLegibility;
+  -o-text-rendering      : optimizeLegibility;
+  text-rendering         : optimizeLegibility;
+  -webkit-font-smoothing : antialiased;
+  -moz-font-smoothing    : antialiased;
+  -ms-font-smoothing     : antialiased;
+  -o-font-smoothing      : antialiased;
+  font-smoothing         : antialiased;
+}
+
+.lsf-icon:before {
+  content                : attr(title);
+  margin-right           : 0.3em;
+  font-size              : 130%;
+  font-family            : 'LigatureSymbols';
+  -webkit-text-rendering : optimizeLegibility;
+  -moz-text-rendering    : optimizeLegibility;
+  -ms-text-rendering     : optimizeLegibility;
+  -o-text-rendering      : optimizeLegibility;
+  text-rendering         : optimizeLegibility;
+  -webkit-font-smoothing : antialiased;
+  -moz-font-smoothing    : antialiased;
+  -ms-font-smoothing     : antialiased;
+  -o-font-smoothing      : antialiased;
+  font-smoothing         : antialiased;
+}
+
+/*-- App styles --*/
+.header {
+  height     : 18px;
+  padding    : 6px 0;
+  text-align : right;
+}
+
+/*-- Header --*/
+.header .home {
+  float           : left;
+  text-decoration : none;
+  font-size       : 14px;
+  cursor          : pointer;
+}
+
+.header .home .lsf {
+  font-size : 18px;
+}
+
+.header .dropdown-toggle {
+  display    : inline-block;
+  position   : relative;
+  cursor     : pointer;
+  text-align : left;
+}
+
+.header .dropdown-toggle .link-toggle {
+  text-decoration : none;
+}
+
+.header .dropdown-toggle .toggle-label {
+  color : #34495E;
+}
+
+.header .dropdown-toggle .toggle-icon {
+  font-size      : 16px;
+  vertical-align : middle;
+  color          : #34495E;
+}
+
+.header .dropdown-toggle .toggle-content {
+  display                     : none\9;
+  background-color            : #2C3E50;
+  border-radius               : 5px;
+  margin                      : 10px 0 0;
+  max-height                  : 244px;
+  padding                     : 0;
+  position                    : absolute;
+  right                       : 0;
+  top                         : 10px;
+  opacity                     : 0;
+  -webkit-transition          : 0.3s ease-out;
+  -moz-transition             : 0.3s ease-out;
+  -o-transition               : 0.3s ease-out;
+  transition                  : 0.3s ease-out;
+  -webkit-backface-visibility : hidden;
+  cursor                      : auto;
+  z-index                     : -1;
+}
+
+.header .dropdown-toggle.open .toggle-content {
+  top     : 20px;
+  opacity : 1;
+  display : block\9;
+  z-index : 10;
+}
+
+.header .dropdown-toggle .toggle-content:before {
+  content           : "";
+  border-style      : solid;
+  border-width      : 0 9px 9px 9px;
+  border-color      : transparent transparent #2C3E50 transparent;
+  height            : 0px;
+  position          : absolute;
+  left              : 15px;
+  top               : -9px;
+  width             : 0px;
+  -webkit-transform : rotate(360deg);
+}
+
+.header .dropdown-toggle .toggle-content:before {
+  left  : auto;
+  right : 12px;
+}
+
+.header .login-form {
+  padding : 20px;
+}
+
+.header .login-form form {
+  margin : 0;
+}
+
+.control-group {
+  position : relative;
+}
+
+.login-field:focus + .login-field-icon {
+  color : #1abc9c;
+}
+
+.login-field.ng-dirty.ng-invalid:focus + .login-field-icon {
+  color : #e74c3c;
+}
+
+.login-field-icon {
+  color                       : #BFC9CA;
+  font-size                   : 28px;
+  position                    : absolute;
+  right                       : 13px;
+  top                         : 12px;
+  -webkit-transition          : 0.25s;
+  -moz-transition             : 0.25s;
+  -o-transition               : 0.25s;
+  transition                  : 0.25s;
+  -webkit-backface-visibility : hidden;
+}
+
+.user-menu {
+  width           : 260px;
+  margin          : 0;
+  list-style-type : none;
+  color           : #6285a8;
+}
+
+.user-menu li {
+  background                  : #34495E;
+  cursor                      : pointer;
+  margin-top                  : 2px;
+  padding                     : 18px 42px 17px 25px;
+  position                    : relative;
+  cursor                      : pointer;
+  -webkit-transition          : 0.25s;
+  -moz-transition             : 0.25s;
+  -o-transition               : 0.25s;
+  transition                  : 0.25s;
+  -webkit-backface-visibility : hidden;
+}
+
+.user-menu li:first-child {
+  margin-top    : 0;
+  border-radius : 5px 5px 0 0;
+}
+
+.user-menu li:last-child {
+  border-radius : 0 0 5px 5px;
+}
+
+.user-menu li:first-child:last-child {
+  border-radius : 5px;
+}
+
+.user-menu li:hover {
+  color      : #1ABC9C;
+  background : none;
+}
+
+.user-menu li:hover h4 {
+  color : #1ABC9C;
+}
+
+.user-menu .menu-icon {
+  float     : left;
+  font-size : 38px;
+  padding   : 0 22px 0 0;
+}
+
+.user-menu .menu-content {
+  padding-top : 1px;
+  overflow    : hidden;
+}
+
+.user-menu h4 {
+  color                       : white;
+  font-size                   : 15px;
+  margin                      : 0 0 3px;
+  -webkit-transition          : 0.25s;
+  -moz-transition             : 0.25s;
+  -o-transition               : 0.25s;
+  transition                  : 0.25s;
+  -webkit-backface-visibility : hidden;
+}
+
+/*-- Toast --*/
+
+.toast-container {
+  width    : 224px;
+  position : fixed;
+  right    : 0;
+  top      : 0;
+  padding  : 10px;
+}
+
+.toast {
+  width                       : 200px;
+  color                       : #FFFFFF;
+  font-size                   : 13px;
+  background-color            : #D35400;
+  line-height                 : 18px;
+  padding                     : 12px 12px;
+  text-align                  : center;
+  margin-top                  : 0;
+  margin-bottom               : 10px;
+  opacity                     : 1;
+  display                     : block\9;
+  -webkit-border-radius       : 6px;
+  -moz-border-radius          : 6px;
+  border-radius               : 6px;
+  -webkit-transition          : 0.25s;
+  -moz-transition             : 0.25s;
+  -o-transition               : 0.25s;
+  transition                  : 0.25s;
+  -webkit-backface-visibility : hidden;
+}
+
+.toast.animate {
+  margin-top : -20px;
+  opacity    : 0;
+  display    : none\9;
+  z-index    : -1;
+  position   : absolute;
+}
+
+/*-- Main View --*/
+
+.main-animation-leave-setup, .main-animation-enter-setup {
+  -webkit-transition          : 0.3s ease-out;
+  -moz-transition             : 0.3s ease-out;
+  -o-transition               : 0.3s ease-out;
+  transition                  : 0.3s ease-out;
+  -webkit-backface-visibility : hidden;
+}
+
+.main-view {
+  position : relative;
+}
+
+.main-view > div.animate {
+  width    : 100%;
+  position : absolute;
+}
+
+.main-animation-enter-setup {
+  top     : -100px;
+  opacity : 0;
+}
+
+.main-animation-enter-setup.main-animation-enter-start {
+  top     : 0;
+  opacity : 1;
+}
+
+.main-animation-leave-setup {
+  opacity : 1;
+}
+
+.main-animation-leave-setup.main-animation-leave-start {
+  opacity : 0;
+}
+
+/*-- Start Page --*/
+
+.start-screen {
+  position : relative;
+}
+
+.start-screen .schedule-icon {
+  left     : 200px;
+  position : absolute;
+  top      : 160px;
+  width    : 96px;
+}
+
+.start-screen .schedule-icon > h4 {
+  font-size   : 17px;
+  font-weight : 200;
+  opacity     : 0.95;
+  text-align  : center;
+}
+
+.start-screen .schedule-form {
+  background-color : #ECEFF1;
+  border-radius    : 6px;
+  padding          : 24px 23px 20px;
+  position         : absolute;
+  left             : 330px;
+  top              : 158px;
+}
+
+.start-screen .schedule-form:before {
+  content           : "";
+  border-style      : solid;
+  border-width      : 12px 12px 12px 0;
+  border-color      : transparent #ECEFF1 transparent transparent;
+  height            : 0;
+  position          : absolute;
+  left              : -12px;
+  top               : 35px;
+  width             : 0;
+  transform         : rotate(360deg);
+  -webkit-transform : rotate(360deg);
+}
+
+.start-screen .schedule-form .control-group {
+  margin-bottom : 6px;
+  position      : relative;
+}
+
+.start-screen .sub-group {
+  margin-left : 14px;
+}
+
+.start-screen form {
+  margin : 0;
+}
+
+input.ng-dirty.ng-invalid {
+  border-color       : #e74c3c;
+  color              : #e74c3c;
+  -webkit-box-shadow : none;
+  -moz-box-shadow    : none;
+  box-shadow         : none;
+}
+
+/*-- Look View --*/
+
+.look-screen {
+  padding-top : 40px;
+}
+
+.look-screen .header-controls .search {
+  margin : 19px 0;
+  float  : right;
+}
+
+.look-screen .header-controls .pager {
+  float                 : left;
+  -webkit-touch-callout : none;
+  -webkit-user-select   : none;
+  -khtml-user-select    : none;
+  -moz-user-select      : none;
+  -ms-user-select       : none;
+  user-select           : none;
+}
+
+.look-screen .header-controls .btn-toolbar {
+  float      : left;
+  margin     : 20px 0;
+  width      : 503px;
+  text-align : center;
+}
+
+.look-screen .header-controls .pager .previous > a {
+  width      : 140px;
+  text-align : left;
+}
+
+.look-screen .header-controls .pager a {
+  cursor : pointer;
+}
+
+.look-screen .subjects-list {
+  width           : 100%;
+  margin          : 0;
+  list-style-type : none;
+  color           : #34495E;
+  background      : #BDC3C7;
+}
+
+.look-screen .subjects-list li:first-child {
+  margin-top : 0;
+}
+
+.look-screen .subjects-list li .noty {
+  vertical-align : middle;
+  font-size      : 17px;
+  position       : relative;
+}
+
+.look-screen .subjects-list li .noty .tooltip {
+  font                        : 14px/1.231 "Lato", sans-serif;
+  top                         : -22px;
+  left                        : 16px;
+  -webkit-transition          : 0.3s ease-out;
+  -moz-transition             : 0.3s ease-out;
+  -o-transition               : 0.3s ease-out;
+  transition                  : 0.3s ease-out;
+  -webkit-backface-visibility : hidden;
+  z-index                     : -1;
+}
+
+.look-screen .subjects-list li .noty .tooltip .tooltip-arrow {
+  top : 27px;
+}
+
+.look-screen .subjects-list li .noty:hover .tooltip {
+  opacity : 1;
+  filter  : alpha(opacity = 100);
+  zoom    : 1;
+  z-index : 8;
+}
+
+.look-screen .subjects-list li .noty .tooltip strong {
+  display : block;
+}
+
+.look-screen .subjects-list li {
+  background      : #FFFFFF;
+  background-size : 20px 20px;
+  margin-top      : 2px;
+  padding         : 18px 42px 17px 25px;
+}
+
+.look-screen .subjects-list li .time {
+  width     : 100px;
+  float     : left;
+  font-size : 36px;
+  padding   : 11px 22px 0 0;
+}
+
+.look-screen .subjects-list li .subject {
+  float : left;
+}
+
+.look-screen .subjects-list li .name {
+  color     : #34495E;
+  font-size : 17px;
+  margin    : 1px 0 3px;
+}
+
+.look-screen .subjects-list li .room {
+  color     : #34495E;
+  float     : right;
+  font-size : 36px;
+  padding   : 11px 0 0 22px;
+}
+
+.look-screen .subjects-list .empty {
+  text-align  : center;
+  font-weight : bold;
+  font-size   : 36px;
+}
+
+.look-screen .subjects-list .ng-match {
+  background : #F1C40F;
+}
+
+.look-screen .legend {
+  float : right;
+}
+
+.look-screen .legend .lsf {
+  font-size : 17px;
+}
