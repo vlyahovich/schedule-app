@@ -505,8 +505,8 @@ textarea,
 .pager li:first-child > a img, .pager li:first-child > span img {
   margin-left  : 0;
   margin-right : 13px;
-  margin-left  : 0     \9;
-  margin-right : 9px     \9;
+  margin-left  : 0          \9;
+  margin-right : 9px          \9;
 }
 
 .pager li.pager-center {
@@ -521,7 +521,7 @@ textarea,
 .pager li.previous img, .pager li.next img {
   height         : 14px;
   margin         : -1px 0 0 13px;
-  margin-left    : 9px     \9;
+  margin-left    : 9px          \9;
   vertical-align : middle;
 }
 
@@ -623,4 +623,108 @@ textarea,
 
 .btn-toolbar .btn.active {
   color : white;
+}
+
+.toggle {
+  background-color            : #34495e;
+  border-radius               : 60px;
+  color                       : white;
+  height                      : 29px;
+  margin                      : 0 12px 0 0;
+  overflow                    : hidden;
+  *zoom                       : 1;
+  display                     : inline-block;
+  zoom                        : 1;
+  *display                    : inline;
+  -webkit-transition          : 0.25s;
+  -moz-transition             : 0.25s;
+  -o-transition               : 0.25s;
+  transition                  : 0.25s;
+  -webkit-backface-visibility : hidden;
+}
+
+.toggle:before, .toggle:after {
+  display : table;
+  content : "";
+}
+
+.toggle:after {
+  clear : both;
+}
+
+.toggle.toggle-off {
+  background-color : #cbd2d8;
+}
+
+.toggle.toggle-off .toggle-radio {
+  background-image    : url("../img/icon-off.png");
+  background-position : 0 0;
+  color               : white;
+  left                : 0;
+  margin-left         : 0.5px;
+  margin-right        : -13px;
+  z-index             : 1;
+}
+
+.toggle.toggle-off .toggle-radio:first-child {
+  left : -120%;
+}
+
+.toggle .toggle-radio {
+  background                  : url("../img/icon-on.png") right top no-repeat;
+  color                       : #1abc9c;
+  display                     : block;
+  font-size                   : 22px;
+  height                      : 21px;
+  left                        : 120%;
+  margin-left                 : -13px;
+  padding                     : 5px 32px 3px;
+  position                    : relative;
+  text-align                  : center;
+  z-index                     : 2;
+  -webkit-transition          : 0.25s;
+  -moz-transition             : 0.25s;
+  -o-transition               : 0.25s;
+  transition                  : 0.25s;
+  -webkit-backface-visibility : hidden;
+}
+
+.toggle .toggle-radio:first-child {
+  margin-bottom : -29px;
+  left          : 0;
+}
+
+.toggle input {
+  display  : none;
+  position : absolute;
+  outline  : none !important;
+  display  : block\9;
+  opacity  : 0.01;
+  filter   : alpha(opacity = 1);
+  zoom     : 1;
+}
+
+.toggle.toggle-icon {
+  border-radius : 6px 7px 7px 6px;
+}
+
+.toggle.toggle-icon.toggle-off {
+  border-radius : 7px 6px 6px 7px;
+}
+
+.toggle.toggle-icon.toggle-off .toggle-radio {
+  background-image    : url("../img/block-off.png");
+  background-position : 0 0;
+}
+
+.toggle.toggle-icon .toggle-radio {
+  background-image    : url("../img/block-on.png");
+  background-position : 62px 0;
+  border-radius       : 6px;
+  min-width           : 27px;
+  text-align          : right;
+}
+
+.toggle.toggle-icon .toggle-radio:first-child {
+  text-align : left;
 }

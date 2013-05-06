@@ -127,3 +127,11 @@ App.controller('SettingsPageController',
     function ($scope) {
 
     });
+
+/**
+ * Settings page controller
+ */
+App.controller('SchedulePageController',
+    function ($scope) {
+
+    });

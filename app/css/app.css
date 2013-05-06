@@ -496,3 +496,50 @@ input.ng-dirty.ng-invalid {
 .look-screen .legend .lsf {
   font-size : 17px;
 }
+
+/*-- Settings view --*/
+
+.settings-screen {
+  padding-top : 20px;
+}
+
+.settings-screen .control-group > label {
+  display : inline-block;
+}
+
+/*-- Schedule view --*/
+
+.schedule-screen {
+  padding-top : 20px;
+}
+
+.schedule-screen .panel-header {
+  background            : #ECEFF1;
+  height                : 60px;
+  border-radius         : 6px 6px 0 0;
+  -moz-border-radius    : 6px 6px 0 0;
+  -webkit-border-radius : 6px 6px 0 0;
+}
+
+.schedule-screen .panel-body {
+  background            : #2C3E50;
+  border-radius         : 0 0 6px 6px;
+  -moz-border-radius    : 0 0 6px 6px;
+  -webkit-border-radius : 0 0 6px 6px;
+}
+
+.schedule-screen .panel-tabs {
+  width  : 20%;
+  height : 10px;
+  float  : left;
+}
+
+.schedule-screen .panel-tabs-view {
+  width                 : 80%;
+  float                 : left;
+  height                : 500px;
+  background            : #34495E;
+  border-radius         : 0 0 6px 0;
+  -moz-border-radius    : 0 0 6px 0;
+  -webkit-border-radius : 0 0 6px 0;
+}

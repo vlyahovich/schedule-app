@@ -51,7 +51,7 @@ angular.module('scheduleApp.directives', []).
           closeMenu = angular.noop;
 
       return {
-        restrict: 'A',
+        restrict: 'C',
         link    : function (scope, element) {
           scope.$watch('$location.path', function () {
             closeMenu();
@@ -149,6 +149,16 @@ angular.module('scheduleApp.directives', []).
           });
         },
         template: '<div class="toast" ng-repeat="toast in toasts" animate-toast>{{toast.message}}</div>'
+      }
+    }]).
+    directive('toggle', [function () {
+      return {
+        restrict: 'C',
+        link    : function (scope, element, attributes) {
+          element.bind('click', function () {
+            element.toggleClass('toggle-off');
+          });
+        }
       }
     }]).
 /**
