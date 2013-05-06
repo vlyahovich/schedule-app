@@ -1,1 +1,0 @@
-system 'bundle exec middleman build'
