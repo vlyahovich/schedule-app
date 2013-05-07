@@ -11,6 +11,8 @@ angular.module('scheduleApp.services', []).
       scheduleList: App.host + '/rest/bsu/mmf/schedule/student'
     }).
     value('strings', {
+      data               : 'Данные',
+      schedule           : 'Расписание',
       appName            : 'Расписание',
       toHome             : 'На главную',
       enter              : 'Войти',

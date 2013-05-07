@@ -507,39 +507,107 @@ input.ng-dirty.ng-invalid {
   display : inline-block;
 }
 
-/*-- Schedule view --*/
+/*-- Manage view --*/
 
-.schedule-screen {
-  padding-top : 20px;
+.manage-screen .tabs.vertical .nav-tabs {
+  border                : none;
+  float                 : left;
+  color                 : #6285A8;
+  background            : #2C3E50;
+  margin                : 0;
+  border-radius         : 6px;
+  -moz-border-radius    : 6px;
+  -webkit-border-radius : 6px;
 }
 
-.schedule-screen .panel-header {
-  background            : #ECEFF1;
-  height                : 60px;
+.manage-screen .tabs.vertical .nav-tabs li {
+  background                  : #34495E;
+  margin                      : 2px 0 0;
+  float                       : none;
+  cursor                      : pointer;
+  padding                     : 18px 42px 17px 25px;
+  position                    : relative;
+  -webkit-transition          : 0.25s;
+  -moz-transition             : 0.25s;
+  -o-transition               : 0.25s;
+  transition                  : 0.25s;
+  -webkit-backface-visibility : hidden;
+}
+
+.manage-screen .tabs.vertical .nav-tabs li:first-child {
   border-radius         : 6px 6px 0 0;
   -moz-border-radius    : 6px 6px 0 0;
   -webkit-border-radius : 6px 6px 0 0;
 }
 
-.schedule-screen .panel-body {
-  background            : #2C3E50;
+.manage-screen .tabs.vertical .nav-tabs li:last-child {
   border-radius         : 0 0 6px 6px;
   -moz-border-radius    : 0 0 6px 6px;
   -webkit-border-radius : 0 0 6px 6px;
 }
 
-.schedule-screen .panel-tabs {
-  width  : 20%;
-  height : 10px;
-  float  : left;
+.manage-screen .tabs.vertical .nav-tabs li.active {
+  background : #2C3E50;
 }
 
-.schedule-screen .panel-tabs-view {
-  width                 : 80%;
-  float                 : left;
-  height                : 500px;
-  background            : #34495E;
-  border-radius         : 0 0 6px 0;
-  -moz-border-radius    : 0 0 6px 0;
-  -webkit-border-radius : 0 0 6px 0;
+.manage-screen .tabs.vertical .nav-tabs li.active span {
+  color : #1ABC9C;
+}
+
+.manage-screen .tabs.vertical .nav-tabs span {
+  vertical-align : middle;
+}
+
+.manage-screen .tabs.vertical .nav-tabs .pane-icon {
+  width     : 24px;
+  font-size : 32px;
+  padding   : 0 22px 0 0;
+  display   : inline-block;
+}
+
+.manage-screen .tabs.vertical .nav-tabs .pane-title {
+  color     : #FFFFFF;
+  font-size : 18px;
+}
+
+.manage-screen .tabs.vertical .tab-content {
+  padding-left : 10px;
+}
+
+.manage-screen .tab-pane {
+  display                     : block;
+  opacity                     : 0;
+  height                      : 0;
+  overflow                    : hidden;
+  -webkit-transition          : opacity 0.25s;
+  -moz-transition             : opacity 0.25s;
+  -o-transition               : opacity 0.25s;
+  transition                  : opacity 0.25s;
+  -webkit-backface-visibility : hidden;
+}
+
+.manage-screen .tab-pane.active {
+  padding    : 20px;
+  opacity    : 1;
+  height     : auto;
+}
+
+.manage-screen .tabs.vertical {
+  background            : #ECF0F5;
+  border-radius         : 6px;
+  -moz-border-radius    : 6px;
+  -webkit-border-radius : 6px;
+}
+
+.manage-screen .table .action {
+  font-size       : 18px;
+  text-decoration : none;
+  margin-right    : 8px;
+  cursor          : pointer;
+}
+
+/*-- Schedule view --*/
+
+.schedule-screen {
+  padding-top : 20px;
 }

@@ -22,6 +22,9 @@ App.controller('HeaderController',
       $scope.goSettings = function () {
         $location.path('/settings');
       };
+      $scope.goManage = function () {
+        $location.path('/manage');
+      };
       $scope.goSchedule = function () {
         $location.path('/schedule');
       };
@@ -127,6 +130,40 @@ App.controller('SettingsPageController',
     function ($scope) {
 
     });
+
+/**
+ * Data page controller
+ */
+App.controller('ManagePageController',
+    function ($scope) {
+      $scope.$on('pane:selected', function (event, category) {
+        console.log(category);
+      });
+    });
+
+/**
+ * Manage users partial controller
+ */
+App.controller('UsersManageController',
+    function ($scope) {
+      $scope.addUser = function () {
+        console.log('Add user request');
+        /*$scope.$broadcast('users:request-start');
+         $timeout(function () {
+         $scope.$broadcast('users:request-start');
+         }, 1000);*/
+      };
+      $scope.editUser = function (user) {
+        console.log(user);
+      };
+      $scope.viewUser = function (user) {
+        console.log(user);
+      };
+      $scope.eraseUser = function (user) {
+        console.log(user);
+      };
+    });
+
 
 /**
  * Settings page controller

@@ -1,0 +1,70 @@
+<div class="manage-screen animate">
+  <h1>Управление данными</h1>
+
+  <div class="clearfix vertical" tabs>
+    <div pane name="Пользователи" icon="user" category="user">
+      <div ng-controller="UsersManageController" spin-on="{on: 'users:request-start', off: 'users:request-end'}">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Имя</th>
+              <th>Фамилия</th>
+              <th>Логин</th>
+              <th width="70"><a class="action lsf" title="добавить" ng-click="addUser()">plus</a></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="user in users">
+              <td>{{$index + 1}}</td>
+              <td>{{user.name}}</td>
+              <td>{{user.surname}}</td>
+              <td>{{user.login}}</td>
+              <td>
+                <a class="action lsf" title="редактировать" ng-click="editUser(user)">edit</a>
+                <a class="action lsf" title="просмотреть" ng-click="viewUser(user)">view</a>
+                <a class="action lsf" title="удалить" ng-click="eraseUser(user)">eraser</a>
+              </td>
+            </tr>
+            <tr ng-show="!users || !users.length">
+              <td colspan="5" style="text-align: center">Нет данных</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div pane name="Студенты" icon="users" category="student">
+      Студенты
+    </div>
+    <div pane name="Преподователи" icon="star" category="lecturer">
+      Преподователи
+    </div>
+    <div pane name="Кафедры" icon="building" category="department">
+      Кафедры
+    </div>
+    <div pane name="Специальности" icon="addstar" category="speciality">
+      Специальности
+    </div>
+    <div pane name="Группы" icon="group" category="group">
+      Группы
+    </div>
+    <div pane name="Учебные дисциплины" icon="memo" category="discipline">
+      Учебные дисциплины
+    </div>
+    <div pane name="Типы учебных дисциплин" icon="bookmark" category="disciplineType">
+      Типы учебных дисциплин
+    </div>
+    <div pane name="Учебные программы" icon="drawer" category="curriculum">
+      Учебные программы
+    </div>
+    <div pane name="Аудитории" icon="photo" category="classroom">
+      Аудитории
+    </div>
+    <div pane name="Время занятий" icon="time" category="time">
+      Время занятий
+    </div>
+    <div pane name="Занятия" icon="bell" category="study">
+      Занятия
+    </div>
+  </div>
+</div>
