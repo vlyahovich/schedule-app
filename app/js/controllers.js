@@ -137,7 +137,7 @@ App.controller('SettingsPageController',
 App.controller('ManagePageController',
     function ($scope) {
       $scope.$on('pane:selected', function (event, category) {
-        console.log(category);
+        //console.log(category);
       });
     });
 

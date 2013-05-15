@@ -133,6 +133,16 @@ angular.module('scheduleApp.directives', []).
         }
       };
     }]).
+    directive('animateView', ['$timeout', function ($timeout) {
+      return {
+        restrict: 'A',
+        link    : function ($scope, element) {
+          $timeout(function () {
+            element.addClass('main-animation-enter-start');
+          }, 20, false);
+        }
+      };
+    }]).
     directive('toast', ['$compile', '$timeout', function ($compile, $timeout) {
       return {
         restrict: 'A',
@@ -166,7 +176,7 @@ angular.module('scheduleApp.directives', []).
         restrict  : 'A',
         transclude: true,
         scope     : {},
-        controller: function ($scope, $element) {
+        controller: function ($scope) {
           var panes = $scope.panes = [];
 
           $scope.select = function (pane) {
@@ -184,14 +194,13 @@ angular.module('scheduleApp.directives', []).
             panes.push(pane);
           }
         },
-        template  :
-            '<div class="tabs">' +
-              '<ul class="nav nav-tabs">' +
-                '<li ng-repeat="pane in panes" ng-class="{active:pane.selected}" ng-click="select(pane)">' +
-                  '<span class="pane-icon lsf">{{pane.icon}}</span><span class="pane-title">{{pane.name}}</span>' +
-                '</li>' +
-              '</ul>' +
-              '<div class="tab-content" ng-transclude></div>' +
+        template  : '<div class="tabs">' +
+            '<ul class="nav nav-tabs">' +
+            '<li ng-repeat="pane in panes" ng-class="{active:pane.selected}" ng-click="select(pane)">' +
+            '<span class="pane-icon lsf">{{pane.icon}}</span><span class="pane-title">{{pane.name}}</span>' +
+            '</li>' +
+            '</ul>' +
+            '<div class="tab-content" ng-transclude></div>' +
             '</div>',
         replace   : true
       };
