@@ -146,18 +146,23 @@ App.controller('ManagePageController',
  */
 App.controller('UsersManageController',
     function ($scope) {
+      $scope.mode = 'listMode';
+
       $scope.addUser = function () {
         console.log('Add user request');
         /*$scope.$broadcast('users:request-start');
          $timeout(function () {
          $scope.$broadcast('users:request-start');
          }, 1000);*/
+        $scope.mode = 'addMode';
       };
       $scope.editUser = function (user) {
         console.log(user);
+        $scope.mode = 'editMode';
       };
       $scope.viewUser = function (user) {
         console.log(user);
+        $scope.mode = 'viewMode';
       };
       $scope.eraseUser = function (user) {
         console.log(user);
@@ -170,5 +175,48 @@ App.controller('UsersManageController',
  */
 App.controller('SchedulePageController',
     function ($scope) {
+      $scope.classrooms = [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113];
+      $scope.range = {min: 100, max: 109};
+      $scope.rangeStep = 9;
+      $scope.hours = ['8.15', '9.45', '10.00', '10.30', '10.45', '12.15', '12.30', '14.00', '14.15', '15.45', '16.00'];
 
+      $scope.updateRooms = function () {
+        $scope.currentRooms = _.filter($scope.classrooms, function (room) {
+          return room >= $scope.range.min && room <= $scope.range.max;
+        });
+      };
+      $scope.updateRooms();
+
+      $scope.previousRange = function () {
+        if ($scope.range.min - $scope.rangeStep >= $scope.classrooms[0]) {
+          $scope.range.min -= $scope.rangeStep;
+          $scope.range.max -= $scope.rangeStep;
+          $scope.updateRooms();
+        } else {
+          var diff = Math.abs($scope.classrooms[0] - $scope.range.min);
+
+          if (diff > 0) {
+            $scope.range.min -= diff;
+            $scope.range.max -= diff;
+            $scope.updateRooms();
+          }
+        }
+      };
+      $scope.nextRange = function () {
+        var last = $scope.classrooms[$scope.classrooms.length - 1];
+
+        if ($scope.range.max + $scope.rangeStep <= last) {
+          $scope.range.min += $scope.rangeStep;
+          $scope.range.max += $scope.rangeStep;
+          $scope.updateRooms();
+        } else {
+          var diff = Math.abs(last - $scope.range.max);
+
+          if (diff > 0) {
+            $scope.range.min += diff;
+            $scope.range.max += diff;
+            $scope.updateRooms();
+          }
+        }
+      };
     });

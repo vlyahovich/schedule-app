@@ -4,7 +4,7 @@
   <div class="clearfix vertical" tabs>
     <div pane name="Пользователи" icon="user" category="user">
       <div ng-controller="UsersManageController" spin-on="{on: 'users:request-start', off: 'users:request-end'}">
-        <table class="table">
+        <table class="table" ng-show="mode == 'listMode'">
           <thead>
             <tr>
               <th>#</th>
@@ -31,6 +31,11 @@
             </tr>
           </tbody>
         </table>
+        <form name="addForm" ng-submit="createUser()" ng-show="mode == 'addMode'">
+          <h3>Добавить пользователя</h3>
+          <input type="text" class="login-field">
+          <input type="submit" class="btn btn-large btn-block btn-danger" value="Отмена" ng-click="mode = 'listMode'">
+        </form>
       </div>
     </div>
     <div pane name="Студенты" icon="users" category="student">

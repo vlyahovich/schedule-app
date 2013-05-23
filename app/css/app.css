@@ -1,3 +1,4 @@
+@import "jquery-ui-1.9.2.custom.min.css";
 @import "bootstrap.css";
 @import "flat-ui.css";
 
@@ -587,9 +588,9 @@ input.ng-dirty.ng-invalid {
 }
 
 .manage-screen .tab-pane.active {
-  padding    : 20px;
-  opacity    : 1;
-  height     : auto;
+  padding : 20px;
+  opacity : 1;
+  height  : auto;
 }
 
 .manage-screen .tabs.vertical {
@@ -610,4 +611,69 @@ input.ng-dirty.ng-invalid {
 
 .schedule-screen {
   padding-top : 20px;
+}
+
+.schedule-screen .scheduler-container {
+  position : relative;
+}
+
+.schedule-screen .scheduler {
+  width : 100%;
+}
+
+/*.schedule-screen .scheduler td {
+  padding : 6px 0;
+}*/
+
+.schedule-screen .scheduler .hours {
+  text-align    : right;
+  padding-right : 8px;
+}
+
+.schedule-screen .scheduler .table-row .hours.first {
+  width : 71px;
+}
+
+.schedule-screen .scheduler .table-row.thead .first {
+  -webkit-border-top-left-radius : 4px;
+  border-top-left-radius         : 4px;
+  -moz-border-radius-topleft     : 4px;
+}
+
+.schedule-screen .scheduler .table-row > div {
+  border-left : 1px solid #dddddd;
+  border-top  : 1px solid #dddddd;
+}
+
+.schedule-screen .scheduler .table-row.thead > div {
+  border-top : none;
+}
+
+.schedule-screen .scheduler .dotted > div {
+  border-top-style : dotted;
+}
+
+.schedule-screen .scheduler .table-row > div {
+  width  : 85px;
+  height : 35px;
+  float  : left;
+}
+
+.schedule-screen .scheduler .table-row .first {
+  width : 79px;
+}
+
+.schedule-screen .draggable-cell {
+  width            : 86px;
+  height           : 34px;
+  background-color : #1abc9c;
+  border-bottom    : 2px solid #16a085;
+}
+
+.schedule-screen .scheduler-handle {
+  position : absolute;
+  left     : 80px;
+  right    : 0;
+  bottom   : 0;
+  top      : 36px;
 }

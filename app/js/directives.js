@@ -244,7 +244,7 @@ angular.module('scheduleApp.directives', []).
         }
       };
     }).
-    directive('ngvInteger', function () {
+    directive('ngvInteger',function () {
       return {
         require: 'ngModel',
         link   : function (scope, element, attributes, controller) {
@@ -257,6 +257,51 @@ angular.module('scheduleApp.directives', []).
               return undefined;
             }
           });
+        }
+      };
+    }).
+/**
+ * Scheduler directives
+ */
+    directive('schedulerHandle',function ($compile) {
+      return {
+        restrict: 'A',
+        scope   : {},
+        link    : function (scope, element, attributes) {
+          element.bind('click', function (event) {
+            var tpl = '<div class="draggable-cell" ' +
+                'scheduler-draggable="{x:' + event.offsetX + ', y:' + event.offsetY + '}">' +
+                '</div>';
+
+            element.append($compile(tpl)(scope));
+          });
+        }
+      };
+    }).
+    directive('schedulerDraggable', function () {
+      var gridSize = [86, 36];
+
+      return {
+        restrict: 'A',
+        link    : function (scope, element, attributes) {
+          var position = scope.$eval(attributes.schedulerDraggable);
+
+          element.css({
+            position: 'absolute',
+            top     : gridSize[1] * Math.floor(position.y / gridSize[1]),
+            left    : gridSize[0] * Math.floor(position.x / gridSize[0])
+          });
+          element.bind('click', function (event) {
+            event.stopPropagation();
+          });
+          element.draggable({
+            containment: '.scheduler-handle',
+            grid       : gridSize
+          }).resizable({
+                containment: '.scheduler-handle',
+                grid       : gridSize,
+                handles    : 's, n'
+              });
         }
       };
     });

@@ -1,7 +1,7 @@
 'use strict';
 
 /* Services */
-App.host = 'http://192.168.1.90:8080';
+App.host = 'http://192.168.1.90:8090';
 
 // Demonstrate how to register services
 // In this case it is a simple value service.

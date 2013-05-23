@@ -1,3 +1,30 @@
 <div class="schedule-screen animate main-animation-enter-setup" animate-view>
   <h1>Составление расписания</h1>
+
+  <ul class="pager">
+    <li class="previous" ng-click="previousRange()">
+      <a>
+        <img src="img/previous.png">
+        {{range.min}}-{{range.max}}
+      </a>
+    </li>
+    <li class="next" ng-click="nextRange()">
+      <a>
+        <img src="img/next.png">
+      </a>
+    </li>
+  </ul>
+  <div class="scheduler-container">
+    <div class="scheduler table table-bordered">
+      <div class="table-row thead clearfix">
+        <div class="first"></div>
+        <div ng-repeat="room in currentRooms">{{room}}</div>
+      </div>
+      <div class="table-row clearfix" ng-repeat="hour in hours" ng-class="{dotted: $index % 2 == 1 }">
+        <div class="first hours">{{hour}}</div>
+        <div ng-repeat="room in currentRooms"></div>
+      </div>
+    </div>
+    <div class="scheduler-handle" scheduler-handle></div>
+  </div>
 </div>
