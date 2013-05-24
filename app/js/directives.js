@@ -263,45 +263,134 @@ angular.module('scheduleApp.directives', []).
 /**
  * Scheduler directives
  */
-    directive('schedulerHandle',function ($compile) {
+    directive('schedulerHandle',function ($compile, gridSettings) {
       return {
         restrict: 'A',
-        scope   : {},
         link    : function (scope, element, attributes) {
-          element.bind('click', function (event) {
+          element.parent().bind('click', function (event) {
             var tpl = '<div class="draggable-cell" ' +
-                'scheduler-draggable="{x:' + event.offsetX + ', y:' + event.offsetY + '}">' +
+                'scheduler-draggable="{x:' + (event.offsetX - element.position().left) +
+                ', y:' + event.offsetY + '}">' +
                 '</div>';
 
             element.append($compile(tpl)(scope));
           });
+          scope.$on('schedule:update-range-back', function ($scope, step) {
+            element.css({
+              left: element.position().left + gridSettings.gridSize.width * step
+            });
+          });
+          scope.$on('schedule:update-range-forward', function ($scope, step) {
+            element.css({
+              left: element.position().left - gridSettings.gridSize.width * step
+            });
+          });
+
+          scope.draggables = [];
+          scope.pushDraggable = function (element) {
+            scope.draggables.push(element);
+          };
+          scope.removeDraggable = function (element) {
+            // TODO: add possibility to remove
+          };
+          scope.isSafeDrop = function (element, room, hour, hourEnd) {
+            var candidates = _.filter(scope.draggables, function (draggable) {
+              return draggable.room == room && draggable !== element;
+            });
+
+            if (candidates.length) {
+              candidates = _.filter(candidates, function (candidate) {
+                var hourNumber = parseFloat(hour),
+                    hourNumberEnd = parseFloat(hourEnd),
+                    candidateHourNumber = parseFloat(candidate.hour),
+                    candidateHourEndNumber = parseFloat(candidate.hourEnd);
+
+                if (hourNumber < candidateHourNumber && hourNumberEnd <= candidateHourNumber) {
+                  return false;
+                } else {
+                  return !(hourNumber >= candidateHourEndNumber);
+                }
+              });
+
+              if (candidates.length) {
+                return false;
+              }
+            }
+            return true;
+          };
         }
       };
     }).
-    directive('schedulerDraggable', function () {
-      var gridSize = [86, 36];
-
+    directive('schedulerDraggable', function (gridSettings) {
       return {
         restrict: 'A',
         link    : function (scope, element, attributes) {
-          var position = scope.$eval(attributes.schedulerDraggable);
+          var position = scope.$eval(attributes.schedulerDraggable),
+              top = gridSettings.gridSize.height * Math.floor(position.y / gridSettings.gridSize.height),
+              left = gridSettings.gridSize.width * Math.floor(position.x / gridSettings.gridSize.width),
+              room = scope.getRoomByPosition(left).room,
+              hour = scope.getHourByPosition(top).hour,
+              hourEnd = scope.getHourByPosition(top + gridSettings.gridSize.height).hour,
+              cells = 1;
 
           element.css({
             position: 'absolute',
-            top     : gridSize[1] * Math.floor(position.y / gridSize[1]),
-            left    : gridSize[0] * Math.floor(position.x / gridSize[0])
+            top     : top,
+            left    : left
           });
+          element.room = room;
+          element.hour = hour;
+          element.hourEnd = hourEnd;
+          element.cells = cells;
           element.bind('click', function (event) {
             event.stopPropagation();
           });
           element.draggable({
-            containment: '.scheduler-handle',
-            grid       : gridSize
+            containment: gridSettings.containment,
+            grid       : [gridSettings.gridSize.width, gridSettings.gridSize.height],
+            stop       : function (event, ui) {
+              var cRoom = scope.getRoomByPosition(ui.position.left).room,
+                  cHour = scope.getHourByPosition(ui.position.top).hour,
+                  cHourEnd = scope.getHourByPosition(ui.position.top + (gridSettings.gridSize.height * cells)).hour;
+
+              if (scope.isSafeDrop(element, cRoom, cHour, cHourEnd)) {
+                room = cRoom;
+                hour = cHour;
+                hourEnd = cHourEnd;
+                element.room = cRoom;
+                element.hour = cHour;
+                element.hourEnd = cHourEnd;
+                left = ui.position.left;
+                top = ui.position.top;
+              } else {
+                ui.helper.css({
+                  left: left,
+                  top : top
+                });
+              }
+            }
           }).resizable({
-                containment: '.scheduler-handle',
-                grid       : gridSize,
-                handles    : 's, n'
+                containment: gridSettings.containment,
+                grid       : [gridSettings.gridSize.width, gridSettings.gridSize.height],
+                handles    : gridSettings.handles,
+                stop       : function (event, ui) {
+                  var cCells = Math.floor(ui.element.height() / gridSettings.gridSize.height),
+                      cHourEnd = scope.getHourByPosition(ui.position.top + (gridSettings.gridSize.height * cCells)).hour;
+
+                  if (scope.isSafeDrop(element, room, hour, cHourEnd)) {
+                    cells = cCells;
+                    hourEnd = cHourEnd;
+                    element.cells = cCells;
+                    element.hourEnd = cHourEnd;
+                  } else {
+                    ui.helper.css({
+                      height: gridSettings.gridSize.height * cells
+                    });
+                  }
+                }
               });
+
+          scope.pushDraggable(element);
         }
       };
     });

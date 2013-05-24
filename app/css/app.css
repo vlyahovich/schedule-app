@@ -621,10 +621,6 @@ input.ng-dirty.ng-invalid {
   width : 100%;
 }
 
-/*.schedule-screen .scheduler td {
-  padding : 6px 0;
-}*/
-
 .schedule-screen .scheduler .hours {
   text-align    : right;
   padding-right : 8px;
@@ -647,6 +643,9 @@ input.ng-dirty.ng-invalid {
 
 .schedule-screen .scheduler .table-row.thead > div {
   border-top : none;
+  text-align : center;
+  padding-top: 10px;
+  height: 25px;
 }
 
 .schedule-screen .scheduler .dotted > div {
@@ -654,9 +653,9 @@ input.ng-dirty.ng-invalid {
 }
 
 .schedule-screen .scheduler .table-row > div {
-  width  : 85px;
-  height : 35px;
-  float  : left;
+  width      : 85px;
+  height     : 35px;
+  float      : left;
 }
 
 .schedule-screen .scheduler .table-row .first {
@@ -664,16 +663,33 @@ input.ng-dirty.ng-invalid {
 }
 
 .schedule-screen .draggable-cell {
-  width            : 86px;
-  height           : 34px;
-  background-color : #1abc9c;
-  border-bottom    : 2px solid #16a085;
+  width                       : 86px !important;
+  height                      : 36px;
+  min-height                  : 36px;
+  background-color            : #1abc9c;
+  z-index                     : 10;
+  -webkit-transition          : 0.1s ease-out;
+  -moz-transition             : 0.1s ease-out;
+  -o-transition               : 0.1s ease-out;
+  transition                  : 0.1s ease-out;
+  -webkit-backface-visibility : hidden;
 }
 
-.schedule-screen .scheduler-handle {
+.schedule-screen .draggable-cell.ui-draggable-dragging,
+.schedule-screen .draggable-cell.ui-resizable-resizing {
+  background : #34495E;
+  z-index    : 15;
+}
+
+.schedule-screen .scheduler-handle-wrap {
   position : absolute;
   left     : 80px;
   right    : 0;
   bottom   : 0;
   top      : 36px;
+  overflow : hidden;
+}
+
+.schedule-screen .scheduler-handle {
+  position : absolute;
 }

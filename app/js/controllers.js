@@ -174,11 +174,28 @@ App.controller('UsersManageController',
  * Settings page controller
  */
 App.controller('SchedulePageController',
-    function ($scope) {
+    function ($scope, gridSettings) {
       $scope.classrooms = [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113];
       $scope.range = {min: 100, max: 109};
       $scope.rangeStep = 9;
       $scope.hours = ['8.15', '9.45', '10.00', '10.30', '10.45', '12.15', '12.30', '14.00', '14.15', '15.45', '16.00'];
+
+      $scope.classroomsPositions = _.map($scope.classrooms, function (value, index) {
+        return {room: value, position: gridSettings.gridSize.width * index};
+      });
+      $scope.getRoomByPosition = function (position) {
+        return _.find($scope.classroomsPositions, function (room) {
+          return room.position == position;
+        });
+      };
+      $scope.hoursPositions = _.map($scope.hours, function (value, index) {
+        return {hour: value, position: gridSettings.gridSize.height * index};
+      });
+      $scope.getHourByPosition = function (position) {
+        return _.find($scope.hoursPositions, function (hour) {
+          return hour.position == position;
+        });
+      };
 
       $scope.updateRooms = function () {
         $scope.currentRooms = _.filter($scope.classrooms, function (room) {
@@ -192,6 +209,7 @@ App.controller('SchedulePageController',
           $scope.range.min -= $scope.rangeStep;
           $scope.range.max -= $scope.rangeStep;
           $scope.updateRooms();
+          $scope.$broadcast('schedule:update-range-back', $scope.rangeStep);
         } else {
           var diff = Math.abs($scope.classrooms[0] - $scope.range.min);
 
@@ -199,6 +217,7 @@ App.controller('SchedulePageController',
             $scope.range.min -= diff;
             $scope.range.max -= diff;
             $scope.updateRooms();
+            $scope.$broadcast('schedule:update-range-back', diff);
           }
         }
       };
@@ -209,6 +228,7 @@ App.controller('SchedulePageController',
           $scope.range.min += $scope.rangeStep;
           $scope.range.max += $scope.rangeStep;
           $scope.updateRooms();
+          $scope.$broadcast('schedule:update-range-forward', $scope.rangeStep);
         } else {
           var diff = Math.abs(last - $scope.range.max);
 
@@ -216,6 +236,7 @@ App.controller('SchedulePageController',
             $scope.range.min += diff;
             $scope.range.max += diff;
             $scope.updateRooms();
+            $scope.$broadcast('schedule:update-range-forward', diff);
           }
         }
       };

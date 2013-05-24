@@ -33,6 +33,11 @@ angular.module('scheduleApp.services', []).
       noData             : 'Нет данных',
       noDataFound        : 'Ничего не найдено'
     }).
+    value('gridSettings', {
+      containment: '.scheduler-handle-wrap',
+      handles    : 's, n',
+      gridSize   : {width: 86, height: 36}
+    }).
     factory('Spinner',function () {
       var spinner = new Spinner();
 
