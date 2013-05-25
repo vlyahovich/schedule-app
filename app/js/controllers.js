@@ -191,7 +191,11 @@ App.controller('SchedulePageController',
       $scope.hoursPositions = _.map($scope.hours, function (value, index) {
         return {hour: value, position: gridSettings.gridSize.height * index};
       });
+      $scope.lowestHour = $scope.hoursPositions[$scope.hoursPositions.length - 1];
       $scope.getHourByPosition = function (position) {
+        if (position > $scope.lowestHour.position) {
+          position = $scope.lowestHour.position;
+        }
         return _.find($scope.hoursPositions, function (hour) {
           return hour.position == position;
         });

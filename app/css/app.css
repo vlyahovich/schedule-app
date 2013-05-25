@@ -611,6 +611,7 @@ input.ng-dirty.ng-invalid {
 
 .schedule-screen {
   padding-top : 20px;
+  overflow    : hidden;
 }
 
 .schedule-screen .scheduler-container {
@@ -618,16 +619,20 @@ input.ng-dirty.ng-invalid {
 }
 
 .schedule-screen .scheduler {
-  width : 100%;
+  width      : 100%;
+  box-sizing : border-box;
 }
 
 .schedule-screen .scheduler .hours {
   text-align    : right;
   padding-right : 8px;
+  z-index       : 100;
+  position      : relative;
+  background    : #FFF;
 }
 
 .schedule-screen .scheduler .table-row .hours.first {
-  width : 71px;
+  width : 70px;
 }
 
 .schedule-screen .scheduler .table-row.thead .first {
@@ -642,10 +647,10 @@ input.ng-dirty.ng-invalid {
 }
 
 .schedule-screen .scheduler .table-row.thead > div {
-  border-top : none;
-  text-align : center;
-  padding-top: 10px;
-  height: 25px;
+  border-top  : none;
+  text-align  : center;
+  padding-top : 10px;
+  height      : 25px;
 }
 
 .schedule-screen .scheduler .dotted > div {
@@ -653,13 +658,13 @@ input.ng-dirty.ng-invalid {
 }
 
 .schedule-screen .scheduler .table-row > div {
-  width      : 85px;
-  height     : 35px;
-  float      : left;
+  width  : 85px;
+  height : 35px;
+  float  : left;
 }
 
 .schedule-screen .scheduler .table-row .first {
-  width : 79px;
+  width : 78px;
 }
 
 .schedule-screen .draggable-cell {
@@ -675,6 +680,100 @@ input.ng-dirty.ng-invalid {
   -webkit-backface-visibility : hidden;
 }
 
+.schedule-screen .draggable-cell-popup {
+  width                       : 172px;
+  height                      : 0;
+  background-color            : #2C3E50;
+  position                    : absolute;
+  -webkit-border-radius       : 6px;
+  -moz-border-radius          : 6px;
+  border-radius               : 6px;
+  top                         : -114px;
+  left                        : -48px;
+  opacity                     : 0;
+  -webkit-transition          : 0.25s;
+  -moz-transition             : 0.25s;
+  -o-transition               : 0.25s;
+  transition                  : 0.25s;
+  -webkit-backface-visibility : hidden;
+}
+
+.schedule-screen .draggable-cell-popup.show {
+  height  : 172px;
+  top     : -174px;
+  opacity : 1;
+  z-index : 10;
+}
+
+.schedule-screen .draggable-cell-popup:before {
+  content           : "";
+  border-style      : solid;
+  border-width      : 0 9px 9px 9px;
+  border-color      : transparent transparent #2C3E50 transparent;
+  height            : 0;
+  position          : absolute;
+  left              : 50%;
+  bottom            : -9px;
+  width             : 0;
+  -webkit-transform : rotate(180deg);
+  transform         : rotate(180deg);
+}
+
+.schedule-screen .draggable-cell-popup .close {
+  color           : #BDC3C7;
+  text-shadow     : none;
+  text-decoration : none;
+  font-size       : 30px;
+  right           : 5px;
+  top             : 5px;
+  position        : absolute;
+  opacity         : 0.5;
+  filter          : alpha(opacity = 50);
+}
+
+.schedule-screen .draggable-cell-popup .close:hover {
+  opacity : 1;
+  filter  : alpha(opacity = 100);
+}
+
+.schedule-screen .draggable-cell-popup form {
+  padding  : 5px;
+  position : absolute;
+  top      : 34px;
+  bottom   : 0;
+  margin   : 0;
+  overflow : hidden;
+}
+
+.schedule-screen .draggable-cell-popup select {
+  width     : 162px;
+  font-size : 12px;
+  padding   : 3px;
+  height    : 24px;
+  display   : none;
+}
+
+.schedule-screen .draggable-cell-popup.show select {
+  display : block;
+}
+
+.schedule-screen .draggable-cell-popup h4 {
+  color   : #FFFFFF;
+  padding : 0 5px;
+}
+
+.schedule-screen .draggable-cell-popup .line-group select {
+  width : 78px;
+}
+
+.schedule-screen .draggable-cell-popup .line-group select:first-child {
+  float : left;
+}
+
+.schedule-screen .draggable-cell-popup .line-group select:last-child {
+  float : right;
+}
+
 .schedule-screen .draggable-cell.ui-draggable-dragging,
 .schedule-screen .draggable-cell.ui-resizable-resizing {
   background : #34495E;
@@ -687,7 +786,7 @@ input.ng-dirty.ng-invalid {
   right    : 0;
   bottom   : 0;
   top      : 36px;
-  overflow : hidden;
+  z-index  : 110;
 }
 
 .schedule-screen .scheduler-handle {

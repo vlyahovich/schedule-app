@@ -106,7 +106,7 @@ angular.module('scheduleApp.services', []).
             method : 'GET',
             url    : rest.scheduleList,
             headers: {
-              'Authorization': 'Basic dXNlcjp1c2Vy'
+              'Authorization': 'Basic eWFzdmVka286eWFzdmVka28='
             },
             params : {
               course  : data.course,
