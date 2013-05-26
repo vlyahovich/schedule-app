@@ -3,7 +3,8 @@
 
   <div class="clearfix vertical" tabs>
     <div pane name="Пользователи" icon="user" category="user">
-      <div ng-controller="UsersManageController" spin-on="{on: 'users:request-start', off: 'users:request-end'}">
+      <div ng-controller="UsersManageController" spin-on="{on: 'users:request-start', off: 'users:request-end'}"
+           class="overflow-pane">
         <table class="table" ng-show="mode == 'listMode'">
           <thead>
             <tr>
@@ -11,7 +12,10 @@
               <th>Имя</th>
               <th>Фамилия</th>
               <th>Логин</th>
-              <th width="70"><a class="action lsf" title="добавить" ng-click="addUser()">plus</a></th>
+              <th width="70">
+                <a class="action lsf" title="добавить" ng-click="addUser()">plus</a>
+                <a class="action lsf" title="синхронизировать" ng-click="sync()">sync</a>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -31,21 +35,349 @@
             </tr>
           </tbody>
         </table>
-        <form name="addForm" ng-submit="createUser()" ng-show="mode == 'addMode'">
+        <form name="addForm" class="manage-form" ng-submit="createUser()" ng-show="mode == 'addMode'">
           <h3>Добавить пользователя</h3>
-          <input type="text" class="login-field">
-          <input type="submit" class="btn btn-large btn-block btn-danger" value="Отмена" ng-click="mode = 'listMode'">
+          <label for="">Имя пользователя</label>
+          <input type="text" class="span7" ng-model="createdUser.name" ngv-required>
+          <label for="">Фамилия пользователя</label>
+          <input type="text" class="span7" ng-model="createdUser.surname" ngv-required>
+          <label for="">Отчество пользователя</label>
+          <input type="text" class="span7" ng-model="createdUser.patronymic" ngv-required>
+          <label for="">Логин пользователя</label>
+          <input type="text" class="span7" ng-model="createdUser.login" ngv-required>
+          <label for="">Пароль пользователя (номер зачетки)</label>
+          <input type="text" class="span7" ng-model="createdUser.password" ngv-required>
+          <label class="checkbox">
+            <input type="checkbox" ng-model="createdUser.admin"> Администратор
+          </label>
+          <input type="submit" class="btn btn-large btn-block span7"
+                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}" value="Создать">
+          <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
+                 ng-click="mode = 'listMode'">
         </form>
+        <form name="editForm" class="manage-form" ng-submit="updateUser()" ng-show="mode == 'editMode'">
+          <h3>Редактировать пользователя</h3>
+          <label for="">Имя пользователя</label>
+          <input type="text" class="span7" ng-model="editedUser.name" ngv-required>
+          <label for="">Фамилия пользователя</label>
+          <input type="text" class="span7" ng-model="editedUser.surname" ngv-required>
+          <label for="">Отчество пользователя</label>
+          <input type="text" class="span7" ng-model="editedUser.patronymic" ngv-required>
+          <label for="">Логин пользователя</label>
+          <input type="text" class="span7" ng-model="editedUser.login" ngv-required>
+          <label for="">Пароль пользователя (номер зачетки)</label>
+          <input type="text" class="span7" ng-model="editedUser.password" ngv-required>
+          <label class="checkbox">
+            <input type="checkbox" ng-model="editedUser.admin"> Администратор
+          </label>
+          <input type="submit" class="btn btn-large btn-block span7"
+                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}" value="Изменить">
+          <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
+                 ng-click="mode = 'listMode'">
+        </form>
+        <div ng-show="mode == 'viewMode'">
+          <h3>Детали пользователя</h3>
+          <dl class="dl-horizontal">
+            <dt>Имя</dt>
+            <dd>{{viewedUser.name}}</dd>
+            <dt>Фамилия</dt>
+            <dd>{{viewedUser.surname}}</dd>
+            <dt>Отчество</dt>
+            <dd>{{viewedUser.patronymic}}</dd>
+            <dt>Логин</dt>
+            <dd>{{viewedUser.login}}</dd>
+            <dt>Пароль (хеш)</dt>
+            <dd>{{viewedUser.password}}</dd>
+            <dt>Администратор</dt>
+            <dd>{{viewedUser.admin && 'Да' || 'Нет'}}</dd>
+          </dl>
+          <input type="button" class="btn btn-large btn-block span7" value="Назад"
+                 ng-click="mode = 'listMode'">
+        </div>
       </div>
     </div>
     <div pane name="Студенты" icon="users" category="student">
-      Студенты
+      <div ng-controller="StudentsManageController"
+           spin-on="{on: 'students:request-start', off: 'students:request-end'}"
+           class="overflow-pane">
+        <table class="table" ng-show="mode == 'listMode'">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Имя</th>
+              <th>Фамилия</th>
+              <th>Логин</th>
+              <th width="70">
+                <a class="action lsf" title="добавить" ng-click="addStudent()">plus</a>
+                <a class="action lsf" title="синхронизировать" ng-click="sync()">sync</a>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="student in students">
+              <td>{{$index + 1}}</td>
+              <td>{{student.name}}</td>
+              <td>{{student.surname}}</td>
+              <td>{{student.login}}</td>
+              <td>
+                <a class="action lsf" title="редактировать" ng-click="editStudent(student)">edit</a>
+                <a class="action lsf" title="просмотреть" ng-click="viewStudent(student)">view</a>
+                <a class="action lsf" title="удалить" ng-click="eraseStudent(student)">eraser</a>
+              </td>
+            </tr>
+            <tr ng-show="!students || !students.length">
+              <td colspan="5" style="text-align: center">Нет данных</td>
+            </tr>
+          </tbody>
+        </table>
+        <form name="addForm" class="manage-form" ng-submit="createStudent()" ng-show="mode == 'addMode'">
+          <h3>Добавить студента</h3>
+          <label for="">Имя студента</label>
+          <input type="text" class="span7" ng-model="createdStudent.name" ngv-required>
+          <label for="">Фамилия студента</label>
+          <input type="text" class="span7" ng-model="createdStudent.surname" ngv-required>
+          <label for="">Отчество студента</label>
+          <input type="text" class="span7" ng-model="createdStudent.patronymic" ngv-required>
+          <label for="">Логин студента</label>
+          <input type="text" class="span7" ng-model="createdStudent.login" ngv-required>
+          <label for="">Пароль студента (номер зачетки)</label>
+          <input type="text" class="span7" ng-model="createdStudent.password" ngv-required>
+          <label for="">Группа студента</label>
+          <input type="text" class="span7" ng-model="createdStudent.groupId" ngv-required>
+          <label for="">Год поступления студента</label>
+          <input type="text" class="span7" ng-model="createdStudent.yearOfEntrance" ngv-required>
+          <label class="checkbox">
+            <input type="checkbox" ng-model="createdStudent.praepostor"> Староста
+          </label>
+          <label class="checkbox">
+            <input type="checkbox" ng-model="createdStudent.admin"> Администратор
+          </label>
+          <input type="submit" class="btn btn-large btn-block span7"
+                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}" value="Создать">
+          <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
+                 ng-click="mode = 'listMode'">
+        </form>
+        <form name="editForm" class="manage-form" ng-submit="updateStudent()" ng-show="mode == 'editMode'">
+          <h3>Редактировать студента</h3>
+          <label for="">Имя студента</label>
+          <input type="text" class="span7" ng-model="editedStudent.name" ngv-required>
+          <label for="">Фамилия студента</label>
+          <input type="text" class="span7" ng-model="editedStudent.surname" ngv-required>
+          <label for="">Отчество студента</label>
+          <input type="text" class="span7" ng-model="editedStudent.patronymic" ngv-required>
+          <label for="">Логин студента</label>
+          <input type="text" class="span7" ng-model="editedStudent.login" ngv-required>
+          <label for="">Пароль студента (номер зачетки)</label>
+          <input type="text" class="span7" ng-model="editedStudent.password" ngv-required>
+          <label for="">Группа студента</label>
+          <input type="text" class="span7" ng-model="editedStudent.groupId" ngv-required>
+          <label for="">Год поступления студента</label>
+          <input type="text" class="span7" ng-model="editedStudent.yearOfEntrance" ngv-required>
+          <label class="checkbox">
+            <input type="checkbox" ng-model="editedStudent.praepostor"> Староста
+          </label>
+          <label class="checkbox">
+            <input type="checkbox" ng-model="editedStudent.admin"> Администратор
+          </label>
+          <input type="submit" class="btn btn-large btn-block span7"
+                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}" value="Изменить">
+          <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
+                 ng-click="mode = 'listMode'">
+        </form>
+        <div ng-show="mode == 'viewMode'">
+          <h3>Детали студента</h3>
+          <dl class="dl-horizontal">
+            <dt>Имя</dt>
+            <dd>{{viewedStudent.name}}</dd>
+            <dt>Фамилия</dt>
+            <dd>{{viewedStudent.surname}}</dd>
+            <dt>Отчество</dt>
+            <dd>{{viewedStudent.patronymic}}</dd>
+            <dt>Логин</dt>
+            <dd>{{viewedStudent.login}}</dd>
+            <dt>Пароль (хеш)</dt>
+            <dd>{{viewedStudent.password}}</dd>
+            <dt>Группа</dt>
+            <dd>{{viewedStudent.groupId}}</dd>
+            <dt>Год поступления</dt>
+            <dd>{{viewedStudent.yearOfEntrance}}</dd>
+            <dt>Староста</dt>
+            <dd>{{viewedStudent.praepostor && 'Да' || 'Нет'}}</dd>
+            <dt>Администратор</dt>
+            <dd>{{viewedStudent.admin && 'Да' || 'Нет'}}</dd>
+          </dl>
+          <input type="button" class="btn btn-large btn-block span7" value="Назад"
+                 ng-click="mode = 'listMode'">
+        </div>
+      </div>
     </div>
     <div pane name="Преподователи" icon="star" category="lecturer">
-      Преподователи
+      <div ng-controller="LecturersManageController"
+           spin-on="{on: 'lecturers:request-start', off: 'lecturers:request-end'}"
+           class="overflow-pane">
+        <table class="table" ng-show="mode == 'listMode'">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Имя</th>
+              <th>Фамилия</th>
+              <th>Логин</th>
+              <th width="70">
+                <a class="action lsf" title="добавить" ng-click="addLecturer()">plus</a>
+                <a class="action lsf" title="синхронизировать" ng-click="sync()">sync</a>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="lecturer in lecturers">
+              <td>{{$index + 1}}</td>
+              <td>{{lecturer.name}}</td>
+              <td>{{lecturer.surname}}</td>
+              <td>{{lecturer.login}}</td>
+              <td>
+                <a class="action lsf" title="редактировать" ng-click="editLecturer(lecturer)">edit</a>
+                <a class="action lsf" title="просмотреть" ng-click="viewLecturer(lecturer)">view</a>
+                <a class="action lsf" title="удалить" ng-click="eraseLecturer(lecturer)">eraser</a>
+              </td>
+            </tr>
+            <tr ng-show="!lecturers || !lecturers.length">
+              <td colspan="5" style="text-align: center">Нет данных</td>
+            </tr>
+          </tbody>
+        </table>
+        <form name="addForm" class="manage-form" ng-submit="createLecturer()" ng-show="mode == 'addMode'">
+          <h3>Добавить преподователя</h3>
+          <label for="">Имя преподователя</label>
+          <input type="text" class="span7" ng-model="createdLecturer.name" ngv-required>
+          <label for="">Фамилия преподователя</label>
+          <input type="text" class="span7" ng-model="createdLecturer.surname" ngv-required>
+          <label for="">Отчество преподователя</label>
+          <input type="text" class="span7" ng-model="createdLecturer.patronymic" ngv-required>
+          <label for="">Логин преподователя</label>
+          <input type="text" class="span7" ng-model="createdLecturer.login" ngv-required>
+          <label for="">Пароль преподователя</label>
+          <input type="text" class="span7" ng-model="createdLecturer.password" ngv-required>
+          <label for="">Кафедра преподователя</label>
+          <input type="text" class="span7" ng-model="createdLecturer.department" ngv-required>
+          <label class="checkbox">
+            <input type="checkbox" ng-model="createdLecturer.admin"> Администратор
+          </label>
+          <input type="submit" class="btn btn-large btn-block span7"
+                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}" value="Создать">
+          <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
+                 ng-click="mode = 'listMode'">
+        </form>
+        <form name="editForm" class="manage-form" ng-submit="updateLecturer()" ng-show="mode == 'editMode'">
+          <h3>Редактировать преподователя</h3>
+          <label for="">Имя преподователя</label>
+          <input type="text" class="span7" ng-model="editedLecturer.name" ngv-required>
+          <label for="">Фамилия преподователя</label>
+          <input type="text" class="span7" ng-model="editedLecturer.surname" ngv-required>
+          <label for="">Отчество преподователя</label>
+          <input type="text" class="span7" ng-model="editedLecturer.patronymic" ngv-required>
+          <label for="">Логин преподователя</label>
+          <input type="text" class="span7" ng-model="editedLecturer.login" ngv-required>
+          <label for="">Пароль преподователя</label>
+          <input type="text" class="span7" ng-model="editedLecturer.password" ngv-required>
+          <label for="">Кафедра преподователя</label>
+          <input type="text" class="span7" ng-model="editedLecturer.department" ngv-required>
+          <label class="checkbox">
+            <input type="checkbox" ng-model="editedLecturer.admin"> Администратор
+          </label>
+          <input type="submit" class="btn btn-large btn-block span7"
+                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}" value="Изменить">
+          <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
+                 ng-click="mode = 'listMode'">
+        </form>
+        <div ng-show="mode == 'viewMode'">
+          <h3>Детали преподователя</h3>
+          <dl class="dl-horizontal">
+            <dt>Имя</dt>
+            <dd>{{viewedLecturer.name}}</dd>
+            <dt>Фамилия</dt>
+            <dd>{{viewedLecturer.surname}}</dd>
+            <dt>Отчество</dt>
+            <dd>{{viewedLecturer.patronymic}}</dd>
+            <dt>Логин</dt>
+            <dd>{{viewedLecturer.login}}</dd>
+            <dt>Пароль (хеш)</dt>
+            <dd>{{viewedLecturer.password}}</dd>
+            <dt>Кафедра</dt>
+            <dd>{{viewedLecturer.department.name}}</dd>
+            <dt>Администратор</dt>
+            <dd>{{viewedLecturer.admin && 'Да' || 'Нет'}}</dd>
+          </dl>
+          <input type="button" class="btn btn-large btn-block span7" value="Назад"
+                 ng-click="mode = 'listMode'">
+        </div>
+      </div>
     </div>
     <div pane name="Кафедры" icon="building" category="department">
-      Кафедры
+      <div ng-controller="DepartmentsManageController"
+           spin-on="{on: 'departments:request-start', off: 'departments:request-end'}"
+           class="overflow-pane">
+        <table class="table" ng-show="mode == 'listMode'">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Имя</th>
+              <th>Описание</th>
+              <th width="70">
+                <a class="action lsf" title="добавить" ng-click="addDepartment()">plus</a>
+                <a class="action lsf" title="синхронизировать" ng-click="sync()">sync</a>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="department in departments">
+              <td>{{$index + 1}}</td>
+              <td>{{department.name}}</td>
+              <td>{{department.description}}</td>
+              <td>
+                <a class="action lsf" title="редактировать" ng-click="editDepartment(department)">edit</a>
+                <a class="action lsf" title="просмотреть" ng-click="viewDepartment(department)">view</a>
+                <a class="action lsf" title="удалить" ng-click="eraseDepartment(department)">eraser</a>
+              </td>
+            </tr>
+            <tr ng-show="!departments || !departments.length">
+              <td colspan="5" style="text-align: center">Нет данных</td>
+            </tr>
+          </tbody>
+        </table>
+        <form name="addForm" class="manage-form" ng-submit="createDepartment()" ng-show="mode == 'addMode'">
+          <h3>Добавить кафедру</h3>
+          <label for="">Имя кафедры</label>
+          <input type="text" class="span7" ng-model="createdDepartment.name" ngv-required>
+          <label for="">Описание кафедры</label>
+          <textarea type="text" class="span7" ng-model="createdDepartment.description" ngv-required></textarea>
+          <input type="submit" class="btn btn-large btn-block span7"
+                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}" value="Создать">
+          <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
+                 ng-click="mode = 'listMode'">
+        </form>
+        <form name="editForm" class="manage-form" ng-submit="updateDepartment()" ng-show="mode == 'editMode'">
+          <h3>Редактировать кафедру</h3>
+          <label for="">Имя кафедры</label>
+          <input type="text" class="span7" ng-model="editedDepartment.name" ngv-required>
+          <label for="">Описание кафедры</label>
+          <textarea type="text" class="span7" ng-model="editedDepartment.description" ngv-required></textarea>
+          <input type="submit" class="btn btn-large btn-block span7"
+                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}" value="Изменить">
+          <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
+                 ng-click="mode = 'listMode'">
+        </form>
+        <div ng-show="mode == 'viewMode'">
+          <h3>Детали кафедры</h3>
+          <dl class="dl-horizontal">
+            <dt>Имя</dt>
+            <dd>{{viewedDepartment.name}}</dd>
+            <dt>Описание</dt>
+            <dd>{{viewedDepartment.description}}</dd>
+          </dl>
+          <input type="button" class="btn btn-large btn-block span7" value="Назад"
+                 ng-click="mode = 'listMode'">
+        </div>
+      </div>
     </div>
     <div pane name="Специальности" icon="addstar" category="speciality">
       Специальности

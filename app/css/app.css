@@ -607,6 +607,15 @@ input.ng-dirty.ng-invalid {
   cursor          : pointer;
 }
 
+.manage-screen .overflow-pane {
+  max-height : 657px;
+  overflow-y : auto;
+}
+
+.manage-screen .manage-form input.btn {
+  width : 538px;
+}
+
 /*-- Schedule view --*/
 
 .schedule-screen {
