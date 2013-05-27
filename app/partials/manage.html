@@ -51,7 +51,8 @@
             <input type="checkbox" ng-model="createdUser.admin"> Администратор
           </label>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}" value="Создать">
+                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}"
+                 ng-disabled="addForm.$invalid" value="Создать">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -66,12 +67,13 @@
           <label for="">Логин пользователя</label>
           <input type="text" class="span7" ng-model="editedUser.login" ngv-required>
           <label for="">Пароль пользователя (номер зачетки)</label>
-          <input type="text" class="span7" ng-model="editedUser.password" ngv-required>
+          <input type="text" class="span7" ng-model="editedUser.password">
           <label class="checkbox">
             <input type="checkbox" ng-model="editedUser.admin"> Администратор
           </label>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}" value="Изменить">
+                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}"
+                 ng-disabled="editForm.$invalid" value="Изменить">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -143,13 +145,9 @@
           <label for="">Пароль студента (номер зачетки)</label>
           <input type="text" class="span7" ng-model="createdStudent.password" ngv-required>
           <label for="">Группа студента</label>
-          <select class="span7" ng-model="createdStudent.groupId" ngv-required>
-            <option value="">Группа/Подгруппа/Год/Специальность</option>
-            <option value="{{group.id}}" ng-repeat="group in groups">
-              {{group.number}}/{{group.subgroup && group.subgroup || 'Нет'}}/{{group.year}}/{{group.specialty.name}}
-            </option>
+          <select class="span7" ng-model="createdStudent.groupId"
+                  ng-options="group.id as groupAdapter(group) for group in groups" ngv-required>
           </select>
-          <!--<input type="text" class="span7" ng-model="createdStudent.groupId" ngv-required>-->
           <label for="">Год поступления студента</label>
           <input type="text" class="span7" ng-model="createdStudent.yearOfEntrance" ngv-required>
           <label class="checkbox">
@@ -159,7 +157,8 @@
             <input type="checkbox" ng-model="createdStudent.admin"> Администратор
           </label>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}" value="Создать">
+                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}"
+                 ng-disabled="addForm.$invalid" value="Создать">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -172,15 +171,12 @@
           <label for="">Отчество студента</label>
           <input type="text" class="span7" ng-model="editedStudent.patronymic" ngv-required>
           <label for="">Логин студента</label>
-          <input type="text" class="span7" ng-model="editedStudent.login" ngv-required>
+          <input type="text" class="span7" ng-model="editedStudent.login">
           <label for="">Пароль студента (номер зачетки)</label>
           <input type="text" class="span7" ng-model="editedStudent.password" ngv-required>
           <label for="">Группа студента</label>
-          <select id="student-group-edit-select" class="span7" ng-model="editedStudent.groupId" ngv-required>
-            <option value="">Группа/Подгруппа/Год/Специальность</option>
-            <option value="{{group.id}}" ng-repeat="group in groups">
-              {{group.number}}/{{group.subgroup && group.subgroup || 'Нет'}}/{{group.year}}/{{group.specialty.name}}
-            </option>
+          <select class="span7" ng-model="editedStudent.groupId"
+                  ng-options="group.id as groupAdapter(group) for group in groups" ngv-required>
           </select>
           <label for="">Год поступления студента</label>
           <input type="text" class="span7" ng-model="editedStudent.yearOfEntrance" ngv-required>
@@ -191,7 +187,8 @@
             <input type="checkbox" ng-model="editedStudent.admin"> Администратор
           </label>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}" value="Изменить">
+                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}"
+                 ng-disabled="editForm.$invalid" value="Изменить">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -269,12 +266,15 @@
           <label for="">Пароль преподователя</label>
           <input type="text" class="span7" ng-model="createdLecturer.password" ngv-required>
           <label for="">Кафедра преподователя</label>
-          <input type="text" class="span7" ng-model="createdLecturer.department" ngv-required>
+          <select class="span7" ng-model="createdLecturer.department"
+                  ng-options="department.id as department.name for department in departments" ngv-required>
+          </select>
           <label class="checkbox">
             <input type="checkbox" ng-model="createdLecturer.admin"> Администратор
           </label>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}" value="Создать">
+                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}"
+                 ng-disabled="addForm.$invalid" value="Создать">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -289,14 +289,17 @@
           <label for="">Логин преподователя</label>
           <input type="text" class="span7" ng-model="editedLecturer.login" ngv-required>
           <label for="">Пароль преподователя</label>
-          <input type="text" class="span7" ng-model="editedLecturer.password" ngv-required>
+          <input type="text" class="span7" ng-model="editedLecturer.password">
           <label for="">Кафедра преподователя</label>
-          <input type="text" class="span7" ng-model="editedLecturer.department" ngv-required>
+          <select class="span7" ng-model="editedLecturer.department"
+                  ng-options="department.id as department.name for department in departments" ngv-required>
+          </select>
           <label class="checkbox">
             <input type="checkbox" ng-model="editedLecturer.admin"> Администратор
           </label>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}" value="Изменить">
+                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}"
+                 ng-disabled="editForm.$invalid" value="Изменить">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -362,7 +365,8 @@
           <label for="">Описание кафедры</label>
           <textarea type="text" class="span7" ng-model="createdDepartment.description" ngv-required></textarea>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}" value="Создать">
+                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}"
+                 ng-disabled="addForm.$invalid" value="Создать">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -373,7 +377,8 @@
           <label for="">Описание кафедры</label>
           <textarea type="text" class="span7" ng-model="editedDepartment.description" ngv-required></textarea>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}" value="Изменить">
+                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}"
+                 ng-disabled="editForm.$invalid" value="Изменить">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -429,7 +434,8 @@
           <label for="">Описание Специальности</label>
           <textarea type="text" class="span7" ng-model="createdSpeciality.description" ngv-required></textarea>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}" value="Создать">
+                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}"
+                 ng-disabled="addForm.$invalid" value="Создать">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -440,7 +446,8 @@
           <label for="">Описание Специальности</label>
           <textarea type="text" class="span7" ng-model="editedSpeciality.description" ngv-required></textarea>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}" value="Изменить">
+                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}"
+                 ng-disabled="editForm.$invalid" value="Изменить">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -502,9 +509,12 @@
           <label for="">Подгруппа группы</label>
           <input type="text" class="span7" ng-model="createdGroup.subgroup">
           <label for="">Специальность группы</label>
-          <input type="text" class="span7" ng-model="createdGroup.specialtyId" ngv-required>
+          <select class="span7" ng-model="createdGroup.specialtyId"
+                  ng-options="speciality.id as speciality.name for speciality in specialities" ngv-required>
+          </select>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}" value="Создать">
+                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}"
+                 ng-disabled="addForm.$invalid" value="Создать">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -519,9 +529,12 @@
           <label for="">Подгруппа группы</label>
           <input type="text" class="span7" ng-model="editedGroup.subgroup">
           <label for="">Специальность группы</label>
-          <input type="text" class="span7" ng-model="editedGroup.specialtyId" ngv-required>
+          <select class="span7" ng-model="editedGroup.specialtyId"
+                  ng-options="speciality.id as speciality.name for speciality in specialities" ngv-required>
+          </select>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}" value="Изменить">
+                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}"
+                 ng-disabled="editForm.$invalid" value="Изменить">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -581,9 +594,12 @@
           <label for="">Имя дисциплины</label>
           <input type="text" class="span7" ng-model="createdDiscipline.name" ngv-required>
           <label for="">Тип дисциплины</label>
-          <input type="text" class="span7" ng-model="createdDiscipline.disciplineTypeId" ngv-required>
+          <select class="span7" ng-model="createdDiscipline.disciplineTypeId"
+                  ng-options="dType.id as dType.type for dType in dTypes" ngv-required>
+          </select>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}" value="Создать">
+                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}"
+                 ng-disabled="addForm.$invalid" value="Создать">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -592,9 +608,12 @@
           <label for="">Имя дисциплины</label>
           <input type="text" class="span7" ng-model="editedDiscipline.name" ngv-required>
           <label for="">Тип дисциплины</label>
-          <input type="text" class="span7" ng-model="editedDiscipline.disciplineTypeId" ngv-required>
+          <select class="span7" ng-model="editedDiscipline.disciplineTypeId"
+                  ng-options="dType.id as dType.type for dType in dTypes" ngv-required>
+          </select>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}" value="Изменить">
+                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}"
+                 ng-disabled="editForm.$invalid" value="Изменить">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -646,7 +665,8 @@
           <label for="">Тип дисциплины</label>
           <input type="text" class="span7" ng-model="createdDisciplineType.type" ngv-required>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}" value="Создать">
+                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}"
+                 ng-disabled="addForm.$invalid" value="Создать">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -655,7 +675,8 @@
           <label for="">Тип дисциплины</label>
           <input type="text" class="span7" ng-model="editedDisciplineType.name" ngv-required>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}" value="Изменить">
+                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}"
+                 ng-disabled="editForm.$invalid" value="Изменить">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -707,9 +728,13 @@
         <form name="addForm" class="manage-form" ng-submit="createCurriculum()" ng-show="mode == 'addMode'">
           <h3>Добавить учебную программу</h3>
           <label for="">Дисциплина программы</label>
-          <input type="text" class="span7" ng-model="createdCurriculum.discipline" ngv-required>
+          <select class="span7" ng-model="createdCurriculum.discipline"
+                  ng-options="discipline.id as discipline.name for discipline in disciplines" ngv-required>
+          </select>
           <label for="">Специальность программы</label>
-          <input type="text" class="span7" ng-model="createdCurriculum.specialty" ngv-required>
+          <select class="span7" ng-model="createdCurriculum.specialty"
+                  ng-options="speciality.id as speciality.name for speciality in specialities" ngv-required>
+          </select>
           <label for="">Часы программы</label>
           <input type="text" class="span7" ng-model="createdCurriculum.hours" ngv-required>
           <label for="">Семестр программы</label>
@@ -721,16 +746,21 @@
             <input type="checkbox" ng-model="createdCurriculum.isSetoff"> SetOff
           </label>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}" value="Создать">
+                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}"
+                 ng-disabled="addForm.$invalid" value="Создать">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
         <form name="editForm" class="manage-form" ng-submit="updateCurriculum()" ng-show="mode == 'editMode'">
           <h3>Редактировать учебную программу</h3>
           <label for="">Дисциплина программы</label>
-          <input type="text" class="span7" ng-model="editedCurriculum.discipline" ngv-required>
+          <select class="span7" ng-model="editedCurriculum.discipline"
+                  ng-options="discipline.id as discipline.name for discipline in disciplines" ngv-required>
+          </select>
           <label for="">Специальность программы</label>
-          <input type="text" class="span7" ng-model="editedCurriculum.specialty" ngv-required>
+          <select class="span7" ng-model="editedCurriculum.specialty"
+                  ng-options="speciality.id as speciality.name for speciality in specialities" ngv-required>
+          </select>
           <label for="">Часы программы</label>
           <input type="text" class="span7" ng-model="editedCurriculum.hours" ngv-required>
           <label for="">Семестр программы</label>
@@ -742,7 +772,8 @@
             <input type="checkbox" ng-model="editedCurriculum.isSetoff"> SetOff
           </label>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}" value="Изменить">
+                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}"
+                 ng-disabled="editForm.$invalid" value="Изменить">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -806,7 +837,8 @@
           <label for="">Вместимость аудитории</label>
           <input type="text" class="span7" ng-model="createdClassroom.capacity" ngv-required>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}" value="Создать">
+                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}"
+                 ng-disabled="addForm.$invalid" value="Создать">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -817,7 +849,8 @@
           <label for="">Вместимость аудитории</label>
           <input type="text" class="span7" ng-model="editedClassroom.capacity" ngv-required>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}" value="Изменить">
+                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}"
+                 ng-disabled="editForm.$invalid" value="Изменить">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
@@ -874,26 +907,40 @@
         <form name="addForm" class="manage-form" ng-submit="createStudy()" ng-show="mode == 'addMode'">
           <h3>Добавить занятие</h3>
           <label for="">Группа занятия</label>
-          <input type="text" class="span7" ng-model="createdStudy.group" ngv-required>
+          <select class="span7" ng-model="createdStudy.group"
+                  ng-options="group.id as groupAdapter(group) for group in groups" ngv-required>
+          </select>
           <label for="">Преподователь занятия</label>
-          <input type="text" class="span7" ng-model="createdStudy.lecturer" ngv-required>
+          <select class="span7" ng-model="createdStudy.lecturer"
+                  ng-options="lecturer.id as lecturer.fullName for lecturer in lecturers" ngv-required>
+          </select>
           <label for="">Учебная программа занятия</label>
-          <input type="text" class="span7" ng-model="createdStudy.curriculum" ngv-required>
+          <select class="span7" ng-model="createdStudy.curriculum"
+                  ng-options="curriculum.id as curriculumAdapter(curriculum) for curriculum in curriculums" ngv-required>
+          </select>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}" value="Создать">
+                 ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}"
+                 ng-disabled="addForm.$invalid" value="Создать">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>
         <form name="editForm" class="manage-form" ng-submit="updateStudy()" ng-show="mode == 'editMode'">
           <h3>Редактировать занятие</h3>
           <label for="">Группа занятия</label>
-          <input type="text" class="span7" ng-model="editedStudy.group" ngv-required>
+          <select class="span7" ng-model="editedStudy.group"
+                  ng-options="group.id as groupAdapter(group) for group in groups" ngv-required>
+          </select>
           <label for="">Преподователь занятия</label>
-          <input type="text" class="span7" ng-model="editedStudy.lecturer" ngv-required>
+          <select class="span7" ng-model="editedStudy.lecturer"
+                  ng-options="lecturer.id as lecturer.fullName for lecturer in lecturers" ngv-required>
+          </select>
           <label for="">Учебная программа занятия</label>
-          <input type="text" class="span7" ng-model="editedStudy.curriculum" ngv-required>
+          <select class="span7" ng-model="editedStudy.curriculum"
+                  ng-options="curriculum.id as curriculumAdapter(curriculum) for curriculum in curriculums" ngv-required>
+          </select>
           <input type="submit" class="btn btn-large btn-block span7"
-                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}" value="Изменить">
+                 ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}"
+                 ng-disabled="editForm.$invalid" value="Изменить">
           <input type="button" class="btn btn-large btn-block btn-danger span7" value="Отмена"
                  ng-click="mode = 'listMode'">
         </form>

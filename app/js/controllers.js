@@ -163,7 +163,7 @@ App.controller('UsersManageController',
 
       $scope.sync = function () {
         $timeout(function () {
-          $scope.$broadcast('users:request-start')
+          $scope.$broadcast('users:request-start');
         }, 1);
         UsersList.lookup().then(function (data) {
           $scope.$broadcast('users:request-end');
@@ -179,7 +179,9 @@ App.controller('UsersManageController',
         $scope.mode = 'addMode';
       };
       $scope.createUser = function () {
+        $scope.$broadcast('users:request-start');
         UsersList.create(this.createdUser || {}).then(function (user) {
+          $scope.$broadcast('users:request-end');
           if ($scope.users) {
             $scope.users.push(user)
           } else {
@@ -187,11 +189,14 @@ App.controller('UsersManageController',
           }
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('users:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
       $scope.editUser = function (user) {
-        $scope.editedUser = user;
+        $scope.editedUser = _.cloneDeep(user);
+        $scope.editedUser.password = null;
+        $scope.aIndex = _.indexOf($scope.users, user);
         $scope.mode = 'editMode';
       };
       $scope.viewUser = function (user) {
@@ -201,10 +206,17 @@ App.controller('UsersManageController',
       $scope.updateUser = function () {
         var usr = this.editedUser;
 
+        $scope.$broadcast('users:request-start');
         UsersList.edit(this.editedUser.id, this.editedUser).then(function () {
-          $scope.users[_.indexOf($scope.users, usr)] = usr;
+          UsersList.getOne($scope.users[$scope.aIndex].id).then(function (data) {
+            $scope.$broadcast('users:request-end');
+            $scope.users[$scope.aIndex] = data;
+          }, function () {
+            $scope.$broadcast('users:request-end');
+          });
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('users:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
@@ -221,7 +233,7 @@ App.controller('UsersManageController',
  * Manage students partial controller
  */
 App.controller('StudentsManageController',
-    function ($scope, $rootScope, StudentsList, GroupsList, strings, $timeout) {
+    function ($scope, $rootScope, StudentsList, GroupsList, strings, $timeout, $parse) {
       $scope.mode = 'listMode';
 
       $scope.sync = function () {
@@ -232,7 +244,6 @@ App.controller('StudentsManageController',
           $scope.$broadcast('students:request-end');
           $scope.students = data;
         }, function () {
-          //$rootScope.$broadcast('toast', strings.networkError);
           $scope.$broadcast('students:request-end');
         });
       };
@@ -243,7 +254,9 @@ App.controller('StudentsManageController',
         $scope.mode = 'addMode';
       };
       $scope.createStudent = function () {
+        $scope.$broadcast('students:request-start')
         StudentsList.create(this.createdStudent || {}).then(function (student) {
+          $scope.$broadcast('students:request-end');
           if ($scope.students) {
             $scope.students.push(student)
           } else {
@@ -251,17 +264,19 @@ App.controller('StudentsManageController',
           }
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('students:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
+      $scope.groupAdapter = function (group) {
+        return group.number + (group.subgroup ? group.subgroup : '') + ' (' + group.year + ')';
+      };
       $scope.editStudent = function (student) {
         $scope.groups = GroupsList.get();
-        $scope.editedStudent = student;
+        $scope.editedStudent = _.cloneDeep(student);
+        $scope.editedStudent.password = null;
         $scope.editedStudent.groupId = student.group.id;
         $scope.mode = 'editMode';
-        setTimeout(function () {
-          $('#student-group-edit-select').val(student.group.id);
-        }, 100);
       };
       $scope.viewStudent = function (student) {
         $scope.viewedStudent = student;
@@ -270,7 +285,6 @@ App.controller('StudentsManageController',
       $scope.updateStudent = function () {
         var std = this.editedStudent;
 
-        console.log(std);
         StudentsList.edit(this.editedStudent.id, this.editedStudent).then(function () {
           $scope.students[_.indexOf($scope.students, std)] = std;
           $scope.mode = 'listMode';
@@ -291,7 +305,7 @@ App.controller('StudentsManageController',
  * Manage lecturers partial controller
  */
 App.controller('LecturersManageController',
-    function ($scope, $rootScope, LecturersList, strings, $timeout) {
+    function ($scope, $rootScope, LecturersList, DepartmentsList, strings, $timeout) {
       $scope.mode = 'listMode';
 
       $scope.sync = function () {
@@ -309,6 +323,7 @@ App.controller('LecturersManageController',
       $scope.sync();
 
       $scope.addLecturer = function () {
+        $scope.departments = DepartmentsList.get();
         $scope.mode = 'addMode';
       };
       $scope.createLecturer = function () {
@@ -324,7 +339,10 @@ App.controller('LecturersManageController',
         });
       };
       $scope.editLecturer = function (lecturer) {
-        $scope.editedLecturer = lecturer;
+        $scope.departments = DepartmentsList.get();
+        $scope.editedLecturer = _.cloneDeep(lecturer);
+        $scope.editedLecturer.department = lecturer.department.id;
+        $scope.editedLecturer.password = null;
         $scope.mode = 'editMode';
       };
       $scope.viewLecturer = function (lecturer) {
@@ -387,7 +405,7 @@ App.controller('DepartmentsManageController',
         });
       };
       $scope.editDepartment = function (department) {
-        $scope.editedDepartment = department;
+        $scope.editedDepartment = _.cloneDeep(department);
         $scope.mode = 'editMode';
       };
       $scope.viewDepartment = function (department) {
@@ -450,7 +468,7 @@ App.controller('SpecialitiesManageController',
         });
       };
       $scope.editSpeciality = function (speciality) {
-        $scope.editedSpeciality = speciality;
+        $scope.editedSpeciality = _.cloneDeep(speciality);
         $scope.mode = 'editMode';
       };
       $scope.viewSpeciality = function (speciality) {
@@ -480,7 +498,7 @@ App.controller('SpecialitiesManageController',
  * Manage groups partial controller
  */
 App.controller('GroupsManageController',
-    function ($scope, $rootScope, GroupsList, strings, $timeout) {
+    function ($scope, $rootScope, GroupsList, SpecialitiesList, strings, $timeout) {
       $scope.mode = 'listMode';
 
       $scope.sync = function () {
@@ -498,6 +516,7 @@ App.controller('GroupsManageController',
       $scope.sync();
 
       $scope.addGroup = function () {
+        $scope.specialities = SpecialitiesList.get();
         $scope.mode = 'addMode';
       };
       $scope.createGroup = function () {
@@ -513,7 +532,9 @@ App.controller('GroupsManageController',
         });
       };
       $scope.editGroup = function (group) {
-        $scope.editedGroup = group;
+        $scope.specialities = SpecialitiesList.get();
+        $scope.editedGroup = _.cloneDeep(group);
+        $scope.editedGroup.specialtyId = group.specialty.id;
         $scope.mode = 'editMode';
       };
       $scope.viewGroup = function (group) {
@@ -543,7 +564,7 @@ App.controller('GroupsManageController',
  * Manage disciplines partial controller
  */
 App.controller('DisciplinesManageController',
-    function ($scope, $rootScope, DisciplinesList, strings, $timeout) {
+    function ($scope, $rootScope, DisciplinesList, DisciplineTypesList, strings, $timeout) {
       $scope.mode = 'listMode';
 
       $scope.sync = function () {
@@ -561,6 +582,7 @@ App.controller('DisciplinesManageController',
       $scope.sync();
 
       $scope.addDiscipline = function () {
+        $scope.dTypes = DisciplineTypesList.get();
         $scope.mode = 'addMode';
       };
       $scope.createDiscipline = function () {
@@ -576,7 +598,9 @@ App.controller('DisciplinesManageController',
         });
       };
       $scope.editDiscipline = function (discipline) {
-        $scope.editedDiscipline = discipline;
+        $scope.dTypes = DisciplineTypesList.get();
+        $scope.editedDiscipline = _.cloneDeep(discipline);
+        $scope.editedDiscipline.disciplineTypeId = discipline.disciplineType.id;
         $scope.mode = 'editMode';
       };
       $scope.viewDiscipline = function (discipline) {
@@ -639,7 +663,7 @@ App.controller('DisciplineTypesManageController',
         });
       };
       $scope.editDisciplineType = function (disciplineType) {
-        $scope.editedDisciplineType = disciplineType;
+        $scope.editedDisciplineType = _.cloneDeep(disciplineType);
         $scope.mode = 'editMode';
       };
       $scope.viewDisciplineType = function (disciplineType) {
@@ -669,7 +693,7 @@ App.controller('DisciplineTypesManageController',
  * Manage curriculums partial controller
  */
 App.controller('CurriculumsManageController',
-    function ($scope, $rootScope, CurriculumsList, strings, $timeout) {
+    function ($scope, $rootScope, CurriculumsList, SpecialitiesList, DisciplinesList, strings, $timeout) {
       $scope.mode = 'listMode';
 
       $scope.sync = function () {
@@ -687,6 +711,8 @@ App.controller('CurriculumsManageController',
       $scope.sync();
 
       $scope.addCurriculum = function () {
+        $scope.disciplines = DisciplinesList.get();
+        $scope.specialities = SpecialitiesList.get();
         $scope.mode = 'addMode';
       };
       $scope.createCurriculum = function () {
@@ -702,7 +728,11 @@ App.controller('CurriculumsManageController',
         });
       };
       $scope.editCurriculum = function (curriculum) {
-        $scope.editedCurriculum = curriculum;
+        $scope.disciplines = DisciplinesList.get();
+        $scope.specialities = SpecialitiesList.get();
+        $scope.editedCurriculum = _.cloneDeep(curriculum);
+        $scope.editedCurriculum.discipline = curriculum.discipline.id;
+        $scope.editedCurriculum.specialty = curriculum.specialty.id;
         $scope.mode = 'editMode';
       };
       $scope.viewCurriculum = function (curriculum) {
@@ -765,7 +795,7 @@ App.controller('ClassroomsManageController',
         });
       };
       $scope.editClassroom = function (classroom) {
-        $scope.editedClassroom = classroom;
+        $scope.editedClassroom = _.cloneDeep(classroom);
         $scope.mode = 'editMode';
       };
       $scope.viewClassroom = function (classroom) {
@@ -795,7 +825,7 @@ App.controller('ClassroomsManageController',
  * Manage studies partial controller
  */
 App.controller('StudiesManageController',
-    function ($scope, $rootScope, StudiesList, strings, $timeout) {
+    function ($scope, $rootScope, StudiesList, GroupsList, LecturersList, CurriculumsList, strings, $timeout) {
       $scope.mode = 'listMode';
 
       $scope.sync = function () {
@@ -813,6 +843,9 @@ App.controller('StudiesManageController',
       $scope.sync();
 
       $scope.addStudy = function () {
+        $scope.groups = GroupsList.get();
+        $scope.lecturers = LecturersList.get();
+        $scope.curriculums = CurriculumsList.get();
         $scope.mode = 'addMode';
       };
       $scope.createStudy = function () {
@@ -827,8 +860,20 @@ App.controller('StudiesManageController',
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
+      $scope.groupAdapter = function (group) {
+        return group.number + (group.subgroup ? group.subgroup : '') + ' (' + group.year + ')';
+      };
+      $scope.curriculumAdapter = function (curriculum) {
+        return curriculum.discipline.name + '(' + curriculum.specialty.name + ') ' + curriculum.semester + ' семестр';
+      };
       $scope.editStudy = function (study) {
-        $scope.editedStudy = study;
+        $scope.groups = GroupsList.get();
+        $scope.lecturers = LecturersList.get();
+        $scope.curriculums = CurriculumsList.get();
+        $scope.editedStudy = _.cloneDeep(study);
+        $scope.editedStudy.group = study.group.id;
+        $scope.editedStudy.lecturer = study.lecturer.id;
+        $scope.editedStudy.curriculum = study.curriculum.id;
         $scope.mode = 'editMode';
       };
       $scope.viewStudy = function (study) {

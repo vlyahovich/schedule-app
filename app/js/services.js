@@ -1,16 +1,15 @@
 'use strict';
 
 /* Services */
-App.host = 'http://192.168.1.90:8090';
+App.host = 'http://127.0.0.1:8090';
 
-// Demonstrate how to register services
-// In this case it is a simple value service.
 angular.module('scheduleApp.services', []).
     value('version', '0.8.0').
     value('rest', {
       auth                : App.host + '/service/rest/bsu/mmf/login',
       scheduleList        : App.host + '/service/rest/bsu/mmf/schedule',
       usersList           : App.host + '/service/rest/bsu/mmf/user/list',
+      userGet             : App.host + '/service/rest/bsu/mmf/user/{userId}',
       userCreate          : App.host + '/service/rest/bsu/mmf/user/add',
       userErase           : App.host + '/service/rest/bsu/mmf/user/{userId}/delete',
       userEdit            : App.host + '/service/rest/bsu/mmf/user/{userId}/edit',
@@ -325,6 +324,29 @@ angular.module('scheduleApp.services', []).
             }),
             success    : function () {
               deferred.resolve();
+              $rootScope.$apply();
+            },
+            error      : function () {
+              listCache = null;
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        getOne: function (id) {
+          var deferred = $q.defer();
+
+          $.ajax({
+            method     : 'GET',
+            url        : rest.userGet.replace('{userId}', id),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success    : function (data) {
+              deferred.resolve(data);
               $rootScope.$apply();
             },
             error      : function () {
