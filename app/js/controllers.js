@@ -7,6 +7,7 @@ App.controller('HeaderController',
     function ($scope, $rootScope, User, $location, strings) {
       $scope.User = User;
       $scope.strings = strings;
+      User.restore();
 
       $scope.login = function () {
         $scope.User.login(this.name, this.password).then(function () {
@@ -168,7 +169,7 @@ App.controller('UsersManageController',
           $scope.$broadcast('users:request-end');
           $scope.users = data;
         }, function () {
-          $rootScope.$broadcast('toast', strings.networkError);
+          //$rootScope.$broadcast('toast', strings.networkError);
           $scope.$broadcast('users:request-end');
         });
       };
@@ -220,7 +221,7 @@ App.controller('UsersManageController',
  * Manage students partial controller
  */
 App.controller('StudentsManageController',
-    function ($scope, $rootScope, StudentsList, strings, $timeout) {
+    function ($scope, $rootScope, StudentsList, GroupsList, strings, $timeout) {
       $scope.mode = 'listMode';
 
       $scope.sync = function () {
@@ -231,13 +232,14 @@ App.controller('StudentsManageController',
           $scope.$broadcast('students:request-end');
           $scope.students = data;
         }, function () {
-          $rootScope.$broadcast('toast', strings.networkError);
+          //$rootScope.$broadcast('toast', strings.networkError);
           $scope.$broadcast('students:request-end');
         });
       };
       $scope.sync();
 
       $scope.addStudent = function () {
+        $scope.groups = GroupsList.get();
         $scope.mode = 'addMode';
       };
       $scope.createStudent = function () {
@@ -253,8 +255,13 @@ App.controller('StudentsManageController',
         });
       };
       $scope.editStudent = function (student) {
+        $scope.groups = GroupsList.get();
         $scope.editedStudent = student;
+        $scope.editedStudent.groupId = student.group.id;
         $scope.mode = 'editMode';
+        setTimeout(function () {
+          $('#student-group-edit-select').val(student.group.id);
+        }, 100);
       };
       $scope.viewStudent = function (student) {
         $scope.viewedStudent = student;
@@ -263,6 +270,7 @@ App.controller('StudentsManageController',
       $scope.updateStudent = function () {
         var std = this.editedStudent;
 
+        console.log(std);
         StudentsList.edit(this.editedStudent.id, this.editedStudent).then(function () {
           $scope.students[_.indexOf($scope.students, std)] = std;
           $scope.mode = 'listMode';
@@ -294,8 +302,8 @@ App.controller('LecturersManageController',
           $scope.$broadcast('lecturers:request-end');
           $scope.lecturers = data;
         }, function () {
-          $rootScope.$broadcast('toast', strings.networkError);
-          $scope.$broadcast('students:request-end');
+          //$rootScope.$broadcast('toast', strings.networkError);
+          $scope.$broadcast('lecturers:request-end');
         });
       };
       $scope.sync();
@@ -357,8 +365,8 @@ App.controller('DepartmentsManageController',
           $scope.$broadcast('departments:request-end');
           $scope.departments = data;
         }, function () {
-          $rootScope.$broadcast('toast', strings.networkError);
-          $scope.$broadcast('students:request-end');
+          //$rootScope.$broadcast('toast', strings.networkError);
+          $scope.$broadcast('departments:request-end');
         });
       };
       $scope.sync();
@@ -399,6 +407,447 @@ App.controller('DepartmentsManageController',
       $scope.eraseDepartment = function (department) {
         DepartmentsList.erase(department.id).then(function () {
           $scope.departments.splice(_.indexOf($scope.departments, department), 1);
+        }, function () {
+          $rootScope.$broadcast('toast', strings.eraseError);
+        });
+      };
+    });
+
+/**
+ * Manage specialities partial controller
+ */
+App.controller('SpecialitiesManageController',
+    function ($scope, $rootScope, SpecialitiesList, strings, $timeout) {
+      $scope.mode = 'listMode';
+
+      $scope.sync = function () {
+        $timeout(function () {
+          $scope.$broadcast('specialities:request-start')
+        }, 1);
+        SpecialitiesList.lookup().then(function (data) {
+          $scope.$broadcast('specialities:request-end');
+          $scope.specialities = data;
+        }, function () {
+          //$rootScope.$broadcast('toast', strings.networkError);
+          $scope.$broadcast('specialities:request-end');
+        });
+      };
+      $scope.sync();
+
+      $scope.addSpeciality = function () {
+        $scope.mode = 'addMode';
+      };
+      $scope.createSpeciality = function () {
+        SpecialitiesList.create(this.createdSpeciality || {}).then(function (speciality) {
+          if ($scope.specialities) {
+            $scope.specialities.push(speciality)
+          } else {
+            $scope.specialities = [speciality];
+          }
+          $scope.mode = 'listMode';
+        }, function () {
+          $rootScope.$broadcast('toast', strings.createError);
+        });
+      };
+      $scope.editSpeciality = function (speciality) {
+        $scope.editedSpeciality = speciality;
+        $scope.mode = 'editMode';
+      };
+      $scope.viewSpeciality = function (speciality) {
+        $scope.viewedSpeciality = speciality;
+        $scope.mode = 'viewMode';
+      };
+      $scope.updateSpeciality = function () {
+        var spc = this.editedSpeciality;
+
+        SpecialitiesList.edit(this.editedSpeciality.id, this.editedSpeciality).then(function () {
+          $scope.specialities[_.indexOf($scope.specialities, spc)] = spc;
+          $scope.mode = 'listMode';
+        }, function () {
+          $rootScope.$broadcast('toast', strings.createError);
+        });
+      };
+      $scope.eraseDepartment = function (speciality) {
+        SpecialitiesList.erase(speciality.id).then(function () {
+          $scope.specialities.splice(_.indexOf($scope.specialities, speciality), 1);
+        }, function () {
+          $rootScope.$broadcast('toast', strings.eraseError);
+        });
+      };
+    });
+
+/**
+ * Manage groups partial controller
+ */
+App.controller('GroupsManageController',
+    function ($scope, $rootScope, GroupsList, strings, $timeout) {
+      $scope.mode = 'listMode';
+
+      $scope.sync = function () {
+        $timeout(function () {
+          $scope.$broadcast('groups:request-start')
+        }, 1);
+        GroupsList.lookup().then(function (data) {
+          $scope.$broadcast('groups:request-end');
+          $scope.groups = data;
+        }, function () {
+          //$rootScope.$broadcast('toast', strings.networkError);
+          $scope.$broadcast('groups:request-end');
+        });
+      };
+      $scope.sync();
+
+      $scope.addGroup = function () {
+        $scope.mode = 'addMode';
+      };
+      $scope.createGroup = function () {
+        GroupsList.create(this.createdGroup || {}).then(function (group) {
+          if ($scope.groups) {
+            $scope.groups.push(group)
+          } else {
+            $scope.groups = [group];
+          }
+          $scope.mode = 'listMode';
+        }, function () {
+          $rootScope.$broadcast('toast', strings.createError);
+        });
+      };
+      $scope.editGroup = function (group) {
+        $scope.editedGroup = group;
+        $scope.mode = 'editMode';
+      };
+      $scope.viewGroup = function (group) {
+        $scope.viewedGroup = group;
+        $scope.mode = 'viewMode';
+      };
+      $scope.updateGroup = function () {
+        var grp = this.editedGroup;
+
+        GroupsList.edit(this.editedGroup.id, this.editedGroup).then(function () {
+          $scope.groups[_.indexOf($scope.groups, grp)] = grp;
+          $scope.mode = 'listMode';
+        }, function () {
+          $rootScope.$broadcast('toast', strings.createError);
+        });
+      };
+      $scope.eraseGroup = function (group) {
+        GroupsList.erase(group.id).then(function () {
+          $scope.groups.splice(_.indexOf($scope.groups, group), 1);
+        }, function () {
+          $rootScope.$broadcast('toast', strings.eraseError);
+        });
+      };
+    });
+
+/**
+ * Manage disciplines partial controller
+ */
+App.controller('DisciplinesManageController',
+    function ($scope, $rootScope, DisciplinesList, strings, $timeout) {
+      $scope.mode = 'listMode';
+
+      $scope.sync = function () {
+        $timeout(function () {
+          $scope.$broadcast('disciplines:request-start')
+        }, 1);
+        DisciplinesList.lookup().then(function (data) {
+          $scope.$broadcast('disciplines:request-end');
+          $scope.disciplines = data;
+        }, function () {
+          //$rootScope.$broadcast('toast', strings.networkError);
+          $scope.$broadcast('disciplines:request-end');
+        });
+      };
+      $scope.sync();
+
+      $scope.addDiscipline = function () {
+        $scope.mode = 'addMode';
+      };
+      $scope.createDiscipline = function () {
+        DisciplinesList.create(this.createdDiscipline || {}).then(function (discipline) {
+          if ($scope.disciplines) {
+            $scope.disciplines.push(discipline)
+          } else {
+            $scope.disciplines = [discipline];
+          }
+          $scope.mode = 'listMode';
+        }, function () {
+          $rootScope.$broadcast('toast', strings.createError);
+        });
+      };
+      $scope.editDiscipline = function (discipline) {
+        $scope.editedDiscipline = discipline;
+        $scope.mode = 'editMode';
+      };
+      $scope.viewDiscipline = function (discipline) {
+        $scope.viewedDiscipline = discipline;
+        $scope.mode = 'viewMode';
+      };
+      $scope.updateDiscipline = function () {
+        var dsc = this.editedDiscipline;
+
+        DisciplinesList.edit(this.editedDiscipline.id, this.editedDiscipline).then(function () {
+          $scope.disciplines[_.indexOf($scope.disciplines, dsc)] = dsc;
+          $scope.mode = 'listMode';
+        }, function () {
+          $rootScope.$broadcast('toast', strings.createError);
+        });
+      };
+      $scope.eraseDiscipline = function (discipline) {
+        DisciplinesList.erase(discipline.id).then(function () {
+          $scope.disciplines.splice(_.indexOf($scope.disciplines, discipline), 1);
+        }, function () {
+          $rootScope.$broadcast('toast', strings.eraseError);
+        });
+      };
+    });
+
+/**
+ * Manage discipline types partial controller
+ */
+App.controller('DisciplineTypesManageController',
+    function ($scope, $rootScope, DisciplineTypesList, strings, $timeout) {
+      $scope.mode = 'listMode';
+
+      $scope.sync = function () {
+        $timeout(function () {
+          $scope.$broadcast('disciplineTypes:request-start')
+        }, 1);
+        DisciplineTypesList.lookup().then(function (data) {
+          $scope.$broadcast('disciplineTypes:request-end');
+          $scope.disciplineTypes = data;
+        }, function () {
+          //$rootScope.$broadcast('toast', strings.networkError);
+          $scope.$broadcast('disciplineTypes:request-end');
+        });
+      };
+      $scope.sync();
+
+      $scope.addDisciplineType = function () {
+        $scope.mode = 'addMode';
+      };
+      $scope.createDisciplineType = function () {
+        DisciplineTypesList.create(this.createdDisciplineType || {}).then(function (disciplineType) {
+          if ($scope.disciplineTypes) {
+            $scope.disciplineTypes.push(disciplineType)
+          } else {
+            $scope.disciplineTypes = [disciplineType];
+          }
+          $scope.mode = 'listMode';
+        }, function () {
+          $rootScope.$broadcast('toast', strings.createError);
+        });
+      };
+      $scope.editDisciplineType = function (disciplineType) {
+        $scope.editedDisciplineType = disciplineType;
+        $scope.mode = 'editMode';
+      };
+      $scope.viewDisciplineType = function (disciplineType) {
+        $scope.viewedDisciplineType = disciplineType;
+        $scope.mode = 'viewMode';
+      };
+      $scope.updateDisciplineType = function () {
+        var dsc = this.editedDisciplineType;
+
+        DisciplineTypesList.edit(this.editedDisciplineType.id, this.editedDisciplineType).then(function () {
+          $scope.disciplineTypes[_.indexOf($scope.disciplineTypes, dsc)] = dsc;
+          $scope.mode = 'listMode';
+        }, function () {
+          $rootScope.$broadcast('toast', strings.createError);
+        });
+      };
+      $scope.eraseDisciplineType = function (disciplineType) {
+        DisciplineTypesList.erase(disciplineType.id).then(function () {
+          $scope.disciplineTypes.splice(_.indexOf($scope.disciplineTypes, disciplineType), 1);
+        }, function () {
+          $rootScope.$broadcast('toast', strings.eraseError);
+        });
+      };
+    });
+
+/**
+ * Manage curriculums partial controller
+ */
+App.controller('CurriculumsManageController',
+    function ($scope, $rootScope, CurriculumsList, strings, $timeout) {
+      $scope.mode = 'listMode';
+
+      $scope.sync = function () {
+        $timeout(function () {
+          $scope.$broadcast('curriculums:request-start')
+        }, 1);
+        CurriculumsList.lookup().then(function (data) {
+          $scope.$broadcast('curriculums:request-end');
+          $scope.curriculums = data;
+        }, function () {
+          //$rootScope.$broadcast('toast', strings.networkError);
+          $scope.$broadcast('curriculums:request-end');
+        });
+      };
+      $scope.sync();
+
+      $scope.addCurriculum = function () {
+        $scope.mode = 'addMode';
+      };
+      $scope.createCurriculum = function () {
+        CurriculumsList.create(this.createdCurriculum || {}).then(function (curriculum) {
+          if ($scope.curriculums) {
+            $scope.curriculums.push(curriculum)
+          } else {
+            $scope.curriculums = [curriculum];
+          }
+          $scope.mode = 'listMode';
+        }, function () {
+          $rootScope.$broadcast('toast', strings.createError);
+        });
+      };
+      $scope.editCurriculum = function (curriculum) {
+        $scope.editedCurriculum = curriculum;
+        $scope.mode = 'editMode';
+      };
+      $scope.viewCurriculum = function (curriculum) {
+        $scope.viewedCurriculum = curriculum;
+        $scope.mode = 'viewMode';
+      };
+      $scope.updateCurriculum = function () {
+        var crc = this.editedCurriculum;
+
+        CurriculumsList.edit(this.editedCurriculum.id, this.editedCurriculum).then(function () {
+          $scope.curriculums[_.indexOf($scope.curriculums, crc)] = crc;
+          $scope.mode = 'listMode';
+        }, function () {
+          $rootScope.$broadcast('toast', strings.createError);
+        });
+      };
+      $scope.eraseCurriculum = function (curriculum) {
+        CurriculumsList.erase(curriculum.id).then(function () {
+          $scope.curriculums.splice(_.indexOf($scope.curriculums, curriculum), 1);
+        }, function () {
+          $rootScope.$broadcast('toast', strings.eraseError);
+        });
+      };
+    });
+
+/**
+ * Manage classrooms partial controller
+ */
+App.controller('ClassroomsManageController',
+    function ($scope, $rootScope, ClassroomsList, strings, $timeout) {
+      $scope.mode = 'listMode';
+
+      $scope.sync = function () {
+        $timeout(function () {
+          $scope.$broadcast('classrooms:request-start')
+        }, 1);
+        ClassroomsList.lookup().then(function (data) {
+          $scope.$broadcast('classrooms:request-end');
+          $scope.classrooms = data;
+        }, function () {
+          //$rootScope.$broadcast('toast', strings.networkError);
+          $scope.$broadcast('classrooms:request-end');
+        });
+      };
+      $scope.sync();
+
+      $scope.addClassroom = function () {
+        $scope.mode = 'addMode';
+      };
+      $scope.createClassroom = function () {
+        ClassroomsList.create(this.createdClassroom || {}).then(function (classroom) {
+          if ($scope.classrooms) {
+            $scope.classrooms.push(classroom)
+          } else {
+            $scope.classrooms = [classroom];
+          }
+          $scope.mode = 'listMode';
+        }, function () {
+          $rootScope.$broadcast('toast', strings.createError);
+        });
+      };
+      $scope.editClassroom = function (classroom) {
+        $scope.editedClassroom = classroom;
+        $scope.mode = 'editMode';
+      };
+      $scope.viewClassroom = function (classroom) {
+        $scope.viewedClassroom = classroom;
+        $scope.mode = 'viewMode';
+      };
+      $scope.updateClassroom = function () {
+        var crm = this.editedClassroom;
+
+        ClassroomsList.edit(this.editedClassroom.id, this.editedClassroom).then(function () {
+          $scope.classrooms[_.indexOf($scope.classrooms, crm)] = crm;
+          $scope.mode = 'listMode';
+        }, function () {
+          $rootScope.$broadcast('toast', strings.createError);
+        });
+      };
+      $scope.eraseClassroom = function (classroom) {
+        ClassroomsList.erase(classroom.id).then(function () {
+          $scope.classrooms.splice(_.indexOf($scope.classrooms, classroom), 1);
+        }, function () {
+          $rootScope.$broadcast('toast', strings.eraseError);
+        });
+      };
+    });
+
+/**
+ * Manage studies partial controller
+ */
+App.controller('StudiesManageController',
+    function ($scope, $rootScope, StudiesList, strings, $timeout) {
+      $scope.mode = 'listMode';
+
+      $scope.sync = function () {
+        $timeout(function () {
+          $scope.$broadcast('studies:request-start')
+        }, 1);
+        StudiesList.lookup().then(function (data) {
+          $scope.$broadcast('studies:request-end');
+          $scope.studies = data;
+        }, function () {
+          //$rootScope.$broadcast('toast', strings.networkError);
+          $scope.$broadcast('studies:request-end');
+        });
+      };
+      $scope.sync();
+
+      $scope.addStudy = function () {
+        $scope.mode = 'addMode';
+      };
+      $scope.createStudy = function () {
+        StudiesList.create(this.createdStudy || {}).then(function (study) {
+          if ($scope.studies) {
+            $scope.studies.push(study)
+          } else {
+            $scope.studies = [study];
+          }
+          $scope.mode = 'listMode';
+        }, function () {
+          $rootScope.$broadcast('toast', strings.createError);
+        });
+      };
+      $scope.editStudy = function (study) {
+        $scope.editedStudy = study;
+        $scope.mode = 'editMode';
+      };
+      $scope.viewStudy = function (study) {
+        $scope.viewedStudy = study;
+        $scope.mode = 'viewMode';
+      };
+      $scope.updateStudy = function () {
+        var std = this.editedStudy;
+
+        StudiesList.edit(this.editedStudy.id, this.editedStudy).then(function () {
+          $scope.studies[_.indexOf($scope.studies, std)] = std;
+          $scope.mode = 'listMode';
+        }, function () {
+          $rootScope.$broadcast('toast', strings.createError);
+        });
+      };
+      $scope.eraseStudy = function (study) {
+        StudiesList.erase(study.id).then(function () {
+          $scope.studies.splice(_.indexOf($scope.studies, study), 1);
         }, function () {
           $rootScope.$broadcast('toast', strings.eraseError);
         });

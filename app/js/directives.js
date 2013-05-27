@@ -67,6 +67,7 @@ angular.module('scheduleApp.directives', []).
               closeMenu();
             }
             if (!elementWasOpen) {
+              element.removeClass('closed');
               element.addClass('open');
               openElement = element;
               closeMenu = function (event) {
@@ -76,6 +77,9 @@ angular.module('scheduleApp.directives', []).
                 }
                 $document.unbind('click', closeMenu);
                 element.removeClass('open');
+                setTimeout(function(){
+                  element.addClass('closed');
+                }, 300);
                 closeMenu = angular.noop;
                 openElement = null;
               };
