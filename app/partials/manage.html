@@ -88,8 +88,6 @@
             <dd>{{viewedUser.patronymic}}</dd>
             <dt>Логин</dt>
             <dd>{{viewedUser.login}}</dd>
-            <dt>Пароль (хеш)</dt>
-            <dd>{{viewedUser.password}}</dd>
             <dt>Администратор</dt>
             <dd>{{viewedUser.admin && 'Да' || 'Нет'}}</dd>
           </dl>
@@ -173,7 +171,7 @@
           <label for="">Логин студента</label>
           <input type="text" class="span7" ng-model="editedStudent.login">
           <label for="">Пароль студента (номер зачетки)</label>
-          <input type="text" class="span7" ng-model="editedStudent.password" ngv-required>
+          <input type="text" class="span7" ng-model="editedStudent.password">
           <label for="">Группа студента</label>
           <select class="span7" ng-model="editedStudent.groupId"
                   ng-options="group.id as groupAdapter(group) for group in groups" ngv-required>
@@ -203,10 +201,8 @@
             <dd>{{viewedStudent.patronymic}}</dd>
             <dt>Логин</dt>
             <dd>{{viewedStudent.login}}</dd>
-            <dt>Пароль (хеш)</dt>
-            <dd>{{viewedStudent.password}}</dd>
             <dt>Группа</dt>
-            <dd>{{viewedStudent.groupId}}</dd>
+            <dd>{{viewedStudent.group.number}}{{viewedStudent.group.subgroup}}</dd>
             <dt>Год поступления</dt>
             <dd>{{viewedStudent.yearOfEntrance}}</dd>
             <dt>Староста</dt>
@@ -266,7 +262,7 @@
           <label for="">Пароль преподователя</label>
           <input type="text" class="span7" ng-model="createdLecturer.password" ngv-required>
           <label for="">Кафедра преподователя</label>
-          <select class="span7" ng-model="createdLecturer.department"
+          <select class="span7" ng-model="createdLecturer.departmentId"
                   ng-options="department.id as department.name for department in departments" ngv-required>
           </select>
           <label class="checkbox">
@@ -291,7 +287,7 @@
           <label for="">Пароль преподователя</label>
           <input type="text" class="span7" ng-model="editedLecturer.password">
           <label for="">Кафедра преподователя</label>
-          <select class="span7" ng-model="editedLecturer.department"
+          <select class="span7" ng-model="editedLecturer.departmentId"
                   ng-options="department.id as department.name for department in departments" ngv-required>
           </select>
           <label class="checkbox">
@@ -314,8 +310,6 @@
             <dd>{{viewedLecturer.patronymic}}</dd>
             <dt>Логин</dt>
             <dd>{{viewedLecturer.login}}</dd>
-            <dt>Пароль (хеш)</dt>
-            <dd>{{viewedLecturer.password}}</dd>
             <dt>Кафедра</dt>
             <dd>{{viewedLecturer.department.name}}</dd>
             <dt>Администратор</dt>
@@ -548,9 +542,9 @@
             <dt>Год</dt>
             <dd>{{viewedGroup.year}}</dd>
             <dt>Подгруппа</dt>
-            <dd>{{viewedGroup.subgroup}}</dd>
+            <dd>{{viewedGroup.subgroup && viewedGroup.subgroup || '&nbsp;'}}</dd>
             <dt>Специальность</dt>
-            <dd>{{viewedGroup.specialtyId}}</dd>
+            <dd>{{viewedGroup.specialty.name}}</dd>
           </dl>
           <input type="button" class="btn btn-large btn-block span7" value="Назад"
                  ng-click="mode = 'listMode'">
@@ -623,7 +617,7 @@
             <dt>Имя</dt>
             <dd>{{viewedDiscipline.name}}</dd>
             <dt>Тип</dt>
-            <dd>{{viewedDiscipline.disciplineTypeId}}</dd>
+            <dd>{{viewedDiscipline.disciplineType.type}}</dd>
           </dl>
           <input type="button" class="btn btn-large btn-block span7" value="Назад"
                  ng-click="mode = 'listMode'">
@@ -673,7 +667,7 @@
         <form name="editForm" class="manage-form" ng-submit="updateDisciplineType()" ng-show="mode == 'editMode'">
           <h3>Редактировать тип дисциплины</h3>
           <label for="">Тип дисциплины</label>
-          <input type="text" class="span7" ng-model="editedDisciplineType.name" ngv-required>
+          <input type="text" class="span7" ng-model="editedDisciplineType.type" ngv-required>
           <input type="submit" class="btn btn-large btn-block span7"
                  ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}"
                  ng-disabled="editForm.$invalid" value="Изменить">
@@ -728,11 +722,11 @@
         <form name="addForm" class="manage-form" ng-submit="createCurriculum()" ng-show="mode == 'addMode'">
           <h3>Добавить учебную программу</h3>
           <label for="">Дисциплина программы</label>
-          <select class="span7" ng-model="createdCurriculum.discipline"
+          <select class="span7" ng-model="createdCurriculum.disciplineId"
                   ng-options="discipline.id as discipline.name for discipline in disciplines" ngv-required>
           </select>
           <label for="">Специальность программы</label>
-          <select class="span7" ng-model="createdCurriculum.specialty"
+          <select class="span7" ng-model="createdCurriculum.specialtyId"
                   ng-options="speciality.id as speciality.name for speciality in specialities" ngv-required>
           </select>
           <label for="">Часы программы</label>
@@ -740,10 +734,10 @@
           <label for="">Семестр программы</label>
           <input type="text" class="span7" ng-model="createdCurriculum.semester" ngv-required>
           <label class="checkbox">
-            <input type="checkbox" ng-model="createdCurriculum.isExam"> Экзамен
+            <input type="checkbox" ng-model="createdCurriculum.exam"> Экзамен
           </label>
           <label class="checkbox">
-            <input type="checkbox" ng-model="createdCurriculum.isSetoff"> SetOff
+            <input type="checkbox" ng-model="createdCurriculum.setoff"> SetOff
           </label>
           <input type="submit" class="btn btn-large btn-block span7"
                  ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}"
@@ -754,11 +748,11 @@
         <form name="editForm" class="manage-form" ng-submit="updateCurriculum()" ng-show="mode == 'editMode'">
           <h3>Редактировать учебную программу</h3>
           <label for="">Дисциплина программы</label>
-          <select class="span7" ng-model="editedCurriculum.discipline"
+          <select class="span7" ng-model="editedCurriculum.disciplineId"
                   ng-options="discipline.id as discipline.name for discipline in disciplines" ngv-required>
           </select>
           <label for="">Специальность программы</label>
-          <select class="span7" ng-model="editedCurriculum.specialty"
+          <select class="span7" ng-model="editedCurriculum.specialtyId"
                   ng-options="speciality.id as speciality.name for speciality in specialities" ngv-required>
           </select>
           <label for="">Часы программы</label>
@@ -766,10 +760,10 @@
           <label for="">Семестр программы</label>
           <input type="text" class="span7" ng-model="editedCurriculum.semester" ngv-required>
           <label class="checkbox">
-            <input type="checkbox" ng-model="editedCurriculum.isExam"> Экзамен
+            <input type="checkbox" ng-model="editedCurriculum.exam"> Экзамен
           </label>
           <label class="checkbox">
-            <input type="checkbox" ng-model="editedCurriculum.isSetoff"> SetOff
+            <input type="checkbox" ng-model="editedCurriculum.setoff"> SetOff
           </label>
           <input type="submit" class="btn btn-large btn-block span7"
                  ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}"
@@ -781,9 +775,9 @@
           <h3>Детали учебной программы</h3>
           <dl class="dl-horizontal">
             <dt>Дисциплина</dt>
-            <dd>{{viewedCurriculum.discipline}}</dd>
+            <dd>{{viewedCurriculum.discipline.name}}</dd>
             <dt>Специальность</dt>
-            <dd>{{viewedCurriculum.specialty}}</dd>
+            <dd>{{viewedCurriculum.specialty.name}}</dd>
             <dt>Часы</dt>
             <dd>{{viewedCurriculum.hours}}</dd>
             <dt>Семестр</dt>
@@ -868,7 +862,59 @@
       </div>
     </div>
     <div pane name="Время занятий" icon="time" category="time">
-      Время занятий
+      <div ng-controller="TimesManageController"
+           spin-on="{on: 'times:request-start', off: 'times:request-end'}"
+           class="overflow-pane time-man">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Начало</th>
+              <th>Конец</th>
+              <th>Перерыв</th>
+              <th width="70">
+                <a class="action lsf" title="добавить" ng-click="addTime()">plus</a>
+                <a class="action lsf" title="синхронизировать" ng-click="sync()">sync</a>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="time in times">
+              <td>{{$index + 1}}</td>
+              <td>{{time.startTime}}</td>
+              <td>{{time.endTime}}</td>
+              <td>{{time.breakTime}}</td>
+              <td>
+                <a class="action lsf" title="редактировать" ng-click="editTime(time)">edit</a>
+                <a class="action lsf" title="удалить" ng-click="eraseTime(time)">eraser</a>
+              </td>
+            </tr>
+            <tr ng-show="!times || !times.length">
+              <td colspan="5" style="text-align: center">Нет данных</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row">
+          <div class="control-group input-append span2">
+            <span class="lsf">bell</span>
+            <input type="text" ng-model="timepicker.startTime" data-default-time="08:15" timepicker>
+            <button type="button" class="btn" data-toggle="timepicker"><span class="lsf">time</span></button>
+          </div>
+          <div class="control-group input-append span2">
+            <span class="lsf">minus</span>
+            <input type="text" ng-model="timepicker.endTime" timepicker>
+            <button type="button" class="btn" data-toggle="timepicker"><span class="lsf">time</span></button>
+          </div>
+          <div class="control-group input-append span2">
+            <span class="lsf" style="margin-left: 20px">cup</span>
+            <input type="text" ng-model="timepicker.breakTime" data-default-time="00:15" timepicker>
+            <button type="button" class="btn" data-toggle="timepicker"><span class="lsf">time</span></button>
+          </div>
+        </div>
+        <div class="row-1">
+          <input type="button" class="btn btn-large btn-block btn-primary" value="{{buttonText}}" ng-click="createTime()">
+        </div>
+      </div>
     </div>
     <div pane name="Занятия" icon="bell" category="study">
       <div ng-controller="StudiesManageController"
@@ -880,7 +926,7 @@
               <th>#</th>
               <th>Группа</th>
               <th>Преподователь</th>
-              <th>Учебная программа</th>
+              <th>Id учебной программы</th>
               <th width="70">
                 <a class="action lsf" title="добавить" ng-click="addStudy()">plus</a>
                 <a class="action lsf" title="синхронизировать" ng-click="sync()">sync</a>
@@ -890,7 +936,7 @@
           <tbody>
             <tr ng-repeat="study in studies">
               <td>{{$index + 1}}</td>
-              <td>{{study.group.number}}</td>
+              <td>{{study.group.number}}{{study.group.subgroup}}</td>
               <td>{{study.lecturer.fullName}}</td>
               <td>{{study.curriculum.id}}</td>
               <td>
@@ -907,16 +953,17 @@
         <form name="addForm" class="manage-form" ng-submit="createStudy()" ng-show="mode == 'addMode'">
           <h3>Добавить занятие</h3>
           <label for="">Группа занятия</label>
-          <select class="span7" ng-model="createdStudy.group"
+          <select class="span7" ng-model="createdStudy.groupId"
                   ng-options="group.id as groupAdapter(group) for group in groups" ngv-required>
           </select>
           <label for="">Преподователь занятия</label>
-          <select class="span7" ng-model="createdStudy.lecturer"
+          <select class="span7" ng-model="createdStudy.lecturerId"
                   ng-options="lecturer.id as lecturer.fullName for lecturer in lecturers" ngv-required>
           </select>
           <label for="">Учебная программа занятия</label>
-          <select class="span7" ng-model="createdStudy.curriculum"
-                  ng-options="curriculum.id as curriculumAdapter(curriculum) for curriculum in curriculums" ngv-required>
+          <select class="span7" ng-model="createdStudy.curriculumId"
+                  ng-options="curriculum.id as curriculumAdapter(curriculum) for curriculum in curriculums"
+                  ngv-required>
           </select>
           <input type="submit" class="btn btn-large btn-block span7"
                  ng-class="{disabled: addForm.$invalid, 'btn-primary': !addForm.$invalid}"
@@ -927,16 +974,17 @@
         <form name="editForm" class="manage-form" ng-submit="updateStudy()" ng-show="mode == 'editMode'">
           <h3>Редактировать занятие</h3>
           <label for="">Группа занятия</label>
-          <select class="span7" ng-model="editedStudy.group"
+          <select class="span7" ng-model="editedStudy.groupId"
                   ng-options="group.id as groupAdapter(group) for group in groups" ngv-required>
           </select>
           <label for="">Преподователь занятия</label>
-          <select class="span7" ng-model="editedStudy.lecturer"
+          <select class="span7" ng-model="editedStudy.lecturerId"
                   ng-options="lecturer.id as lecturer.fullName for lecturer in lecturers" ngv-required>
           </select>
           <label for="">Учебная программа занятия</label>
-          <select class="span7" ng-model="editedStudy.curriculum"
-                  ng-options="curriculum.id as curriculumAdapter(curriculum) for curriculum in curriculums" ngv-required>
+          <select class="span7" ng-model="editedStudy.curriculumId"
+                  ng-options="curriculum.id as curriculumAdapter(curriculum) for curriculum in curriculums"
+                  ngv-required>
           </select>
           <input type="submit" class="btn btn-large btn-block span7"
                  ng-class="{disabled: editForm.$invalid, 'btn-primary': !editForm.$invalid}"
@@ -948,11 +996,11 @@
           <h3>Детали занятия</h3>
           <dl class="dl-horizontal">
             <dt>Группа</dt>
-            <dd>{{viewedStudy.number}}</dd>
+            <dd>{{viewedStudy.group.number}}</dd>
             <dt>Преподователь</dt>
-            <dd>{{viewedStudy.capacity}}</dd>
-            <dt>Учебная программа</dt>
-            <dd>{{viewedStudy.capacity}}</dd>
+            <dd>{{viewedStudy.lecturer.fullName}}</dd>
+            <dt>Id учебной программы</dt>
+            <dd>{{viewedStudy.curriculum.id}}</dd>
           </dl>
           <input type="button" class="btn btn-large btn-block span7" value="Назад"
                  ng-click="mode = 'listMode'">

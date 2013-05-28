@@ -77,7 +77,7 @@ angular.module('scheduleApp.directives', []).
                 }
                 $document.unbind('click', closeMenu);
                 element.removeClass('open');
-                setTimeout(function(){
+                setTimeout(function () {
                   element.addClass('closed');
                 }, 300);
                 closeMenu = angular.noop;
@@ -222,6 +222,58 @@ angular.module('scheduleApp.directives', []).
         replace   : true
       };
     }).
+    directive('timeCell', [function () {
+      return {
+        restrict: 'A',
+        link    : function (scope, element, attrs) {
+
+        },
+        template: '<div class="tab-pane" ng-class="{active: selected}" ng-transclude></div>',
+        replace : true
+      }
+    }]).
+    directive('timepicker', [ '$timeout', function ($timeout) {
+      var TIME_REGEXP = '((?:(?:[0-1][0-9])|(?:[2][0-3])|(?:[0-9])):(?:[0-5][0-9])(?::[0-5][0-9])?(?:\\s?(?:am|AM|pm|PM))?)';
+      return {
+        restrict: 'A',
+        require : '?ngModel',
+        link    : function postLink(scope, element, attrs, controller) {
+          if (controller) {
+            element.on('changeTime.timepicker', function (ev) {
+              $timeout(function () {
+                controller.$setViewValue(element.val());
+              });
+            });
+            var timeRegExp = new RegExp('^' + TIME_REGEXP + '$', ['i']);
+            controller.$parsers.unshift(function (viewValue) {
+              if (!viewValue || timeRegExp.test(viewValue)) {
+                controller.$setValidity('time', true);
+                return viewValue;
+              } else {
+                controller.$setValidity('time', false);
+                return null;
+              }
+            });
+          }
+          element.attr('data-toggle', 'timepicker');
+          element.parent().addClass('bootstrap-timepicker');
+          element.timepicker({
+            showMeridian: false,
+            minuteStep  : 5
+          });
+          var timepicker = element.data('timepicker');
+          var component = element.siblings('[data-toggle="timepicker"]');
+          if (component.length) {
+            component.on('click', $.proxy(timepicker.showWidget, timepicker));
+          }
+          /*element.keypress(function (event) {
+           if (event.which == 13) {
+           scope.$broadcast('timepicker:accept');
+           }
+           });*/
+        }
+      };
+    }]).
 /**
  * Validation directives
  */
@@ -423,8 +475,8 @@ angular.module('scheduleApp.directives', []).
     }).
     directive('schedulerDraggablePopup', function () {
       return {
-        restrict: 'A',
-        link    : function (scope, element, attributes) {
+        restrict   : 'A',
+        link       : function (scope, element, attributes) {
           element.find('.close').click(function () {
             element.removeClass('show');
           });

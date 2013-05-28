@@ -180,13 +180,8 @@ App.controller('UsersManageController',
       };
       $scope.createUser = function () {
         $scope.$broadcast('users:request-start');
-        UsersList.create(this.createdUser || {}).then(function (user) {
+        UsersList.create(this.createdUser || {}).then(function () {
           $scope.$broadcast('users:request-end');
-          if ($scope.users) {
-            $scope.users.push(user)
-          } else {
-            $scope.users = [user];
-          }
           $scope.mode = 'listMode';
         }, function () {
           $scope.$broadcast('users:request-end');
@@ -196,7 +191,6 @@ App.controller('UsersManageController',
       $scope.editUser = function (user) {
         $scope.editedUser = _.cloneDeep(user);
         $scope.editedUser.password = null;
-        $scope.aIndex = _.indexOf($scope.users, user);
         $scope.mode = 'editMode';
       };
       $scope.viewUser = function (user) {
@@ -204,16 +198,9 @@ App.controller('UsersManageController',
         $scope.mode = 'viewMode';
       };
       $scope.updateUser = function () {
-        var usr = this.editedUser;
-
         $scope.$broadcast('users:request-start');
-        UsersList.edit(this.editedUser.id, this.editedUser).then(function () {
-          UsersList.getOne($scope.users[$scope.aIndex].id).then(function (data) {
-            $scope.$broadcast('users:request-end');
-            $scope.users[$scope.aIndex] = data;
-          }, function () {
-            $scope.$broadcast('users:request-end');
-          });
+        UsersList.edit(this.editedUser).then(function () {
+          $scope.$broadcast('users:request-end');
           $scope.mode = 'listMode';
         }, function () {
           $scope.$broadcast('users:request-end');
@@ -221,9 +208,12 @@ App.controller('UsersManageController',
         });
       };
       $scope.eraseUser = function (user) {
+        $scope.$broadcast('users:request-start');
         UsersList.erase(user.id).then(function () {
+          $scope.$broadcast('users:request-end');
           $scope.users.splice(_.indexOf($scope.users, user), 1);
         }, function () {
+          $scope.$broadcast('users:request-end');
           $rootScope.$broadcast('toast', strings.eraseError);
         });
       };
@@ -238,7 +228,7 @@ App.controller('StudentsManageController',
 
       $scope.sync = function () {
         $timeout(function () {
-          $scope.$broadcast('students:request-start')
+          $scope.$broadcast('students:request-start');
         }, 1);
         StudentsList.lookup().then(function (data) {
           $scope.$broadcast('students:request-end');
@@ -254,14 +244,9 @@ App.controller('StudentsManageController',
         $scope.mode = 'addMode';
       };
       $scope.createStudent = function () {
-        $scope.$broadcast('students:request-start')
-        StudentsList.create(this.createdStudent || {}).then(function (student) {
+        $scope.$broadcast('students:request-start');
+        StudentsList.create(this.createdStudent || {}).then(function () {
           $scope.$broadcast('students:request-end');
-          if ($scope.students) {
-            $scope.students.push(student)
-          } else {
-            $scope.students = [student];
-          }
           $scope.mode = 'listMode';
         }, function () {
           $scope.$broadcast('students:request-end');
@@ -283,19 +268,22 @@ App.controller('StudentsManageController',
         $scope.mode = 'viewMode';
       };
       $scope.updateStudent = function () {
-        var std = this.editedStudent;
-
-        StudentsList.edit(this.editedStudent.id, this.editedStudent).then(function () {
-          $scope.students[_.indexOf($scope.students, std)] = std;
+        $scope.$broadcast('students:request-start');
+        StudentsList.edit(this.editedStudent).then(function () {
+          $scope.$broadcast('students:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('students:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
       $scope.eraseStudent = function (student) {
+        $scope.$broadcast('students:request-start');
         StudentsList.erase(student.id).then(function () {
+          $scope.$broadcast('students:request-end');
           $scope.students.splice(_.indexOf($scope.students, student), 1);
         }, function () {
+          $scope.$broadcast('students:request-end');
           $rootScope.$broadcast('toast', strings.eraseError);
         });
       };
@@ -310,7 +298,7 @@ App.controller('LecturersManageController',
 
       $scope.sync = function () {
         $timeout(function () {
-          $scope.$broadcast('lecturers:request-start')
+          $scope.$broadcast('lecturers:request-start');
         }, 1);
         LecturersList.lookup().then(function (data) {
           $scope.$broadcast('lecturers:request-end');
@@ -327,21 +315,19 @@ App.controller('LecturersManageController',
         $scope.mode = 'addMode';
       };
       $scope.createLecturer = function () {
-        LecturersList.create(this.createdLecturer || {}).then(function (lecturer) {
-          if ($scope.lecturers) {
-            $scope.lecturers.push(lecturer)
-          } else {
-            $scope.lecturers = [lecturer];
-          }
+        $scope.$broadcast('lecturers:request-start');
+        LecturersList.create(this.createdLecturer || {}).then(function () {
+          $scope.$broadcast('lecturers:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('lecturers:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
       $scope.editLecturer = function (lecturer) {
         $scope.departments = DepartmentsList.get();
         $scope.editedLecturer = _.cloneDeep(lecturer);
-        $scope.editedLecturer.department = lecturer.department.id;
+        $scope.editedLecturer.departmentId = lecturer.department.id;
         $scope.editedLecturer.password = null;
         $scope.mode = 'editMode';
       };
@@ -350,19 +336,22 @@ App.controller('LecturersManageController',
         $scope.mode = 'viewMode';
       };
       $scope.updateLecturer = function () {
-        var lct = this.editedLecturer;
-
-        LecturersList.edit(this.editedLecturer.id, this.editedLecturer).then(function () {
-          $scope.lecturers[_.indexOf($scope.lecturers, lct)] = lct;
+        $scope.$broadcast('lecturers:request-start');
+        LecturersList.edit(this.editedLecturer).then(function () {
+          $scope.$broadcast('lecturers:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('lecturers:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
       $scope.eraseLecturer = function (lecturer) {
+        $scope.$broadcast('lecturers:request-start');
         LecturersList.erase(lecturer.id).then(function () {
+          $scope.$broadcast('lecturers:request-end');
           $scope.lecturers.splice(_.indexOf($scope.lecturers, lecturer), 1);
         }, function () {
+          $scope.$broadcast('lecturers:request-end');
           $rootScope.$broadcast('toast', strings.eraseError);
         });
       };
@@ -377,7 +366,7 @@ App.controller('DepartmentsManageController',
 
       $scope.sync = function () {
         $timeout(function () {
-          $scope.$broadcast('departments:request-start')
+          $scope.$broadcast('departments:request-start');
         }, 1);
         DepartmentsList.lookup().then(function (data) {
           $scope.$broadcast('departments:request-end');
@@ -393,12 +382,9 @@ App.controller('DepartmentsManageController',
         $scope.mode = 'addMode';
       };
       $scope.createDepartment = function () {
-        DepartmentsList.create(this.createdDepartment || {}).then(function (department) {
-          if ($scope.departments) {
-            $scope.departments.push(department)
-          } else {
-            $scope.departments = [department];
-          }
+        $scope.$broadcast('departments:request-start');
+        DepartmentsList.create(this.createdDepartment || {}).then(function () {
+          $scope.$broadcast('departments:request-end');
           $scope.mode = 'listMode';
         }, function () {
           $rootScope.$broadcast('toast', strings.createError);
@@ -413,19 +399,22 @@ App.controller('DepartmentsManageController',
         $scope.mode = 'viewMode';
       };
       $scope.updateDepartment = function () {
-        var dpt = this.editedDepartment;
-
-        DepartmentsList.edit(this.editedDepartment.id, this.editedDepartment).then(function () {
-          $scope.departments[_.indexOf($scope.departments, dpt)] = dpt;
+        $scope.$broadcast('departments:request-start');
+        DepartmentsList.edit(this.editedDepartment).then(function () {
+          $scope.$broadcast('departments:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('departments:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
       $scope.eraseDepartment = function (department) {
+        $scope.$broadcast('departments:request-start');
         DepartmentsList.erase(department.id).then(function () {
+          $scope.$broadcast('departments:request-end');
           $scope.departments.splice(_.indexOf($scope.departments, department), 1);
         }, function () {
+          $scope.$broadcast('departments:request-end');
           $rootScope.$broadcast('toast', strings.eraseError);
         });
       };
@@ -440,7 +429,7 @@ App.controller('SpecialitiesManageController',
 
       $scope.sync = function () {
         $timeout(function () {
-          $scope.$broadcast('specialities:request-start')
+          $scope.$broadcast('specialities:request-start');
         }, 1);
         SpecialitiesList.lookup().then(function (data) {
           $scope.$broadcast('specialities:request-end');
@@ -456,14 +445,12 @@ App.controller('SpecialitiesManageController',
         $scope.mode = 'addMode';
       };
       $scope.createSpeciality = function () {
-        SpecialitiesList.create(this.createdSpeciality || {}).then(function (speciality) {
-          if ($scope.specialities) {
-            $scope.specialities.push(speciality)
-          } else {
-            $scope.specialities = [speciality];
-          }
+        $scope.$broadcast('specialities:request-start');
+        SpecialitiesList.create(this.createdSpeciality || {}).then(function () {
+          $scope.$broadcast('specialities:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('specialities:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
@@ -476,19 +463,22 @@ App.controller('SpecialitiesManageController',
         $scope.mode = 'viewMode';
       };
       $scope.updateSpeciality = function () {
-        var spc = this.editedSpeciality;
-
-        SpecialitiesList.edit(this.editedSpeciality.id, this.editedSpeciality).then(function () {
-          $scope.specialities[_.indexOf($scope.specialities, spc)] = spc;
+        $scope.$broadcast('specialities:request-start');
+        SpecialitiesList.edit(this.editedSpeciality).then(function () {
+          $scope.$broadcast('specialities:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('specialities:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
-      $scope.eraseDepartment = function (speciality) {
+      $scope.eraseSpeciality = function (speciality) {
+        $scope.$broadcast('specialities:request-start');
         SpecialitiesList.erase(speciality.id).then(function () {
+          $scope.$broadcast('specialities:request-end');
           $scope.specialities.splice(_.indexOf($scope.specialities, speciality), 1);
         }, function () {
+          $scope.$broadcast('specialities:request-end');
           $rootScope.$broadcast('toast', strings.eraseError);
         });
       };
@@ -503,7 +493,7 @@ App.controller('GroupsManageController',
 
       $scope.sync = function () {
         $timeout(function () {
-          $scope.$broadcast('groups:request-start')
+          $scope.$broadcast('groups:request-start');
         }, 1);
         GroupsList.lookup().then(function (data) {
           $scope.$broadcast('groups:request-end');
@@ -520,14 +510,12 @@ App.controller('GroupsManageController',
         $scope.mode = 'addMode';
       };
       $scope.createGroup = function () {
-        GroupsList.create(this.createdGroup || {}).then(function (group) {
-          if ($scope.groups) {
-            $scope.groups.push(group)
-          } else {
-            $scope.groups = [group];
-          }
+        $scope.$broadcast('groups:request-start');
+        GroupsList.create(this.createdGroup || {}).then(function () {
+          $scope.$broadcast('groups:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('groups:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
@@ -542,19 +530,22 @@ App.controller('GroupsManageController',
         $scope.mode = 'viewMode';
       };
       $scope.updateGroup = function () {
-        var grp = this.editedGroup;
-
-        GroupsList.edit(this.editedGroup.id, this.editedGroup).then(function () {
-          $scope.groups[_.indexOf($scope.groups, grp)] = grp;
+        $scope.$broadcast('groups:request-start');
+        GroupsList.edit(this.editedGroup).then(function () {
+          $scope.$broadcast('groups:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('groups:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
       $scope.eraseGroup = function (group) {
+        $scope.$broadcast('groups:request-start');
         GroupsList.erase(group.id).then(function () {
+          $scope.$broadcast('groups:request-end');
           $scope.groups.splice(_.indexOf($scope.groups, group), 1);
         }, function () {
+          $scope.$broadcast('groups:request-end');
           $rootScope.$broadcast('toast', strings.eraseError);
         });
       };
@@ -569,7 +560,7 @@ App.controller('DisciplinesManageController',
 
       $scope.sync = function () {
         $timeout(function () {
-          $scope.$broadcast('disciplines:request-start')
+          $scope.$broadcast('disciplines:request-start');
         }, 1);
         DisciplinesList.lookup().then(function (data) {
           $scope.$broadcast('disciplines:request-end');
@@ -586,14 +577,12 @@ App.controller('DisciplinesManageController',
         $scope.mode = 'addMode';
       };
       $scope.createDiscipline = function () {
-        DisciplinesList.create(this.createdDiscipline || {}).then(function (discipline) {
-          if ($scope.disciplines) {
-            $scope.disciplines.push(discipline)
-          } else {
-            $scope.disciplines = [discipline];
-          }
+        $scope.$broadcast('disciplines:request-start');
+        DisciplinesList.create(this.createdDiscipline || {}).then(function () {
+          $scope.$broadcast('disciplines:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('disciplines:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
@@ -608,19 +597,22 @@ App.controller('DisciplinesManageController',
         $scope.mode = 'viewMode';
       };
       $scope.updateDiscipline = function () {
-        var dsc = this.editedDiscipline;
-
-        DisciplinesList.edit(this.editedDiscipline.id, this.editedDiscipline).then(function () {
-          $scope.disciplines[_.indexOf($scope.disciplines, dsc)] = dsc;
+        $scope.$broadcast('disciplines:request-start');
+        DisciplinesList.edit(this.editedDiscipline).then(function () {
+          $scope.$broadcast('disciplines:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('disciplines:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
       $scope.eraseDiscipline = function (discipline) {
+        $scope.$broadcast('disciplines:request-start');
         DisciplinesList.erase(discipline.id).then(function () {
+          $scope.$broadcast('disciplines:request-end');
           $scope.disciplines.splice(_.indexOf($scope.disciplines, discipline), 1);
         }, function () {
+          $scope.$broadcast('disciplines:request-end');
           $rootScope.$broadcast('toast', strings.eraseError);
         });
       };
@@ -635,7 +627,7 @@ App.controller('DisciplineTypesManageController',
 
       $scope.sync = function () {
         $timeout(function () {
-          $scope.$broadcast('disciplineTypes:request-start')
+          $scope.$broadcast('disciplineTypes:request-start');
         }, 1);
         DisciplineTypesList.lookup().then(function (data) {
           $scope.$broadcast('disciplineTypes:request-end');
@@ -651,14 +643,12 @@ App.controller('DisciplineTypesManageController',
         $scope.mode = 'addMode';
       };
       $scope.createDisciplineType = function () {
-        DisciplineTypesList.create(this.createdDisciplineType || {}).then(function (disciplineType) {
-          if ($scope.disciplineTypes) {
-            $scope.disciplineTypes.push(disciplineType)
-          } else {
-            $scope.disciplineTypes = [disciplineType];
-          }
+        $scope.$broadcast('disciplineTypes:request-start');
+        DisciplineTypesList.create(this.createdDisciplineType || {}).then(function () {
+          $scope.$broadcast('disciplineTypes:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('disciplineTypes:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
@@ -671,19 +661,22 @@ App.controller('DisciplineTypesManageController',
         $scope.mode = 'viewMode';
       };
       $scope.updateDisciplineType = function () {
-        var dsc = this.editedDisciplineType;
-
-        DisciplineTypesList.edit(this.editedDisciplineType.id, this.editedDisciplineType).then(function () {
-          $scope.disciplineTypes[_.indexOf($scope.disciplineTypes, dsc)] = dsc;
+        $scope.$broadcast('disciplineTypes:request-start');
+        DisciplineTypesList.edit(this.editedDisciplineType).then(function () {
+          $scope.$broadcast('disciplineTypes:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('disciplineTypes:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
       $scope.eraseDisciplineType = function (disciplineType) {
+        $scope.$broadcast('disciplineTypes:request-start');
         DisciplineTypesList.erase(disciplineType.id).then(function () {
+          $scope.$broadcast('disciplineTypes:request-end');
           $scope.disciplineTypes.splice(_.indexOf($scope.disciplineTypes, disciplineType), 1);
         }, function () {
+          $scope.$broadcast('disciplineTypes:request-end');
           $rootScope.$broadcast('toast', strings.eraseError);
         });
       };
@@ -698,7 +691,7 @@ App.controller('CurriculumsManageController',
 
       $scope.sync = function () {
         $timeout(function () {
-          $scope.$broadcast('curriculums:request-start')
+          $scope.$broadcast('curriculums:request-start');
         }, 1);
         CurriculumsList.lookup().then(function (data) {
           $scope.$broadcast('curriculums:request-end');
@@ -716,14 +709,12 @@ App.controller('CurriculumsManageController',
         $scope.mode = 'addMode';
       };
       $scope.createCurriculum = function () {
-        CurriculumsList.create(this.createdCurriculum || {}).then(function (curriculum) {
-          if ($scope.curriculums) {
-            $scope.curriculums.push(curriculum)
-          } else {
-            $scope.curriculums = [curriculum];
-          }
+        $scope.$broadcast('curriculums:request-start');
+        CurriculumsList.create(this.createdCurriculum || {}).then(function () {
+          $scope.$broadcast('curriculums:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('curriculums:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
@@ -731,8 +722,8 @@ App.controller('CurriculumsManageController',
         $scope.disciplines = DisciplinesList.get();
         $scope.specialities = SpecialitiesList.get();
         $scope.editedCurriculum = _.cloneDeep(curriculum);
-        $scope.editedCurriculum.discipline = curriculum.discipline.id;
-        $scope.editedCurriculum.specialty = curriculum.specialty.id;
+        $scope.editedCurriculum.disciplineId = curriculum.discipline.id;
+        $scope.editedCurriculum.specialtyId = curriculum.specialty.id;
         $scope.mode = 'editMode';
       };
       $scope.viewCurriculum = function (curriculum) {
@@ -740,19 +731,22 @@ App.controller('CurriculumsManageController',
         $scope.mode = 'viewMode';
       };
       $scope.updateCurriculum = function () {
-        var crc = this.editedCurriculum;
-
-        CurriculumsList.edit(this.editedCurriculum.id, this.editedCurriculum).then(function () {
-          $scope.curriculums[_.indexOf($scope.curriculums, crc)] = crc;
+        $scope.$broadcast('curriculums:request-start');
+        CurriculumsList.edit(this.editedCurriculum).then(function () {
+          $scope.$broadcast('curriculums:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('curriculums:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
       $scope.eraseCurriculum = function (curriculum) {
+        $scope.$broadcast('curriculums:request-start');
         CurriculumsList.erase(curriculum.id).then(function () {
+          $scope.$broadcast('curriculums:request-end');
           $scope.curriculums.splice(_.indexOf($scope.curriculums, curriculum), 1);
         }, function () {
+          $scope.$broadcast('curriculums:request-end');
           $rootScope.$broadcast('toast', strings.eraseError);
         });
       };
@@ -767,7 +761,7 @@ App.controller('ClassroomsManageController',
 
       $scope.sync = function () {
         $timeout(function () {
-          $scope.$broadcast('classrooms:request-start')
+          $scope.$broadcast('classrooms:request-start');
         }, 1);
         ClassroomsList.lookup().then(function (data) {
           $scope.$broadcast('classrooms:request-end');
@@ -783,14 +777,12 @@ App.controller('ClassroomsManageController',
         $scope.mode = 'addMode';
       };
       $scope.createClassroom = function () {
-        ClassroomsList.create(this.createdClassroom || {}).then(function (classroom) {
-          if ($scope.classrooms) {
-            $scope.classrooms.push(classroom)
-          } else {
-            $scope.classrooms = [classroom];
-          }
+        $scope.$broadcast('classrooms:request-start');
+        ClassroomsList.create(this.createdClassroom || {}).then(function () {
+          $scope.$broadcast('classrooms:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('classrooms:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
@@ -803,19 +795,22 @@ App.controller('ClassroomsManageController',
         $scope.mode = 'viewMode';
       };
       $scope.updateClassroom = function () {
-        var crm = this.editedClassroom;
-
-        ClassroomsList.edit(this.editedClassroom.id, this.editedClassroom).then(function () {
-          $scope.classrooms[_.indexOf($scope.classrooms, crm)] = crm;
+        $scope.$broadcast('classrooms:request-start');
+        ClassroomsList.edit(this.editedClassroom).then(function () {
+          $scope.$broadcast('classrooms:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('classrooms:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
       $scope.eraseClassroom = function (classroom) {
+        $scope.$broadcast('classrooms:request-start');
         ClassroomsList.erase(classroom.id).then(function () {
+          $scope.$broadcast('classrooms:request-end');
           $scope.classrooms.splice(_.indexOf($scope.classrooms, classroom), 1);
         }, function () {
+          $scope.$broadcast('classrooms:request-end');
           $rootScope.$broadcast('toast', strings.eraseError);
         });
       };
@@ -830,7 +825,7 @@ App.controller('StudiesManageController',
 
       $scope.sync = function () {
         $timeout(function () {
-          $scope.$broadcast('studies:request-start')
+          $scope.$broadcast('studies:request-start');
         }, 1);
         StudiesList.lookup().then(function (data) {
           $scope.$broadcast('studies:request-end');
@@ -849,14 +844,12 @@ App.controller('StudiesManageController',
         $scope.mode = 'addMode';
       };
       $scope.createStudy = function () {
-        StudiesList.create(this.createdStudy || {}).then(function (study) {
-          if ($scope.studies) {
-            $scope.studies.push(study)
-          } else {
-            $scope.studies = [study];
-          }
+        $scope.$broadcast('studies:request-start');
+        StudiesList.create(this.createdStudy || {}).then(function () {
+          $scope.$broadcast('studies:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('studies:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
@@ -871,9 +864,9 @@ App.controller('StudiesManageController',
         $scope.lecturers = LecturersList.get();
         $scope.curriculums = CurriculumsList.get();
         $scope.editedStudy = _.cloneDeep(study);
-        $scope.editedStudy.group = study.group.id;
-        $scope.editedStudy.lecturer = study.lecturer.id;
-        $scope.editedStudy.curriculum = study.curriculum.id;
+        $scope.editedStudy.groupId = study.group.id;
+        $scope.editedStudy.lecturerId = study.lecturer.id;
+        $scope.editedStudy.curriculumId = study.curriculum.id;
         $scope.mode = 'editMode';
       };
       $scope.viewStudy = function (study) {
@@ -881,19 +874,104 @@ App.controller('StudiesManageController',
         $scope.mode = 'viewMode';
       };
       $scope.updateStudy = function () {
-        var std = this.editedStudy;
-
-        StudiesList.edit(this.editedStudy.id, this.editedStudy).then(function () {
-          $scope.studies[_.indexOf($scope.studies, std)] = std;
+        $scope.$broadcast('studies:request-start');
+        StudiesList.edit(this.editedStudy).then(function () {
+          $scope.$broadcast('studies:request-end');
           $scope.mode = 'listMode';
         }, function () {
+          $scope.$broadcast('studies:request-end');
           $rootScope.$broadcast('toast', strings.createError);
         });
       };
       $scope.eraseStudy = function (study) {
+        $scope.$broadcast('studies:request-start');
         StudiesList.erase(study.id).then(function () {
+          $scope.$broadcast('studies:request-end');
           $scope.studies.splice(_.indexOf($scope.studies, study), 1);
         }, function () {
+          $scope.$broadcast('studies:request-end');
+          $rootScope.$broadcast('toast', strings.eraseError);
+        });
+      };
+    });
+
+/**
+ * Manage time partial controller
+ */
+
+App.controller('TimesManageController',
+    function ($scope, $rootScope, TimesList, strings, $timeout) {
+      $scope.sync = function () {
+        $timeout(function () {
+          $scope.$broadcast('times:request-start');
+        }, 1);
+        TimesList.lookup().then(function (data) {
+          $scope.$broadcast('times:request-end');
+          $scope.times = data;
+        }, function () {
+          $scope.$broadcast('times:request-end');
+        });
+      };
+      $scope.sync();
+      $scope.buttonText = "Добавить";
+      $scope.edit = false;
+
+      $scope.addTime = function () {
+        this.timepicker = {};
+        $scope.buttonText = "Добавить";
+        $scope.edit = false;
+      };
+      $scope.editTime = function (time) {
+        if (!this.timepicker) {
+          this.timepicker = {};
+        }
+        this.timepicker.id = time.id;
+        this.timepicker.number = time.number;
+        this.timepicker.startTime = time.startTime;
+        this.timepicker.endTime = time.endTime;
+        this.timepicker.breakTime = "00:" + (time.breakTime < 10 ? '0' + time.breakTime : time.breakTime);
+        $scope.buttonText = "Изменить";
+        $scope.edit = true;
+      };
+      $scope.createTime = function () {
+        var timepicker;
+        if ($scope.edit) {
+          if (this.timepicker) {
+            timepicker = _.cloneDeep(this.timepicker);
+            timepicker.breakTime = timepicker.breakTime.substr(timepicker.breakTime.length - 2,
+                timepicker.breakTime.length);
+          }
+          $scope.$broadcast('times:request-start');
+          TimesList.edit(timepicker).then(function () {
+            $scope.$broadcast('times:request-end');
+          }, function () {
+            $scope.$broadcast('times:request-end');
+            $rootScope.$broadcast('toast', strings.createError);
+          });
+        } else {
+          if (this.timepicker) {
+            timepicker = _.cloneDeep(this.timepicker);
+            timepicker.number = $scope.times.length + 1;
+            timepicker.breakTime = timepicker.breakTime.substr(timepicker.breakTime.length - 2,
+                timepicker.breakTime.length);
+          }
+          $scope.$broadcast('times:request-start');
+          TimesList.create(timepicker || {}).then(function () {
+            $scope.$broadcast('times:request-end');
+          }, function () {
+            $scope.$broadcast('times:request-end');
+            $rootScope.$broadcast('toast', strings.createError);
+          });
+        }
+      };
+      $scope.eraseTime = function (time) {
+        this.timepicker = {};
+        $scope.$broadcast('times:request-start');
+        TimesList.erase(time.id).then(function () {
+          $scope.$broadcast('times:request-end');
+          $scope.times.splice(_.indexOf($scope.times, time), 1);
+        }, function () {
+          $scope.$broadcast('times:request-end');
           $rootScope.$broadcast('toast', strings.eraseError);
         });
       };

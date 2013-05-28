@@ -14,45 +14,60 @@ angular.module('scheduleApp.services', []).
       userErase           : App.host + '/service/rest/bsu/mmf/user/{userId}/delete',
       userEdit            : App.host + '/service/rest/bsu/mmf/user/{userId}/edit',
       studentsList        : App.host + '/service/rest/bsu/mmf/user/student/list',
+      studentGet          : App.host + '/service/rest/bsu/mmf/user/student/{studentId}',
       studentCreate       : App.host + '/service/rest/bsu/mmf/user/student/add',
       studentErase        : App.host + '/service/rest/bsu/mmf/user/student/{studentId}/delete',
       studentEdit         : App.host + '/service/rest/bsu/mmf/user/student/{studentId}/edit',
       lecturersList       : App.host + '/service/rest/bsu/mmf/user/lecturer/list',
+      lecturerGet         : App.host + '/service/rest/bsu/mmf/user/lecturer/{lecturerId}',
       lecturerCreate      : App.host + '/service/rest/bsu/mmf/user/lecturer/add',
       lecturerErase       : App.host + '/service/rest/bsu/mmf/user/lecturer/{lecturerId}/delete',
       lecturerEdit        : App.host + '/service/rest/bsu/mmf/user/lecturer/{lecturerId}/edit',
       departmentsList     : App.host + '/service/rest/bsu/mmf/department/list',
+      departmentGet       : App.host + '/service/rest/bsu/mmf/department/{departmentId}',
       departmentCreate    : App.host + '/service/rest/bsu/mmf/department/add',
       departmentErase     : App.host + '/service/rest/bsu/mmf/department/{departmentId}/delete',
       departmentEdit      : App.host + '/service/rest/bsu/mmf/department/{departmentId}/edit',
       specialitiesList    : App.host + '/service/rest/bsu/mmf/specialty/list',
+      specialityGet       : App.host + '/service/rest/bsu/mmf/specialty/{specialityId}',
       specialityCreate    : App.host + '/service/rest/bsu/mmf/specialty/add',
       specialityErase     : App.host + '/service/rest/bsu/mmf/specialty/{specialityId}/delete',
       specialityEdit      : App.host + '/service/rest/bsu/mmf/specialty/{specialityId}/edit',
       groupsList          : App.host + '/service/rest/bsu/mmf/group/list',
+      groupGet            : App.host + '/service/rest/bsu/mmf/group/{groupId}',
       groupCreate         : App.host + '/service/rest/bsu/mmf/group/add',
       groupErase          : App.host + '/service/rest/bsu/mmf/group/{groupId}/delete',
       groupEdit           : App.host + '/service/rest/bsu/mmf/group/{groupId}/edit',
       disciplinesList     : App.host + '/service/rest/bsu/mmf/discipline/list',
+      disciplineGet       : App.host + '/service/rest/bsu/mmf/discipline/{disciplineId}',
       disciplineCreate    : App.host + '/service/rest/bsu/mmf/discipline/add',
       disciplineErase     : App.host + '/service/rest/bsu/mmf/discipline/{disciplineId}/delete',
       disciplineEdit      : App.host + '/service/rest/bsu/mmf/discipline/{disciplineId}/edit',
       disciplineTypesList : App.host + '/service/rest/bsu/mmf/disciplineType/list',
+      disciplineTypeGet   : App.host + '/service/rest/bsu/mmf/disciplineType/{disciplineTypeId}',
       disciplineTypeCreate: App.host + '/service/rest/bsu/mmf/disciplineType/add',
       disciplineTypeErase : App.host + '/service/rest/bsu/mmf/disciplineType/{disciplineTypeId}/delete',
       disciplineTypeEdit  : App.host + '/service/rest/bsu/mmf/disciplineType/{disciplineTypeId}/edit',
       curriculumsList     : App.host + '/service/rest/bsu/mmf/curriculum/list',
+      curriculumGet       : App.host + '/service/rest/bsu/mmf/curriculum/{curriculumId}',
       curriculumCreate    : App.host + '/service/rest/bsu/mmf/curriculum/add',
       curriculumErase     : App.host + '/service/rest/bsu/mmf/curriculum/{curriculumId}/delete',
       curriculumEdit      : App.host + '/service/rest/bsu/mmf/curriculum/{curriculumId}/edit',
       classroomsList      : App.host + '/service/rest/bsu/mmf/classroom/list',
+      classroomGet        : App.host + '/service/rest/bsu/mmf/classroom/{classroomId}',
       classroomCreate     : App.host + '/service/rest/bsu/mmf/classroom/add',
       classroomErase      : App.host + '/service/rest/bsu/mmf/classroom/{classroomId}/delete',
       classroomEdit       : App.host + '/service/rest/bsu/mmf/classroom/{classroomId}/edit',
       studiesList         : App.host + '/service/rest/bsu/mmf/study/list',
+      studyGet            : App.host + '/service/rest/bsu/mmf/study/{studyId}',
       studyCreate         : App.host + '/service/rest/bsu/mmf/study/add',
       studyErase          : App.host + '/service/rest/bsu/mmf/study/{studyId}/delete',
-      studyEdit           : App.host + '/service/rest/bsu/mmf/study/{studyId}/edit'
+      studyEdit           : App.host + '/service/rest/bsu/mmf/study/{studyId}/edit',
+      timesList           : App.host + '/service/rest/bsu/mmf/disciplineTime/list',
+      timeGet             : App.host + '/service/rest/bsu/mmf/disciplineTime/{timeId}',
+      timeCreate          : App.host + '/service/rest/bsu/mmf/disciplineTime/add',
+      timeErase           : App.host + '/service/rest/bsu/mmf/disciplineTime/{timeId}/delete',
+      timeEdit            : App.host + '/service/rest/bsu/mmf/disciplineTime/{timeId}/edit'
     }).
     value('strings', {
       data               : 'Данные',
@@ -208,7 +223,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error     : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -240,7 +254,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error     : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -258,7 +271,7 @@ angular.module('scheduleApp.services', []).
                 login     : req.login,
                 password  : req.password,
                 admin     : req.admin == true
-              };
+              }, getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
@@ -267,12 +280,12 @@ angular.module('scheduleApp.services', []).
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             data       : JSON.stringify(user),
-            success    : function () {
+            success    : function (response) {
+              getOneFn(response.id);
               deferred.resolve(user);
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -295,7 +308,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -304,12 +316,13 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        edit  : function (id, req) {
-          var deferred = $q.defer();
+        edit  : function (req) {
+          var deferred = $q.defer(),
+              getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
-            url        : rest.userEdit.replace('{userId}', id),
+            url        : rest.userEdit.replace('{userId}', req.id),
             beforeSend : function (xhr) {
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
@@ -323,11 +336,11 @@ angular.module('scheduleApp.services', []).
               admin     : req.admin == true
             }),
             success    : function () {
+              getOneFn(req.id);
               deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -346,11 +359,18 @@ angular.module('scheduleApp.services', []).
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             success    : function (data) {
-              deferred.resolve(data);
+              var matched = _.findIndex(listCache, function (elem) {
+                return data.id == elem.id;
+              });
+              if (matched != -1) {
+                listCache[matched] = data;
+              } else {
+                listCache.push(data);
+              }
+              deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -382,7 +402,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error     : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -403,7 +422,7 @@ angular.module('scheduleApp.services', []).
                 yearOfEntrance: req.yearOfEntrance,
                 praepostor    : req.praepostor == true,
                 admin         : req.admin == true
-              };
+              }, getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
@@ -412,12 +431,12 @@ angular.module('scheduleApp.services', []).
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             data       : JSON.stringify(student),
-            success    : function () {
+            success    : function (response) {
+              getOneFn(response.id);
               deferred.resolve(student);
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -440,7 +459,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -449,12 +467,13 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        edit  : function (id, req) {
-          var deferred = $q.defer();
+        edit  : function (req) {
+          var deferred = $q.defer(),
+              getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
-            url        : rest.studentEdit.replace('{studentId}', id),
+            url        : rest.studentEdit.replace('{studentId}', req.id),
             beforeSend : function (xhr) {
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
@@ -471,11 +490,41 @@ angular.module('scheduleApp.services', []).
               admin         : req.admin == true
             }),
             success    : function () {
+              getOneFn(req.id);
               deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        getOne: function (id) {
+          var deferred = $q.defer();
+
+          $.ajax({
+            method     : 'GET',
+            url        : rest.studentGet.replace('{studentId}', id),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success    : function (data) {
+              var matched = _.findIndex(listCache, function (elem) {
+                return data.id == elem.id;
+              });
+              if (matched != -1) {
+                listCache[matched] = data;
+              } else {
+                listCache.push(data);
+              }
+              deferred.resolve();
+              $rootScope.$apply();
+            },
+            error      : function () {
               deferred.reject();
               $rootScope.$apply();
             },
@@ -507,7 +556,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error     : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -519,14 +567,14 @@ angular.module('scheduleApp.services', []).
         create: function (req) {
           var deferred = $q.defer(),
               lecturer = {
-                name      : req.name,
-                surname   : req.surname,
-                patronymic: req.patronymic,
-                login     : req.login,
-                password  : req.password,
-                department: req.department,
-                admin     : req.admin == true
-              };
+                name        : req.name,
+                surname     : req.surname,
+                patronymic  : req.patronymic,
+                login       : req.login,
+                password    : req.password,
+                departmentId: req.departmentId,
+                admin       : req.admin == true
+              }, getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
@@ -535,7 +583,8 @@ angular.module('scheduleApp.services', []).
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             data       : JSON.stringify(lecturer),
-            success    : function () {
+            success    : function (response) {
+              getOneFn(response.id);
               deferred.resolve(lecturer);
               $rootScope.$apply();
             },
@@ -554,7 +603,7 @@ angular.module('scheduleApp.services', []).
 
           $.ajax({
             method     : 'GET',
-            url        : rest.studentErase.replace('{lecturerId}', id),
+            url        : rest.lecturerErase.replace('{lecturerId}', id),
             beforeSend : function (xhr) {
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
@@ -563,7 +612,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -572,31 +620,62 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        edit  : function (id, req) {
-          var deferred = $q.defer();
+        edit  : function (req) {
+          var deferred = $q.defer(),
+              getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
-            url        : rest.lecturerEdit.replace('{lecturerId}', id),
+            url        : rest.lecturerEdit.replace('{lecturerId}', req.id),
             beforeSend : function (xhr) {
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             data       : JSON.stringify({
-              id        : req.id,
-              name      : req.name,
-              surname   : req.surname,
-              patronymic: req.patronymic,
-              login     : req.login,
-              password  : req.password,
-              department: req.department,
-              admin     : req.admin == true
+              id          : req.id,
+              name        : req.name,
+              surname     : req.surname,
+              patronymic  : req.patronymic,
+              login       : req.login,
+              password    : req.password,
+              departmentId: req.departmentId,
+              admin       : req.admin == true
             }),
             success    : function () {
+              getOneFn(req.id);
               deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        getOne: function (id) {
+          var deferred = $q.defer();
+
+          $.ajax({
+            method     : 'GET',
+            url        : rest.lecturerGet.replace('{lecturerId}', id),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success    : function (data) {
+              var matched = _.findIndex(listCache, function (elem) {
+                return data.id == elem.id;
+              });
+              if (matched != -1) {
+                listCache[matched] = data;
+              } else {
+                listCache.push(data);
+              }
+              deferred.resolve();
+              $rootScope.$apply();
+            },
+            error      : function () {
               deferred.reject();
               $rootScope.$apply();
             },
@@ -628,7 +707,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error     : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -642,7 +720,7 @@ angular.module('scheduleApp.services', []).
               department = {
                 name       : req.name,
                 description: req.description
-              };
+              }, getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
@@ -651,12 +729,12 @@ angular.module('scheduleApp.services', []).
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             data       : JSON.stringify(department),
-            success    : function () {
+            success    : function (response) {
+              getOneFn(response.id);
               deferred.resolve(department);
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -679,7 +757,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -688,12 +765,13 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        edit  : function (id, req) {
-          var deferred = $q.defer();
+        edit  : function (req) {
+          var deferred = $q.defer(),
+              getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
-            url        : rest.departmentEdit.replace('{departmentId}', id),
+            url        : rest.departmentEdit.replace('{departmentId}', req.id),
             beforeSend : function (xhr) {
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
@@ -703,11 +781,41 @@ angular.module('scheduleApp.services', []).
               description: req.description
             }),
             success    : function () {
+              getOneFn(req.id);
               deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        getOne: function (id) {
+          var deferred = $q.defer();
+
+          $.ajax({
+            method     : 'GET',
+            url        : rest.departmentGet.replace('{departmentId}', id),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success    : function (data) {
+              var matched = _.findIndex(listCache, function (elem) {
+                return data.id == elem.id;
+              });
+              if (matched != -1) {
+                listCache[matched] = data;
+              } else {
+                listCache.push(data);
+              }
+              deferred.resolve();
+              $rootScope.$apply();
+            },
+            error      : function () {
               deferred.reject();
               $rootScope.$apply();
             },
@@ -739,7 +847,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error     : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -753,21 +860,21 @@ angular.module('scheduleApp.services', []).
               speciality = {
                 name       : req.name,
                 description: req.description
-              };
+              }, getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
-            url        : rest.departmentCreate,
+            url        : rest.specialityCreate,
             beforeSend : function (xhr) {
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             data       : JSON.stringify(speciality),
-            success    : function () {
-              deferred.resolve(speciality);
+            success    : function (response) {
+              getOneFn(response.id);
+              deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -790,7 +897,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -799,12 +905,13 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        edit  : function (id, req) {
-          var deferred = $q.defer();
+        edit  : function (req) {
+          var deferred = $q.defer(),
+              getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
-            url        : rest.specialityEdit.replace('{specialityId}', id),
+            url        : rest.specialityEdit.replace('{specialityId}', req.id),
             beforeSend : function (xhr) {
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
@@ -814,11 +921,41 @@ angular.module('scheduleApp.services', []).
               description: req.description
             }),
             success    : function () {
+              getOneFn(req.id);
               deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        getOne: function (id) {
+          var deferred = $q.defer();
+
+          $.ajax({
+            method     : 'GET',
+            url        : rest.specialityGet.replace('{specialityId}', id),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success    : function (data) {
+              var matched = _.findIndex(listCache, function (elem) {
+                return data.id == elem.id;
+              });
+              if (matched != -1) {
+                listCache[matched] = data;
+              } else {
+                listCache.push(data);
+              }
+              deferred.resolve();
+              $rootScope.$apply();
+            },
+            error      : function () {
               deferred.reject();
               $rootScope.$apply();
             },
@@ -850,7 +987,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error     : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -866,7 +1002,7 @@ angular.module('scheduleApp.services', []).
                 course     : req.course,
                 year       : req.year,
                 specialtyId: req.specialtyId
-              };
+              }, getOneFn = this.getOne;
 
           if (req.subgroup) {
             group.subgroup = req.subgroup;
@@ -878,12 +1014,12 @@ angular.module('scheduleApp.services', []).
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             data       : JSON.stringify(group),
-            success    : function () {
-              deferred.resolve(group);
+            success    : function (response) {
+              getOneFn(response.id);
+              deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -906,7 +1042,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -915,7 +1050,7 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        edit  : function (id, req) {
+        edit  : function (req) {
           var deferred = $q.defer(),
               group = {
                 id         : req.id,
@@ -923,24 +1058,54 @@ angular.module('scheduleApp.services', []).
                 course     : req.course,
                 year       : req.year,
                 specialtyId: req.specialtyId
-              };
+              }, getOneFn = this.getOne;
 
           if (req.subgroup) {
             group.subgroup = req.subgroup;
           }
           $.ajax({
             method     : 'POST',
-            url        : rest.groupEdit.replace('{groupId}', id),
+            url        : rest.groupEdit.replace('{groupId}', req.id),
             beforeSend : function (xhr) {
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             data       : JSON.stringify(group),
             success    : function () {
+              getOneFn(req.id);
               deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        getOne: function (id) {
+          var deferred = $q.defer();
+
+          $.ajax({
+            method     : 'GET',
+            url        : rest.groupGet.replace('{groupId}', id),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success    : function (data) {
+              var matched = _.findIndex(listCache, function (elem) {
+                return data.id == elem.id;
+              });
+              if (matched != -1) {
+                listCache[matched] = data;
+              } else {
+                listCache.push(data);
+              }
+              deferred.resolve();
+              $rootScope.$apply();
+            },
+            error      : function () {
               deferred.reject();
               $rootScope.$apply();
             },
@@ -972,7 +1137,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error     : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -986,7 +1150,7 @@ angular.module('scheduleApp.services', []).
               discipline = {
                 name            : req.name,
                 disciplineTypeId: req.disciplineTypeId
-              };
+              }, getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
@@ -995,12 +1159,12 @@ angular.module('scheduleApp.services', []).
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             data       : JSON.stringify(discipline),
-            success    : function () {
-              deferred.resolve(discipline);
+            success    : function (response) {
+              getOneFn(response.id);
+              deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1023,7 +1187,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1032,12 +1195,13 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        edit  : function (id, req) {
-          var deferred = $q.defer();
+        edit  : function (req) {
+          var deferred = $q.defer(),
+              getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
-            url        : rest.disciplineEdit.replace('{disciplineId}', id),
+            url        : rest.disciplineEdit.replace('{disciplineId}', req.id),
             beforeSend : function (xhr) {
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
@@ -1047,11 +1211,41 @@ angular.module('scheduleApp.services', []).
               disciplineTypeId: req.disciplineTypeId
             }),
             success    : function () {
+              getOneFn(req.id);
               deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        getOne: function (id) {
+          var deferred = $q.defer();
+
+          $.ajax({
+            method     : 'GET',
+            url        : rest.disciplineGet.replace('{disciplineId}', id),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success    : function (data) {
+              var matched = _.findIndex(listCache, function (elem) {
+                return data.id == elem.id;
+              });
+              if (matched != -1) {
+                listCache[matched] = data;
+              } else {
+                listCache.push(data);
+              }
+              deferred.resolve();
+              $rootScope.$apply();
+            },
+            error      : function () {
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1083,7 +1277,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error     : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1096,7 +1289,7 @@ angular.module('scheduleApp.services', []).
           var deferred = $q.defer(),
               disciplineType = {
                 type: req.type
-              };
+              }, getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
@@ -1105,12 +1298,12 @@ angular.module('scheduleApp.services', []).
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             data       : JSON.stringify(disciplineType),
-            success    : function () {
+            success    : function (response) {
+              getOneFn(response.id);
               deferred.resolve(disciplineType);
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1133,7 +1326,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1142,12 +1334,13 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        edit  : function (id, req) {
-          var deferred = $q.defer();
+        edit  : function (req) {
+          var deferred = $q.defer(),
+              getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
-            url        : rest.disciplineTypeEdit.replace('{disciplineTypeId}', id),
+            url        : rest.disciplineTypeEdit.replace('{disciplineTypeId}', req.id),
             beforeSend : function (xhr) {
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
@@ -1156,11 +1349,41 @@ angular.module('scheduleApp.services', []).
               type: req.type
             }),
             success    : function () {
+              getOneFn(req.id);
               deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        getOne: function (id) {
+          var deferred = $q.defer();
+
+          $.ajax({
+            method     : 'GET',
+            url        : rest.disciplineTypeGet.replace('{disciplineTypeId}', id),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success    : function (data) {
+              var matched = _.findIndex(listCache, function (elem) {
+                return data.id == elem.id;
+              });
+              if (matched != -1) {
+                listCache[matched] = data;
+              } else {
+                listCache.push(data);
+              }
+              deferred.resolve();
+              $rootScope.$apply();
+            },
+            error      : function () {
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1192,7 +1415,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error     : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1204,13 +1426,13 @@ angular.module('scheduleApp.services', []).
         create: function (req) {
           var deferred = $q.defer(),
               curriculum = {
-                discipline: req.discipline,
-                specialty : req.specialty,
-                hours     : req.hours,
-                semester  : req.semester,
-                isExam    : req.isExam == true,
-                isSetoff  : req.isSetoff == true
-              };
+                disciplineId: req.disciplineId,
+                specialtyId : req.specialtyId,
+                hours       : req.hours,
+                semester    : req.semester,
+                exam        : req.exam == true,
+                setoff      : req.setoff == true
+              }, getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
@@ -1219,12 +1441,12 @@ angular.module('scheduleApp.services', []).
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             data       : JSON.stringify(curriculum),
-            success    : function () {
-              deferred.resolve(curriculum);
+            success    : function (response) {
+              getOneFn(response.id);
+              deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1247,7 +1469,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1256,30 +1477,61 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        edit  : function (id, req) {
-          var deferred = $q.defer();
+        edit  : function (req) {
+          var deferred = $q.defer(),
+              getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
-            url        : rest.curriculumEdit.replace('{curriculumId}', id),
+            url        : rest.curriculumEdit.replace('{curriculumId}', req.id),
             beforeSend : function (xhr) {
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             data       : JSON.stringify({
-              id        : req.id,
-              discipline: req.discipline,
-              specialty : req.specialty,
-              hours     : req.hours,
-              semester  : req.semester,
-              isExam    : req.isExam == true,
-              isSetoff  : req.isSetoff == true
+              id          : req.id,
+              disciplineId: req.disciplineId,
+              specialtyId : req.specialtyId,
+              hours       : req.hours,
+              semester    : req.semester,
+              exam        : req.exam == true,
+              setoff      : req.setoff == true
             }),
             success    : function () {
+              getOneFn(req.id);
               deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        getOne: function (id) {
+          var deferred = $q.defer();
+
+          $.ajax({
+            method     : 'GET',
+            url        : rest.curriculumGet.replace('{curriculumId}', id),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success    : function (data) {
+              var matched = _.findIndex(listCache, function (elem) {
+                return data.id == elem.id;
+              });
+              if (matched != -1) {
+                listCache[matched] = data;
+              } else {
+                listCache.push(data);
+              }
+              deferred.resolve();
+              $rootScope.$apply();
+            },
+            error      : function () {
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1311,7 +1563,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error     : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1325,7 +1576,7 @@ angular.module('scheduleApp.services', []).
               classroom = {
                 number  : req.number,
                 capacity: req.capacity
-              };
+              }, getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
@@ -1334,12 +1585,12 @@ angular.module('scheduleApp.services', []).
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             data       : JSON.stringify(classroom),
-            success    : function () {
-              deferred.resolve(classroom);
+            success    : function (response) {
+              getOneFn(response.id);
+              deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1362,7 +1613,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1371,12 +1621,13 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        edit  : function (id, req) {
-          var deferred = $q.defer();
+        edit  : function (req) {
+          var deferred = $q.defer(),
+              getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
-            url        : rest.classroomEdit.replace('{classroomId}', id),
+            url        : rest.classroomEdit.replace('{classroomId}', req.id),
             beforeSend : function (xhr) {
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
@@ -1386,11 +1637,185 @@ angular.module('scheduleApp.services', []).
               capacity: req.capacity
             }),
             success    : function () {
+              getOneFn(req.id);
               deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        getOne: function (id) {
+          var deferred = $q.defer();
+
+          $.ajax({
+            method     : 'GET',
+            url        : rest.classroomGet.replace('{classroomId}', id),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success    : function (data) {
+              var matched = _.findIndex(listCache, function (elem) {
+                return data.id == elem.id;
+              });
+              if (matched != -1) {
+                listCache[matched] = data;
+              } else {
+                listCache.push(data);
+              }
+              deferred.resolve();
+              $rootScope.$apply();
+            },
+            error      : function () {
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        get   : function () {
+          return listCache;
+        }
+      }
+    }).
+    factory('TimesList',function ($q, $rootScope, rest, User) {
+      var listCache;
+
+      return {
+        lookup: function () {
+          var deferred = $q.defer();
+
+          $.ajax({
+            url       : rest.timesList,
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success   : function (data) {
+              listCache = data;
+              deferred.resolve(data);
+              $rootScope.$apply();
+            },
+            error     : function () {
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            dataType  : 'json'
+          });
+
+          return deferred.promise;
+        },
+        create: function (req) {
+          var deferred = $q.defer(),
+              time = {
+                startTime: req.startTime,
+                endTime  : req.endTime,
+                number   : req.number,
+                breakTime: req.breakTime || 0
+              }, getOneFn = this.getOne;
+
+          $.ajax({
+            method     : 'POST',
+            url        : rest.timeCreate,
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            data       : JSON.stringify(time),
+            success    : function (response) {
+              getOneFn(response.id);
+              deferred.resolve();
+              $rootScope.$apply();
+            },
+            error      : function () {
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        erase : function (id) {
+          var deferred = $q.defer();
+
+          $.ajax({
+            method     : 'GET',
+            url        : rest.timeErase.replace('{timeId}', id),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success    : function () {
+              deferred.resolve();
+              $rootScope.$apply();
+            },
+            error      : function () {
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        edit  : function (req) {
+          var deferred = $q.defer(),
+              getOneFn = this.getOne;
+
+          $.ajax({
+            method     : 'POST',
+            url        : rest.timeEdit.replace('{timeId}', req.id),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            data       : JSON.stringify({
+              id       : req.id,
+              startTime: req.startTime,
+              endTime  : req.endTime,
+              number   : req.number,
+              breakTime: req.breakTime || 0
+            }),
+            success    : function () {
+              getOneFn(req.id);
+              deferred.resolve();
+              $rootScope.$apply();
+            },
+            error      : function () {
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        getOne: function (id) {
+          var deferred = $q.defer();
+
+          $.ajax({
+            method     : 'GET',
+            url        : rest.timeGet.replace('{timeId}', id),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success    : function (data) {
+              var matched = _.findIndex(listCache, function (elem) {
+                return data.id == elem.id;
+              });
+              if (matched != -1) {
+                listCache[matched] = data;
+              } else {
+                listCache.push(data);
+              }
+              deferred.resolve();
+              $rootScope.$apply();
+            },
+            error      : function () {
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1422,7 +1847,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error     : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1434,10 +1858,10 @@ angular.module('scheduleApp.services', []).
         create: function (req) {
           var deferred = $q.defer(),
               study = {
-                group     : req.group,
-                lecturer  : req.lecturer,
-                curriculum: req.curriculum
-              };
+                groupId     : req.groupId,
+                lecturerId  : req.lecturerId,
+                curriculumId: req.curriculumId
+              }, getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
@@ -1446,12 +1870,12 @@ angular.module('scheduleApp.services', []).
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             data       : JSON.stringify(study),
-            success    : function () {
+            success    : function (response) {
+              getOneFn(response.id);
               deferred.resolve(study);
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1474,7 +1898,6 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
               deferred.reject();
               $rootScope.$apply();
             },
@@ -1483,27 +1906,58 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        edit  : function (id, req) {
-          var deferred = $q.defer();
+        edit  : function (req) {
+          var deferred = $q.defer(),
+              getOneFn = this.getOne;
 
           $.ajax({
             method     : 'POST',
-            url        : rest.studyEdit.replace('{studyId}', id),
+            url        : rest.studyEdit.replace('{studyId}', req.id),
             beforeSend : function (xhr) {
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
             data       : JSON.stringify({
-              id        : req.id,
-              group     : req.group,
-              lecturer  : req.lecturer,
-              curriculum: req.curriculum
+              id          : req.id,
+              groupId     : req.groupId,
+              lecturerId  : req.lecturerId,
+              curriculumId: req.curriculumId
             }),
             success    : function () {
+              getOneFn(req.id);
               deferred.resolve();
               $rootScope.$apply();
             },
             error      : function () {
-              listCache = null;
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        getOne: function (id) {
+          var deferred = $q.defer();
+
+          $.ajax({
+            method     : 'GET',
+            url        : rest.studyGet.replace('{studyId}', id),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success    : function (data) {
+              var matched = _.findIndex(listCache, function (elem) {
+                return data.id == elem.id;
+              });
+              if (matched != -1) {
+                listCache[matched] = data;
+              } else {
+                listCache.push(data);
+              }
+              deferred.resolve();
+              $rootScope.$apply();
+            },
+            error      : function () {
               deferred.reject();
               $rootScope.$apply();
             },

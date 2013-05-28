@@ -1,5 +1,6 @@
 @import "jquery-ui-1.9.2.custom.min.css";
 @import "bootstrap.css";
+@import "bootstrap-timepicker.css";
 @import "flat-ui.css";
 
 /*-- LigatureSymbols --*/
@@ -109,7 +110,7 @@
   display : block\9;
 }
 
-.header .dropdown-toggle.closed .toggle-content{
+.header .dropdown-toggle.closed .toggle-content {
   height   : 0;
   overflow : hidden;
 }
@@ -612,7 +613,7 @@ input.ng-dirty.ng-invalid {
 }
 
 .manage-screen .overflow-pane {
-  max-height : 657px;
+  height     : 657px;
   overflow-y : auto;
 }
 
@@ -634,6 +635,44 @@ input.ng-dirty.ng-invalid {
   -moz-box-shadow       : none;
   box-shadow            : none;
   height                : 40px;
+}
+
+.manage-screen .control-group.input-append > input {
+  width                              : 48px;
+  border-top-right-radius            : 0;
+  border-bottom-right-radius         : 0;
+  -moz-border-top-right-radius       : 0;
+  -moz-border-bottom-right-radius    : 0;
+  -webkit-border-top-right-radius    : 0;
+  -webkit-border-bottom-right-radius : 0;
+}
+
+.manage-screen .control-group.input-append > button {
+  font-size : 28px;
+  height    : 41px;
+}
+
+.manage-screen .bootstrap-timepicker-widget a {
+  text-decoration : none;
+}
+
+.manage-screen .bootstrap-timepicker-widget input {
+  padding-left  : 5px;
+  padding-right : 5px;
+}
+
+.manage-screen .time-man .row{
+  padding-left: 35px;
+}
+
+.manage-screen .time-man .row .lsf{
+  font-size: 34px;
+  padding-right: 10px;
+}
+
+.manage-screen .time-man .row-1{
+  margin-left: 35px;
+  margin-right: 35px;
 }
 
 /*-- Schedule view --*/
