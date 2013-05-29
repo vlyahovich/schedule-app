@@ -23,9 +23,9 @@
   </div>
   <ul class="subjects-list">
     <li ng-repeat="subject in currentList" class="clearfix">
-      <div class="time" ng-bind-html-unsafe="subject.time.startTime | timelize"></div>
+      <div class="time" ng-bind-html-unsafe="subject.disciplineTime.startTime | timelize"></div>
       <div class="subject">
-        <h4 class="name"><span ng-bind-html-unsafe="subject.name | highlight:searchQuery"></span>
+        <h4 class="name"><span ng-bind-html-unsafe="subject.discipline.name | highlight:searchQuery"></span>
           <!--<span class="noty lsf">tabs
           <div class="tooltip right">
             <div class="tooltip-arrow" style=""></div>
@@ -45,9 +45,9 @@
           </div>
           </span>-->
         </h4>
-        <span ng-bind-html-unsafe="subject.lecturer.surname | highlight:searchQuery"></span>
+        <span ng-bind-html-unsafe="subject.lecturer.fullName | highlight:searchQuery"></span>
       </div>
-      <div class="room">{{subject.classroom}}</div>
+      <div class="room">{{subject.classroom.number}}</div>
     </li>
     <li ng-show="!currentList.length" class="empty">{{strings.noDataFound}}</li>
   </ul>

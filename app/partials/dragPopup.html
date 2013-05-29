@@ -1,23 +1,14 @@
 <a class="close lsf">backspace</a>
-<h4>Создание</h4>
-<form>
-  <select>
-    <option value="">Предмет</option>
-  </select>
-  <select>
-    <option value="">Преподователь</option>
-  </select>
-  <select>
-    <option value="">Курс</option>
-  </select>
-
-  <div class="line-group">
-    <select>
-      <option value="">Группа</option>
+<h4>Детали</h4>
+<form name="addTileForm" ng-submit="createScheduleTile()">
+  <div class="pad">
+    <select ng-model="currentStudyId"
+            ng-options="study.id as studyAdapter(study) for study in studies" ngv-required>
+      <option value="">Занятие</option>
     </select>
-    <select>
-      <option value="">Подгруппа</option>
-    </select>
+    <a class="push"><span class="lsf">plus</span> Дополнить</a>
   </div>
-  <input type="submit" class="btn btn-primary btn-block">
+  <input type="submit" class="btn btn-inverse btn-block"
+         ng-class="{disabled: addTileForm.$invalid, 'btn-primary': !addTileForm.$invalid}"
+         ng-disabled="addTileForm.$invalid" value="Подтвердить">
 </form>

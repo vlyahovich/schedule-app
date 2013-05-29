@@ -5,7 +5,7 @@
     <li class="previous" ng-click="previousRange()">
       <a>
         <img src="img/previous.png">
-        {{range.min}}-{{range.max}}
+        {{classrooms[range.min].number}}-{{classrooms[range.max].number}}
       </a>
     </li>
     <li class="next" ng-click="nextRange()">
@@ -14,19 +14,72 @@
       </a>
     </li>
   </ul>
-  <div class="scheduler-container">
+  <ul class="pager">
+    <li class="previous" ng-click="previousDay()">
+      <a>
+        <img src="img/previous.png">
+        {{dayNames[dayKeys[dayIndex]]}}
+      </a>
+    </li>
+    <li class="next" ng-click="nextDay()">
+      <a>
+        <img src="img/next.png">
+      </a>
+    </li>
+  </ul>
+  <div class="scheduler-container" spin-on="{on: 'scheduler:request-start', off: 'scheduler:request-end'}">
     <div class="scheduler table table-bordered">
       <div class="table-row thead clearfix">
         <div class="first"></div>
-        <div ng-repeat="room in currentRooms">{{room}}</div>
+        <div ng-repeat="room in currentRooms">{{room.number}}</div>
       </div>
       <div class="table-row clearfix" ng-repeat="hour in hours" ng-class="{dotted: $index % 2 == 1 }">
-        <div class="first hours">{{hour}}</div>
+        <div class="first hours">{{hour.toString('.')}}</div>
         <div ng-repeat="room in currentRooms"></div>
       </div>
     </div>
     <div class="scheduler-handle-wrap">
-      <div class="scheduler-handle" scheduler-handle>
+      <div class="scheduler-handle" scheduler-handle="0">
+        <div class="draggable-cell" ng-repeat="listElem in scheduleList[2]"
+             scheduler-draggable="{x:getPositionByRoom(listElem.classroom.number),
+                                   y:getPositionByHour(listElem.disciplineTime.startTime),
+                                   noOpen: true, label: listElem.discipline.name, id: listElem.id,
+                                   gIndex: 0, studyId: listElem.study.id}"></div>
+      </div>
+      <div class="scheduler-handle" scheduler-handle="1">
+        <div class="draggable-cell" ng-repeat="listElem in scheduleList[3]"
+             scheduler-draggable="{x:getPositionByRoom(listElem.classroom.number),
+                                   y:getPositionByHour(listElem.disciplineTime.startTime),
+                                   noOpen: true, label: listElem.discipline.name, editedId: listElem.id,
+                                   gIndex: 1, studyId: listElem.study.id}"></div>
+      </div>
+      <div class="scheduler-handle" scheduler-handle="2">
+        <div class="draggable-cell" ng-repeat="listElem in scheduleList[4]"
+             scheduler-draggable="{x:getPositionByRoom(listElem.classroom.number),
+                                   y:getPositionByHour(listElem.disciplineTime.startTime),
+                                   noOpen: true, label: listElem.discipline.name, editedId: listElem.id,
+                                   gIndex: 2, studyId: listElem.study.id}"></div>
+      </div>
+      <div class="scheduler-handle" scheduler-handle="3">
+        <div class="draggable-cell" ng-repeat="listElem in scheduleList[5]"
+             scheduler-draggable="{x:getPositionByRoom(listElem.classroom.number),
+                                   y:getPositionByHour(listElem.disciplineTime.startTime),
+                                   noOpen: true, label: listElem.discipline.name, editedId: listElem.id,
+                                   gIndex: 3, studyId: listElem.study.id}"></div>
+      </div>
+      <div class="scheduler-handle" scheduler-handle="4">
+        <div class="draggable-cell" ng-repeat="listElem in scheduleList[6]"
+             scheduler-draggable="{x:getPositionByRoom(listElem.classroom.number),
+                                   y:getPositionByHour(listElem.disciplineTime.startTime),
+                                   noOpen: true, label: listElem.discipline.name, editedId: listElem.id,
+                                   gIndex: 4, studyId: listElem.study.id}"></div>
+      </div>
+      <div class="scheduler-handle" scheduler-handle="5">
+        <div class="draggable-cell" ng-repeat="listElem in scheduleList[7]"
+             scheduler-draggable="{x:getPositionByRoom(listElem.classroom.number),
+                                   y:getPositionByHour(listElem.disciplineTime.startTime),
+                                   noOpen: true, label: listElem.discipline.name, editedId: listElem.id,
+                                   gIndex: 5, studyId: listElem.study.id}"></div>
       </div>
     </div>
   </div>

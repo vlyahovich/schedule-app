@@ -68,26 +68,21 @@ App.controller('StartPageController',
  * Schedule view controller
  */
 App.controller('LookPageController',
-    function ($scope, User, ScheduleList, $location, strings) {
+    function ($scope, User, ScheduleList, dayValues, $location, strings) {
       if (!User.getLook()) {
         $location.path('/');
       } else {
-        var scheduleList = null,
+        var keys = dayValues.keys,
+            names = dayValues.names,
             list = ScheduleList.get();
-
-        if (angular.isArray(list) && list.length > 0) {
-          scheduleList = list;
-          $scope.currentDay = list[0].dayTitle;
-          $scope.currentList = list[0].disciplines;
-        }
 
         $scope.strings = strings;
 
         // Navigation control
         $scope.navIndex = 0;
         $scope.nextDay = function () {
-          if (scheduleList) {
-            if ($scope.navIndex + 1 < scheduleList.length) {
+          if (list) {
+            if ($scope.navIndex + 1 < keys.length) {
               $scope.navIndex++;
             } else {
               $scope.navIndex = 0;
@@ -95,18 +90,24 @@ App.controller('LookPageController',
           }
         };
         $scope.previousDay = function () {
-          if (scheduleList) {
+          if (list) {
             if ($scope.navIndex - 1 >= 0) {
               $scope.navIndex--;
             } else {
-              $scope.navIndex = scheduleList.length - 1;
+              $scope.navIndex = keys.length - 1;
             }
           }
         };
         $scope.$watch('navIndex', function () {
-          if (scheduleList && scheduleList.length > 0) {
-            $scope.currentDay = scheduleList[$scope.navIndex].dayTitle;
-            $scope.currentList = scheduleList[$scope.navIndex].disciplines;
+          if (list) {
+            var elms = list[keys[$scope.navIndex]];
+            if (elms && elms.length) {
+              $scope.currentDay = elms[0].dayTitle;
+              $scope.currentList = elms;
+            } else {
+              $scope.currentDay = names[keys[$scope.navIndex]];
+              $scope.currentList = [];
+            }
           }
         }, true);
 
@@ -114,13 +115,13 @@ App.controller('LookPageController',
         $scope.search = function () {
           var query = this.searchQuery;
 
-          if ((query || angular.isNumber(query)) && scheduleList) {
-            $scope.currentList = _.filter(scheduleList[$scope.navIndex].disciplines, function (subject) {
-              return subject.name.search(new RegExp(query, 'gi')) != -1 ||
-                  subject.lecturer.surname.search(new RegExp(query, 'gi')) != -1;
+          if ((query || angular.isNumber(query)) && list) {
+            $scope.currentList = _.filter(list[keys[$scope.navIndex]], function (subject) {
+              return subject.discipline.name.search(new RegExp(query, 'gi')) != -1 ||
+                  subject.lecturer.fullName.search(new RegExp(query, 'gi')) != -1;
             });
-          } else if (scheduleList) {
-            $scope.currentList = scheduleList[$scope.navIndex].disciplines;
+          } else if (list) {
+            $scope.currentList = list[keys[$scope.navIndex]];
           }
         };
       }
@@ -980,53 +981,217 @@ App.controller('TimesManageController',
 /**
  * Settings page controller
  */
+// Time class
+var Time = function (time) {
+  if (time && time.match(/^\d{2,}:(?:[0-5]\d)$/)) {
+    var split = time.split(':');
+    this.hours = Number(split[0]);
+    this.minutes = Number(split[1]);
+  } else {
+    this.hours = 0;
+    this.minutes = 0;
+  }
+};
+Time.prototype.compare = function (timeObj) {
+  if (timeObj instanceof Time) {
+    if (this.hours < timeObj.hours) {
+      return 'less';
+    } else if (this.hours > timeObj.hours) {
+      return 'greater';
+    } else if (this.minutes < timeObj.minutes) {
+      return 'less';
+    } else if (this.minutes > timeObj.minutes) {
+      return 'greater';
+    } else {
+      return 'equals';
+    }
+  } else {
+    return null;
+  }
+};
+Time.prototype.diff = function (timeObj) {
+  if (timeObj instanceof Time) {
+    var timeDiff = new Time();
+
+    timeDiff.hours = Math.abs(this.hours - timeObj.hours);
+    timeDiff.minutes = Math.abs(this.minutes - timeObj.minutes);
+    return timeDiff;
+  } else {
+    return new Time();
+  }
+};
+Time.prototype.isEmpty = function () {
+  return this.hours <= 0 && this.minutes <= 0;
+};
+Time.prototype.toFloat = function () {
+  return parseFloat(this.hours + '.' + this.minutes);
+};
+Time.prototype.toString = function (delimiter) {
+  return this.hours + (delimiter || ':') + (this.minutes < 10 ? '0' + this.minutes : this.minutes);
+};
+
 App.controller('SchedulePageController',
-    function ($scope, $rootScope, gridSettings, $location, User, strings) {
+    function ($scope, $rootScope, gridSettings, TimesList, ClassroomsList, StudiesList, CurriculumsList, ScheduleList, $location, User, dayValues, strings, $timeout) {
       if (!User.is('ROLE_ADMIN')) {
         $rootScope.$broadcast('toast', strings.permissionError);
         $location.path('/');
       } else {
-        $scope.classrooms = [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113];
-        $scope.range = {min: 100, max: 109};
-        $scope.rangeStep = 9;
-        $scope.hours = ['8.15', '9.45', '10.00', '10.30', '10.45', '12.15', '12.30', '14.00', '14.15', '15.45', '16.00'];
+        var parallel = [];
+        $scope.dayKeys = dayValues.keys;
+        $scope.dayNames = dayValues.names;
 
-        $scope.classroomsPositions = _.map($scope.classrooms, function (value, index) {
-          return {room: value, position: gridSettings.gridSize.width * index};
-        });
-        $scope.getRoomByPosition = function (position) {
-          return _.find($scope.classroomsPositions, function (room) {
-            return room.position == position;
+        parallel.push(function (callback) {
+          TimesList.lookup().then(function (data) {
+            $scope.hours = [];
+            _.each(data, function (time) {
+              var startTime = new Time(time.startTime);
+              startTime.id = time.id;
+              $scope.hours.push(startTime);
+              /*var endTime = new Time(time.endTime);
+               $scope.hours.push(endTime);*/
+            });
+
+            $scope.hoursPositions = _.map($scope.hours, function (value, index) {
+              return {hour: value, position: gridSettings.gridSize.height * index};
+            });
+            $scope.lowestHour = $scope.hoursPositions[$scope.hoursPositions.length - 1];
+            $scope.getHourByPosition = function (position) {
+              if (position > $scope.lowestHour.position) {
+                position = $scope.lowestHour.position;
+              }
+              return _.find($scope.hoursPositions, function (hour) {
+                return hour.position == position;
+              });
+            };
+            $scope.getPositionByHour = function (hourString) {
+              var time = new Time(hourString),
+                  matched = _.find($scope.hoursPositions, function (hour) {
+                    return hour.hour.compare(time) == 'equals';
+                  });
+
+              if (matched) {
+                return matched.position;
+              } else {
+                return 0;
+              }
+            };
+            callback();
+          }, function () {
+            callback();
           });
-        };
-        $scope.hoursPositions = _.map($scope.hours, function (value, index) {
-          return {hour: value, position: gridSettings.gridSize.height * index};
         });
-        $scope.lowestHour = $scope.hoursPositions[$scope.hoursPositions.length - 1];
-        $scope.getHourByPosition = function (position) {
-          if (position > $scope.lowestHour.position) {
-            position = $scope.lowestHour.position;
-          }
-          return _.find($scope.hoursPositions, function (hour) {
-            return hour.position == position;
+        parallel.push(function (callback) {
+          ClassroomsList.lookup().then(function (data) {
+            $scope.range = {min: 0, max: 9};
+            $scope.rangeStep = 9;
+            $scope.classrooms = data;
+            $scope.classroomsPositions = _.map($scope.classrooms, function (value, index) {
+              return {room: value, position: gridSettings.gridSize.width * index};
+            });
+            $scope.getRoomByPosition = function (position) {
+              return _.find($scope.classroomsPositions, function (room) {
+                return room.position == position;
+              });
+            };
+            $scope.getPositionByRoom = function (roomString) {
+              var matched = _.find($scope.classroomsPositions, function (room) {
+                return room.room.number == roomString;
+              });
+
+              if (matched) {
+                return matched.position;
+              } else {
+                return 0;
+              }
+            };
+            $scope.updateRooms();
+            callback();
+          }, function () {
+            callback();
           });
-        };
+        });
+        parallel.push(function (callback) {
+          CurriculumsList.lookup().then(function (data) {
+            $scope.curriculums = data;
+            callback();
+          }, function () {
+            callback();
+          });
+        });
+        parallel.push(function (callback) {
+          StudiesList.lookup().then(function (data) {
+            $scope.studies = data;
+            callback();
+          }, function () {
+            callback();
+          });
+        });
+
+        $timeout(function () {
+          $scope.$broadcast('scheduler:request-start');
+        }, 1);
+        $('.scheduler, .scheduler-handle-wrap').css({
+          visibility: 'hidden'
+        });
+        async.parallel(parallel, function () {
+          _.each($scope.studies, function (study) {
+            study._curriculum = _.find($scope.curriculums, function (curriculum) {
+              return curriculum.id == study.curriculum.id;
+            });
+          });
+          ScheduleList.lookup().then(function (data) {
+            $scope.scheduleList = _.groupBy(data, function (listElem) {
+              return listElem.dayOfWeek;
+            });
+            console.log($scope.scheduleList);
+            $scope.$broadcast('scheduler:request-end');
+            $('.scheduler, .scheduler-handle-wrap').css({
+              visibility: 'visible'
+            });
+          }, function () {
+            $scope.$broadcast('scheduler:request-end');
+          });
+        });
 
         $scope.updateRooms = function () {
-          $scope.currentRooms = _.filter($scope.classrooms, function (room) {
-            return room >= $scope.range.min && room <= $scope.range.max;
+          $scope.currentRooms = _.filter($scope.classrooms, function (room, index) {
+            return index >= $scope.range.min && index <= $scope.range.max;
           });
         };
-        $scope.updateRooms();
+        $scope.studyAdapter = function (study) {
+          return study._curriculum.discipline.name + '(' + study._curriculum.specialty.name + ') ' +
+              study._curriculum.semester + ' семестр группа ' + study.group.number +
+              (study.group.subgroup ? study.group.subgroup : '');
+        };
+
+        // Navigation control
+        $scope.dayIndex = 0;
+        $scope.nextDay = function () {
+          if ($scope.dayIndex + 1 < $scope.dayKeys.length) {
+            $scope.dayIndex++;
+          } else {
+            $scope.dayIndex = 0;
+          }
+        };
+        $scope.previousDay = function () {
+          if ($scope.dayIndex - 1 >= 0) {
+            $scope.dayIndex--;
+          } else {
+            $scope.dayIndex = $scope.dayKeys.length - 1;
+          }
+        };
+        $scope.$watch('dayIndex', function () {
+          $scope.$broadcast('schedule:change-grid', $scope.dayIndex);
+        }, true);
 
         $scope.previousRange = function () {
-          if ($scope.range.min - $scope.rangeStep >= $scope.classrooms[0]) {
+          if ($scope.range.min - $scope.rangeStep >= 0) {
             $scope.range.min -= $scope.rangeStep;
             $scope.range.max -= $scope.rangeStep;
             $scope.updateRooms();
             $scope.$broadcast('schedule:update-range-back', $scope.rangeStep);
           } else {
-            var diff = Math.abs($scope.classrooms[0] - $scope.range.min);
+            var diff = Math.abs(0 - $scope.range.min);
 
             if (diff > 0) {
               $scope.range.min -= diff;
@@ -1037,7 +1202,7 @@ App.controller('SchedulePageController',
           }
         };
         $scope.nextRange = function () {
-          var last = $scope.classrooms[$scope.classrooms.length - 1];
+          var last = $scope.classrooms.length - 1;
 
           if ($scope.range.max + $scope.rangeStep <= last) {
             $scope.range.min += $scope.rangeStep;

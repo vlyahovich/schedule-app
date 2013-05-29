@@ -101,7 +101,7 @@
   transition                  : 0.3s ease-out;
   -webkit-backface-visibility : hidden;
   cursor                      : auto;
-  z-index                     : 10;
+  z-index                     : 150;
 }
 
 .header .dropdown-toggle.open .toggle-content {
@@ -661,18 +661,18 @@ input.ng-dirty.ng-invalid {
   padding-right : 5px;
 }
 
-.manage-screen .time-man .row{
-  padding-left: 35px;
+.manage-screen .time-man .row {
+  padding-left : 35px;
 }
 
-.manage-screen .time-man .row .lsf{
-  font-size: 34px;
-  padding-right: 10px;
+.manage-screen .time-man .row .lsf {
+  font-size     : 34px;
+  padding-right : 10px;
 }
 
-.manage-screen .time-man .row-1{
-  margin-left: 35px;
-  margin-right: 35px;
+.manage-screen .time-man .row-1 {
+  margin-left  : 35px;
+  margin-right : 35px;
 }
 
 /*-- Schedule view --*/
@@ -700,7 +700,8 @@ input.ng-dirty.ng-invalid {
 }
 
 .schedule-screen .scheduler .table-row .hours.first {
-  width : 70px;
+  width   : 70px;
+  z-index : 120;
 }
 
 .schedule-screen .scheduler .table-row.thead .first {
@@ -748,15 +749,19 @@ input.ng-dirty.ng-invalid {
   -webkit-backface-visibility : hidden;
 }
 
+.schedule-screen .draggable-cell.active {
+  z-index : 150;
+}
+
 .schedule-screen .draggable-cell-popup {
   width                       : 172px;
-  height                      : 0;
+  height                      : 1px;
   background-color            : #2C3E50;
   position                    : absolute;
   -webkit-border-radius       : 6px;
   -moz-border-radius          : 6px;
   border-radius               : 6px;
-  top                         : -114px;
+  top                         : -84px;
   left                        : -48px;
   opacity                     : 0;
   -webkit-transition          : 0.25s;
@@ -766,11 +771,20 @@ input.ng-dirty.ng-invalid {
   -webkit-backface-visibility : hidden;
 }
 
+.schedule-screen .draggable-cell-popup .pad {
+  height   : 1px;
+  overflow : hidden;
+}
+
+.schedule-screen .draggable-cell-popup.show .pad {
+  height : auto;
+}
+
 .schedule-screen .draggable-cell-popup.show {
-  height  : 172px;
-  top     : -174px;
+  height  : 140px;
+  top     : -143px;
   opacity : 1;
-  z-index : 10;
+  z-index : 150;
 }
 
 .schedule-screen .draggable-cell-popup:before {
@@ -805,12 +819,15 @@ input.ng-dirty.ng-invalid {
 }
 
 .schedule-screen .draggable-cell-popup form {
-  padding  : 5px;
   position : absolute;
   top      : 34px;
   bottom   : 0;
   margin   : 0;
   overflow : hidden;
+}
+
+.schedule-screen .draggable-cell-popup .pad {
+  padding : 5px;
 }
 
 .schedule-screen .draggable-cell-popup select {
@@ -842,6 +859,39 @@ input.ng-dirty.ng-invalid {
   float : right;
 }
 
+.schedule-screen .draggable-cell-popup input[type="submit"] {
+  border-top-left-radius          : 0;
+  border-top-right-radius         : 0;
+  -moz-border-top-left-radius     : 0;
+  -moz-border-top-right-radius    : 0;
+  -webkit-border-top-left-radius  : 0;
+  -webkit-border-top-right-radius : 0;
+}
+
+.schedule-screen .draggable-cell-popup .push {
+  text-decoration : none;
+  cursor          : pointer;
+  margin-top      : 18px;
+  margin-bottom   : 8px;
+  display         : block;
+  text-align      : right;
+}
+
+.schedule-screen .cell-name {
+  width     : 78px;
+  padding   : 3px;
+  height    : 28px;
+  font-size : 12px;
+  border    : 1px solid #2C3E50;
+  overflow  : hidden;
+  cursor    : pointer;
+}
+
+.schedule-screen .ui-draggable-dragging .cell-name,
+.schedule-screen .ui-resizable-resizing .cell-name {
+  color : #FFFFFF;
+}
+
 .schedule-screen .draggable-cell.ui-draggable-dragging,
 .schedule-screen .draggable-cell.ui-resizable-resizing {
   background : #34495E;
@@ -858,5 +908,10 @@ input.ng-dirty.ng-invalid {
 }
 
 .schedule-screen .scheduler-handle {
-  position : absolute;
+  position                    : absolute;
+  -webkit-transition          : 0.25s;
+  -moz-transition             : 0.25s;
+  -o-transition               : 0.25s;
+  transition                  : 0.25s;
+  -webkit-backface-visibility : hidden;
 }

@@ -7,7 +7,10 @@ angular.module('scheduleApp.services', []).
     value('version', '0.8.0').
     value('rest', {
       auth                : App.host + '/service/rest/bsu/mmf/login',
-      scheduleList        : App.host + '/service/rest/bsu/mmf/schedule',
+      schedule            : App.host + '/service/rest/bsu/mmf/schedule',
+      scheduleList        : App.host + '/service/rest/bsu/mmf/schedule/list',
+      scheduleAdd         : App.host + '/service/rest/bsu/mmf/schedule/add',
+      scheduleEdit        : App.host + '/service/rest/bsu/mmf/schedule/{scheduleId}/edit',
       usersList           : App.host + '/service/rest/bsu/mmf/user/list',
       userGet             : App.host + '/service/rest/bsu/mmf/user/{userId}',
       userCreate          : App.host + '/service/rest/bsu/mmf/user/add',
@@ -100,6 +103,17 @@ angular.module('scheduleApp.services', []).
       containment: '.scheduler-handle-wrap',
       handles    : 's',
       gridSize   : {width: 86, height: 36}
+    }).
+    value('dayValues', {
+      keys : ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
+      names: {
+        'monday'   : 'Понедельник',
+        'tuesday'  : 'Вторник',
+        'wednesday': 'Среда',
+        'thursday' : 'Четверг',
+        'friday'   : 'Пятница',
+        'saturday' : 'Суббота'
+      }
     }).
     factory('Spinner',function () {
       var spinner = new Spinner();
@@ -208,12 +222,12 @@ angular.module('scheduleApp.services', []).
           var deferred = $q.defer();
 
           $.ajax({
-            url       : rest.scheduleList,
-            data      : {
+            url       : req ? rest.schedule : rest.scheduleList,
+            data      : req ? {
               course  : req.course,
               group   : req.group,
               subGroup: req.subGroup
-            },
+            } : null,
             beforeSend: function (xhr) {
               xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
             },
@@ -227,6 +241,65 @@ angular.module('scheduleApp.services', []).
               $rootScope.$apply();
             },
             dataType  : 'json'
+          });
+
+          return deferred.promise;
+        },
+        add   : function (req) {
+          var deferred = $q.defer();
+
+          $.ajax({
+            method     : 'POST',
+            url        : rest.scheduleAdd,
+            data       : JSON.stringify({
+              classroomId     : req.classroomId,
+              disciplineTimeId: req.disciplineTimeId,
+              studyId         : req.studyId,
+              dayOfWeek       : req.dayOfWeek + 2,
+              week            : req.week
+            }),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success    : function (data) {
+              deferred.resolve(data);
+              $rootScope.$apply();
+            },
+            error      : function () {
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
+          });
+
+          return deferred.promise;
+        },
+        edit  : function (req) {
+          var deferred = $q.defer();
+
+          $.ajax({
+            method     : 'POST',
+            url        : rest.scheduleEdit.replace('{scheduleId}', req.id),
+            data       : JSON.stringify({
+              id              : req.id,
+              classroomId     : req.classroomId,
+              disciplineTimeId: req.disciplineTimeId,
+              studyId         : req.studyId,
+              dayOfWeek       : req.dayOfWeek + 2,
+              week            : req.week
+            }),
+            beforeSend : function (xhr) {
+              xhr.setRequestHeader('Authorization', 'Basic ' + User.encode());
+            },
+            success    : function (data) {
+              deferred.resolve(data);
+              $rootScope.$apply();
+            },
+            error      : function () {
+              deferred.reject();
+              $rootScope.$apply();
+            },
+            contentType: 'application/json'
           });
 
           return deferred.promise;
@@ -1833,7 +1906,7 @@ angular.module('scheduleApp.services', []).
       var listCache;
 
       return {
-        lookup: function () {
+        lookup        : function () {
           var deferred = $q.defer();
 
           $.ajax({
@@ -1855,7 +1928,7 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        create: function (req) {
+        create        : function (req) {
           var deferred = $q.defer(),
               study = {
                 groupId     : req.groupId,
@@ -1884,7 +1957,7 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        erase : function (id) {
+        erase         : function (id) {
           var deferred = $q.defer();
 
           $.ajax({
@@ -1906,7 +1979,7 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        edit  : function (req) {
+        edit          : function (req) {
           var deferred = $q.defer(),
               getOneFn = this.getOne;
 
@@ -1936,7 +2009,7 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        getOne: function (id) {
+        getOne        : function (id) {
           var deferred = $q.defer();
 
           $.ajax({
@@ -1966,7 +2039,12 @@ angular.module('scheduleApp.services', []).
 
           return deferred.promise;
         },
-        get   : function () {
+        getOneFromList: function (id) {
+          return _.find(listCache, function (listElem) {
+            return listElem.id == id;
+          });
+        },
+        get           : function () {
           return listCache;
         }
       }

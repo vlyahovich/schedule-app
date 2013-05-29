@@ -222,16 +222,6 @@ angular.module('scheduleApp.directives', []).
         replace   : true
       };
     }).
-    directive('timeCell', [function () {
-      return {
-        restrict: 'A',
-        link    : function (scope, element, attrs) {
-
-        },
-        template: '<div class="tab-pane" ng-class="{active: selected}" ng-transclude></div>',
-        replace : true
-      }
-    }]).
     directive('timepicker', [ '$timeout', function ($timeout) {
       var TIME_REGEXP = '((?:(?:[0-1][0-9])|(?:[2][0-3])|(?:[0-9])):(?:[0-5][0-9])(?::[0-5][0-9])?(?:\\s?(?:am|AM|pm|PM))?)';
       return {
@@ -323,13 +313,17 @@ angular.module('scheduleApp.directives', []).
       return {
         restrict: 'A',
         link    : function (scope, element, attributes) {
-          element.parent().bind('click', function (event) {
-            var tpl = '<div class="draggable-cell" ' +
-                'scheduler-draggable="{x:' + (event.offsetX - element.position().left) +
-                ', y:' + event.offsetY + '}">' +
-                '</div>';
+          var gridIndex = scope.$eval(attributes.schedulerHandle);
 
-            element.append($compile(tpl)(scope));
+          element.parent().bind('click', function (event) {
+            if (gridIndex == scope.dayIndex) {
+              var tpl = '<div class="draggable-cell" ' +
+                  'scheduler-draggable="{x:' + (event.offsetX - element.position().left) +
+                  ', y:' + event.offsetY + ', gIndex:' + gridIndex + '}">' +
+                  '</div>';
+
+              element.append($compile(tpl)(scope));
+            }
           });
           scope.$on('schedule:update-range-back', function ($scope, step) {
             element.css({
@@ -341,6 +335,19 @@ angular.module('scheduleApp.directives', []).
               left: element.position().left - gridSettings.gridSize.width * step
             });
           });
+          scope.$on('schedule:change-grid', function ($scope, index) {
+            if (gridIndex != index) {
+              element.hide();
+              element.animate({
+                opacity: 0
+              });
+            } else {
+              element.show();
+              element.animate({
+                opacity: 1
+              });
+            }
+          });
 
           scope.draggables = [];
           scope.pushDraggable = function (element) {
@@ -351,16 +358,20 @@ angular.module('scheduleApp.directives', []).
           };
           scope.isSafeDrop = function (element, room, hour, hourEnd) {
             var candidates = _.filter(scope.draggables, function (draggable) {
-              return draggable.room == room && draggable !== element;
+              return draggable.room.number == room.number && draggable !== element
+                  && element.gIndex == draggable.gIndex;
             });
 
             if (candidates.length) {
               candidates = _.filter(candidates, function (candidate) {
-                var hourNumber = parseFloat(hour),
-                    hourNumberEnd = parseFloat(hourEnd),
-                    candidateHourNumber = parseFloat(candidate.hour),
-                    candidateHourEndNumber = parseFloat(candidate.hourEnd);
+                var hourNumber = hour.toFloat(),
+                    hourNumberEnd = hourEnd.toFloat(),
+                    candidateHourNumber = candidate.hour.toFloat(),
+                    candidateHourEndNumber = candidate.hourEnd.toFloat();
 
+                if (element.gIndex != candidate.gIndex) {
+                  return false;
+                }
                 if (hourNumber < candidateHourNumber && hourNumberEnd <= candidateHourNumber) {
                   return false;
                 } else {
@@ -381,9 +392,9 @@ angular.module('scheduleApp.directives', []).
       return {
         restrict: 'A',
         link    : function (scope, element, attributes) {
-          var position = scope.$eval(attributes.schedulerDraggable),
-              top = gridSettings.gridSize.height * Math.floor(position.y / gridSettings.gridSize.height),
-              left = gridSettings.gridSize.width * Math.floor(position.x / gridSettings.gridSize.width),
+          var attrs = scope.$eval(attributes.schedulerDraggable),
+              top = gridSettings.gridSize.height * Math.floor(attrs.y / gridSettings.gridSize.height),
+              left = gridSettings.gridSize.width * Math.floor(attrs.x / gridSettings.gridSize.width),
               room = scope.getRoomByPosition(left).room,
               hour = scope.getHourByPosition(top).hour,
               hourEnd = scope.getHourByPosition(top + gridSettings.gridSize.height).hour,
@@ -396,6 +407,14 @@ angular.module('scheduleApp.directives', []).
             top     : top,
             left    : left
           });
+          element.append('<div class="cell-name">' + (attrs.label ? attrs.label : '') + '</div>');
+          if (attrs.editedId) {
+            element.editedId = attrs.editedId;
+          }
+          if (attrs.studyId) {
+            element.studyId = attrs.studyId;
+          }
+          element.gIndex = attrs.gIndex;
           element.room = room;
           element.hour = hour;
           element.hourEnd = hourEnd;
@@ -407,6 +426,16 @@ angular.module('scheduleApp.directives', []).
             if (!dragging && !resizing) {
               $('.draggable-cell-popup').removeClass('show');
               element.find('.draggable-cell-popup').addClass('show');
+              $('.draggable-cell').removeClass('active');
+              element.addClass('active');
+              scope.current = {};
+              scope.currentStudyId = element.studyId;
+              scope.current.element = element;
+              scope.current.disciplineTimeId = element.hour.id;
+              scope.current.classroomId = element.room.id;
+              scope.current.dayOfWeek = scope.dayIndex;
+              scope.current.week = 0;
+              scope.$apply();
             }
             dragging = false;
             resizing = false;
@@ -431,6 +460,18 @@ angular.module('scheduleApp.directives', []).
                 element.hourEnd = cHourEnd;
                 left = ui.position.left;
                 top = ui.position.top;
+
+                if (element.editedId) {
+                  scope.current = {};
+                  scope.current.id = element.editedId;
+                  scope.current.element = element;
+                  scope.current.disciplineTimeId = element.hour.id;
+                  scope.current.classroomId = element.room.id;
+                  scope.current.studyId = element.studyId;
+                  scope.current.dayOfWeek = scope.dayIndex;
+                  scope.current.week = 0;
+                  scope.dragScheduleTile();
+                }
               } else {
                 ui.helper.css({
                   left: left,
@@ -438,51 +479,107 @@ angular.module('scheduleApp.directives', []).
                 });
               }
             }
-          }).resizable({
-                containment: gridSettings.containment,
-                grid       : [gridSettings.gridSize.width, gridSettings.gridSize.height],
-                handles    : gridSettings.handles,
-                start      : function () {
-                  resizing = true;
-                },
-                stop       : function (event, ui) {
-                  var cCells = Math.floor(ui.element.height() / gridSettings.gridSize.height),
-                      cHourEnd = scope.getHourByPosition(ui.position.top + (gridSettings.gridSize.height * cCells)).hour;
+          })/*.resizable({
+           containment: gridSettings.containment,
+           grid       : [gridSettings.gridSize.width, gridSettings.gridSize.height],
+           handles    : gridSettings.handles,
+           start      : function () {
+           resizing = true;
+           },
+           stop       : function (event, ui) {
+           var cCells = Math.floor(ui.element.height() / gridSettings.gridSize.height),
+           cHourEnd = scope.getHourByPosition(ui.position.top + (gridSettings.gridSize.height * cCells)).hour;
 
-                  if (scope.isSafeDrop(element, room, hour, cHourEnd)) {
-                    cells = cCells;
-                    hourEnd = cHourEnd;
-                    element.cells = cCells;
-                    element.hourEnd = cHourEnd;
-                  } else {
-                    ui.helper.css({
-                      height: gridSettings.gridSize.height * cells
-                    });
-                  }
-                }
-              });
+           if (scope.isSafeDrop(element, room, hour, cHourEnd)) {
+           cells = cCells;
+           hourEnd = cHourEnd;
+           element.cells = cCells;
+           element.hourEnd = cHourEnd;
+           } else {
+           ui.helper.css({
+           height: gridSettings.gridSize.height * cells
+           });
+           }
+           }
+           })*/;
 
           var pTpl = '<div class="draggable-cell-popup" scheduler-draggable-popup></div>';
-          $('.draggable-cell-popup').removeClass('show');
           element.append($compile(pTpl)(scope));
-          $timeout(function () {
-            element.find('.draggable-cell-popup').addClass('show');
-          }, 20);
+          if (!attrs.noOpen) {
+            $('.draggable-cell-popup').removeClass('show');
+            $('.draggable-cell').removeClass('active');
+            element.addClass('active');
+            $timeout(function () {
+              element.find('.draggable-cell-popup').addClass('show');
+              scope.current = {};
+              scope.currentStudyId = null;
+              scope.current.element = element;
+              scope.current.disciplineTimeId = element.hour.id;
+              scope.current.classroomId = element.room.id;
+              scope.current.dayOfWeek = scope.dayIndex;
+              scope.current.week = 0;
+            }, 20);
+          }
 
           scope.pushDraggable(element);
         }
       };
     }).
-    directive('schedulerDraggablePopup', function () {
+    directive('schedulerDraggablePopup', function (ScheduleList, StudiesList, $rootScope, strings) {
       return {
         restrict   : 'A',
         link       : function (scope, element, attributes) {
+          var attrs = scope.$eval(attributes.schedulerDraggablePopup);
+
           element.find('.close').click(function () {
             element.removeClass('show');
           });
           element.bind('mousedown', function (event) {
             event.stopPropagation();
           });
+          element.find('select, input').bind('mouseup', function (event) {
+            event.stopPropagation();
+          });
+          scope.createScheduleTile = function () {
+            scope.current.studyId = this.currentStudyId;
+
+            var elem = scope.current.element,
+                sendingObj = _.cloneDeep(scope.current);
+            if (elem.editedId) {
+              sendingObj.id = elem.editedId;
+              ScheduleList.edit(sendingObj).then(function (data) {
+                elem.studyId = sendingObj.studyId;
+
+                var matched = _.find(scope.studies, function(study){
+                  return elem.studyId == study.id;
+                });
+                if (matched) {
+                  $(sendingObj.element).find('.cell-name').text(matched._curriculum.discipline.name);
+                }
+              }, function () {
+                $rootScope.$broadcast('toast', strings.createError);
+              });
+            } else {
+              ScheduleList.add(sendingObj).then(function (data) {
+                var matched = StudiesList.getOneFromList(sendingObj.studyId);
+
+                elem.editedId = data.id;
+                elem.studyId = sendingObj.studyId;
+                if (matched) {
+                  $(sendingObj.element).find('.cell-name').text(matched._curriculum.discipline.name);
+                }
+              }, function () {
+                $rootScope.$broadcast('toast', strings.createError);
+              });
+            }
+          };
+          scope.dragScheduleTile = function () {
+            var sendingObj = _.cloneDeep(scope.current);
+            ScheduleList.edit(sendingObj).then(function (data) {
+            }, function () {
+              $rootScope.$broadcast('toast', strings.createError);
+            });
+          };
         },
         templateUrl: 'partials/dragPopup.html'
       };
